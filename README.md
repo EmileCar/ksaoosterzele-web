@@ -1,46 +1,67 @@
-# Getting Started with Create React App
+# KSA Oosterzele Website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Algemeen
+Deze repository bevat de broncode van de website van KSA Oosterzele. De website bestaat uit
+- ReactJS frontend
+- PHP Laravel backend
+- mySQL Database
 
-## Available Scripts
+## Installatie (lokaal)
+### Frontend
+De frontend bevind zich in de root van de repository. Om de frontend te lokaal te starten, moet je eerst alle dependencies installeren:
+```
+npm install
+```
+Daarna kan je de app starten met
 
-In the project directory, you can run:
+```
+npm start
+```
 
-### `npm start`
+### Backend & Database
+Er is een docker-compose.yml file en een Dockerfile om de backend & lokale database op te starten. Deze zijn gemaakt om de backend lokaal te testen en zijn zodanig opgesteld om de environment van de live server op one.com te simuleren. De backend & database kan je opstarten met
+```
+docker-compose up
+```
+De backend draait dan op [localhost:80](http://localhost:8080)  
+De database draait op [localhost:3306](http://localhost:3306)  
+PhpmyAdmin draait op [localhost:80](http://localhost:80)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Belangrijk!!**
+Als je lokale backend wilt gebruiken, met je wel [environment.json](src/environment.json) aanpassen in de frontend. Dat is de baseUrl van de API. Deze moet dan naar localhost:80 wijzen.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deployment
+Onze hostingservice/provider is [one.com](https://www.one.com/nl/). Alle code is daar te vinden in de file manager. <b>Zowel de frontend als de backend zitten samen in deze file manager als 1 service.</b> Is dat clean code? Waarschijnlijk niet, maar het werkt en dat zorgt ervoor dat we niet hoeven bijbetalen voor extra services.
 
-### `npm test`
+Ook belangrijk is dat de structuur van de repository niet gelijk is aan de structuur van de file manager. In de file manager zit enkel gedeployde files, terwijl in deze repository de broncode zit.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Hoe deployen?
+Om frontend code te deployen, moet je eerst de code builden. Dit kan met
+```
+npm run build
+```
+Dit maakt een build folder aan in de root van de repository. De bestanden van die folder moet je dan uploaden naar de root van de file manager van one.com. Dit kan via de file manager zelf of via FTP.
 
-### `npm run build`
+Om backend code te deployen, moet je gewoon de bestanden uploaden naar de /api folder in de file manager van one.com. De structuur van /api hier in de repo is wel hetzelfde als die van in de file manager. Dit kan ook via de file manager zelf of via FTP.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Qua deployment voor de database is er niet veel te veranderen. We hebben maar 1 database en die draait altijd live op one.com.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Structuur van code
+### Frontend
+De frontend is gemaakt in ReactJS. De code is opgedeeld in verschillende componenten. De root component is App.js. Hierin worden alle andere componenten ingeladen. De componenten zijn opgedeeld in verschillende folders:
+- <b>assets</b>: bevat alle assets zoals afbeeldingen en fonts
+- <b>components</b>: bevat alle componenten die gebruikt worden
+- <b>contexts</b>: bevat alle contexts die gebruikt worden
+- <b>layouts</b>: bevat alle layouts die gebruikt worden
+- <b>models</b>: bevat alle modellen die gebruikt worden
+- <b>pages</b>: bevat alle pagina's die gebruikt worden
+- <b>services</b>: bevat alle services die gebruikt worden
+- <b>utils</b>: bevat verschillende functies die gebruikt worden over de hele app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Backend
+De backend is gemaakt in PHP Laravel. De root van de API is /api. De code is opgedeeld in verschillende folders:
+- <b>controller</b>: bevat alle controllers die gebruikt worden
+- <b>database</b>: bevat alle database gerelateerde code
+- <b>model</b>: bevat alle database-modellen die gebruikt worden
+- <b>routes</b>: bevat alle routes die gebruikt worden
+- <b>index.php</b>: de startup van de API

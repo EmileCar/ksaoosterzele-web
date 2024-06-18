@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  api:
+    build: .
+    image: ksaoosterzele-api
+    ports:
+      - "80:80"
+      - "443:433"
+    volumes:
+      - ./api:/var/www/html/api
+      - ./public/assets:/var/www/html/assets
+
+  database:
+    image: mariadb:10.6.17
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+      - ./docker/testdata.sql:/testdata.sql
+    environment:
+      MYSQL_SERVERNAME: database
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: 1
+    command: ["--init-file", "/testdata.sql"]
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - database
+    ports:
+      - "8080:80"
+    volumes:
+      - ./docker/phpconfig/php/php.ini:/usr/local/etc/php/php.ini
+    environment:
+      MYSQL_SERVERNAME: localhost
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: 1
+      PMA_HOST: database
+      UPLOAD_LIMIT: 128M
