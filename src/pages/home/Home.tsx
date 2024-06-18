@@ -1,6 +1,6 @@
 import "./Home.css";
-import BlueTop from "../../assets/svgPaths/bluetop";
-import BlueBottom from "../../assets/svgPaths/bluebottom";
+import BlueTop from "../../components/hero/Bluetop";
+import BlueBottom from "../../components/hero/Bluebottom";
 import LeidingsFoto from "../../assets/img/pages/leiding.jpeg";
 // import EventsList from "../../components/events/EventsList";
 // import Takken from "../../components/takken/Takken";

@@ -3,9 +3,9 @@
 	width: 100vw;
 	z-index: 40;
 	transition: opacity 0.5s ease-in-out;
-	border-bottom: solid 0.2rem var(--main-color);
 	background-color: white;
 	color: var(--main-color);
+	box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.4);
 }
 
 .header-admin {
@@ -119,7 +119,7 @@
 	display: none;
 }
 .toggle-button{
-	padding: 1.2rem 1.8rem;
+	padding: 1rem 1.5rem;
 	display: block;
 	right: 3%;
 	top: 50%;

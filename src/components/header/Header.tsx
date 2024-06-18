@@ -6,12 +6,8 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = ({ adminMode }: { adminMode?: boolean }) => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const location = useLocation();
-
-  if(!adminMode) {
-    adminMode = false;
-  }
 
   useEffect(() => {
     setIsNavOpen(false);
@@ -59,11 +55,7 @@ const Header = ({ adminMode }: { adminMode?: boolean }) => {
             </li>
           </ul>
         </nav>
-        <label htmlFor="nav-toggle" className="toggle-button" onClick={handleClickNavToggle}>
-          <span className="toggle-button-bar"></span>
-          <span className="toggle-button-bar"></span>
-          <span className="toggle-button-bar"></span>
-        </label>
+        <span className='pi pi-bars toggle-button' style={{ fontSize: '3rem' }} onClick={handleClickNavToggle}></span>
       </div>
     </header>
   );

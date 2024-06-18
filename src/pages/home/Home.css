@@ -84,9 +84,9 @@
 		position: relative;
 		bottom: 9rem;
 		max-width: 600px;
-		border: solid 0.2rem var(--darker-main-color);
 		border-radius: 3rem;
 		padding: 1.5rem 4rem 2rem 4rem;
+		box-shadow: 0 0 1rem rgba(0, 0, 0, 0.4);
 	}
 
 	.hero__content h2 {

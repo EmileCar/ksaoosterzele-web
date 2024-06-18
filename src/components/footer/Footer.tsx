@@ -4,7 +4,7 @@ import logo from '../../assets/img/ksaLogo-invert.svg'
 import instaIcon from '../../assets/img/icons/instaIcon.svg'
 import facebookIcon from '../../assets/img/icons/facebookIcon.svg'
 
-function Footer() {
+const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer__wrapper">
