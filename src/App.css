@@ -1,38 +1,327 @@
-.App {
-  text-align: center;
+/*   APP CSS: Algemene styling classes die voor elke pagina kan terugkomen   */
+.inherit-font {
+	font-family: inherit;
+	color: inherit;
+	font-size: inherit;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.button {
+	background-color: var(--main-color);
+	padding: var(--s0);
+	border-radius: 4rem;
+	color: white;
+	text-decoration: none;
+	transition: transform 0.1s ease-in-out;
+	display: inline-block;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.button:hover {
+	transform: scale(1.05);
+}
+
+.button-inverted {
+	background-color: white;
+	color: var(--main-color);
+}
+
+.link {
+	color: white;
+	text-decoration: none;
+}
+
+strong {
+	font-weight: bold;
+}
+
+.cursive{
+	text-decoration: underline;
+	font-style: italic;
+	color: inherit;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.layered-grid {
+	display: grid;
+	place-items: center;
+}
+
+.layered-grid>* {
+	grid-row: 1;
+	grid-column: 1;
+}
+
+.page__container {
+	color: var(--main-color);
+	margin-top: 8rem;
+	text-align: center;
+	padding: var(--s0);
+}
+.page__container.admin{
+	margin-top: 4rem;
+}
+
+.page__section {
+	max-width: 60rem;
+	margin: 0 auto;
+}
+
+.page__section--bordertop{
+	border-top: 0.2rem solid var(--main-color);
+    margin-top: var(--s1);
+    padding-top: var(--s2);
+}
+
+.page__section--content{
+	border-top: 0.2rem solid var(--main-color);
+	margin: var(--s2) 0;
+	padding: 2rem 0;
+}
+
+@media screen and (min-width: 55rem) {
+	.page__container {
+		text-align: left;
+	}
+	.page__section {
+		align-items: flex-start;
+	}
+}
+
+.more__link a {
+	color: white;
+	text-decoration: underline;
+	font-style: italic;
+	font-size: 80%;
+}
+
+.error{
+	color: var(--error-color)
+}
+
+.error.global{
+	margin-bottom: 1rem;
+}
+
+.flex__container {
+	display: flex;
+	gap: var(--s2);
+	align-items: flex-start;
+	flex-direction: column-reverse;
+	text-align: center;
+}
+
+.flex__container img {
+	width: 85%;
+	max-width: 400px;
+	align-self: center;
+}
+
+.flex__container--text {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-1);
+}
+
+@media screen and (min-width: 55rem) {
+	.flex__container {
+		flex-direction: row;
+		text-align: left;
+	}
+
+	.flex__container .section-title__container {
+		align-items: flex-start;
+	}
+
+	.event-text__container {
+		text-align: left;
+	}
+}
+
+.round-image {
+	border-radius: 100%;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s0);
+}
+
+.form .label {
+	width: 100%;
+	align-self: flex-start !important;
+}
+
+.form .label{
+	font-weight: bold;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.2rem;
+}
+
+label.error {
+	color: var(--error-color);
+  	position: relative;
+}
+.error-message{
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+}
+.label.error .error-message {
+	opacity: 1;
+	pointer-events: initial;
+	visibility: visible;
+	position: relative;
+	top: 100%;
+	text-align: left;
+	font-style: italic;
+	font-size: 1.1rem;
+}
+.label.error .input {
+	border: var(--s-2) solid var(--error-color);
+	outline: none;
+}
+
+.form .input {
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	padding: var(--s-1);
+	display: block;
+	width: 100%;
+	outline: var(--s-99) solid var(--main-color);
+	border: var(--s-2) solid transparent;
+}
+.form .input::placeholder{
+    color: var(--main-color);
+    opacity: 0.5;
+}
+.form.disabled{
+	pointer-events: none;
+}
+.form.disabled .input{
+	background-color: rgb(228, 228, 228);
+	outline: var(--s-99) solid gray;
+	color: gray;
+}
+.form .input:disabled{
+	background-color: rgb(228, 228, 228);
+	outline: var(--s-99) solid gray;
+	color: gray;
+}
+.form .form-group{
+	display: flex;
+	gap: 1rem;
+	align-items: flex-end;
+}
+form .form-group__half{
+	display: flex;
+	gap: 1rem;
+	width: 100%;
+}
+form .verplicht{
+	color: var(--error-color);
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+form .form-text{
+	margin-bottom: 1rem;
+}
+@media screen and (max-width: 740px) {
+	form .form-group{
+		flex-wrap: wrap;
+	}
+	form .form-text{
+		margin-bottom: 0;
+		align-self: center;
+		width: 100%;
+	}
+}
+
+
+/* Hide the default checkbox */
+.custom-checkbox {
+    display: none;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  /* Style the custom checkbox */
+  .checkbox-label {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: #fff;
+    border: 2px solid var(--main-color);
+    border-radius: 4px;
+    cursor: pointer;
+	margin-left: 1rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  /* Style the custom checkbox when checked */
+  .custom-checkbox:checked + .checkbox-label {
+    background-color: var(--main-color);
+	background-image: url("assets/img/icons/checkIcon.svg");
+	background-position: center;
+	background-repeat: no-repeat;
   }
+  
+  /* Add a checkmark inside the checked checkbox */
+  .custom-checkbox:checked + .checkbox-label::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 7px;
+    width: 6px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  
+  /* Style the label text (optional) */
+  .checkbox-label::before {
+  }
+
+.input-dropdown{
+  padding: 0px !important;
+  width: 100% !important;
+  display: flex !important;
+}
+
+.p-inputtext{
+  border: 0 !important;
+  outline: 0 !important;
+  padding: var(--s-1) !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+/* 
+@media screen and (max-width: 700px) {
+	.popup {
+		width: 70%;
+	}
+} */
+
+.success-toast{
+    background-color: rgb(0, 181, 0);
+    color: white;
+}
+
+.error-toast{
+    background-color: var(--error-color);
+    color: white;
+}
+
+.p-toast{
+	opacity: 1 !important;
+    z-index: 999 !important;
 }
