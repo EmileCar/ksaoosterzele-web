@@ -113,7 +113,6 @@
 }
 
 .home__section--content {
-	max-width: 45rem;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;

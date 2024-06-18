@@ -72,8 +72,7 @@ strong {
 	margin: 0 auto;
 }
 
-.page__section--bordertop{
-	border-top: 0.2rem solid var(--main-color);
+.page__section:not(:first-child) {
     margin-top: var(--s1);
     padding-top: var(--s2);
 }

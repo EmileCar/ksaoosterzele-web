@@ -8,6 +8,7 @@ import HeroSlider from "../../components/hero/HeroSlider";
 import { Link } from "react-router-dom";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
+import EventsList from "../../components/events/eventsList/FeaturedEventsList";
 
 const Home = () => {
   return (
@@ -51,13 +52,13 @@ const Home = () => {
             <SectionTitle title="Komende evenementen">
               <p>Hieronder kan u een paar van onze komende evenementen zien die wij organiseren. Klik op een activiteit om meer informatie te krijgen!</p>
             </SectionTitle>
-            {/* <EventsList limit={3}/> */}
+            <EventsList limit={3}/>
           </div>
         </section>
 
-        <section className="page__section page__section--bordertop" id="takken">
+        <section className="page__section" id="takken">
             <div className="home__section--content">
-                <SectionTitle title="Takken">
+                <SectionTitle title="Onze leeftijdsgroepen">
                     <p>Wij geven leiding aan jongens van 6 tot 16 jaar, hier kan u zien tot welke tak jouw kind behoort door te klikken op een leeftijdsgroep.</p>
                 </SectionTitle>
             </div>

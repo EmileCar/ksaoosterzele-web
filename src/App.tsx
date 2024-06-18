@@ -3,6 +3,7 @@ import 'primeicons/primeicons.css';
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home';
+import EventDetail from './pages/events/EventDetail';
 
 const App = () => {
 
@@ -12,6 +13,7 @@ const App = () => {
         {/* Vaste routes */}
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path='/evenement/:id' element={<EventDetail />} />
 
         {/* Fallback */}
         <Route path="/*" element={<div>notfound</div>} />

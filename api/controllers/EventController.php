@@ -9,7 +9,6 @@ class EventController extends Controller {
 
 	public function getEvents() {
 		$events = Event::where("datetime", '>', Carbon::now())
-			->orderBy("featured", "desc")
 			->orderBy("datetime", "asc")
 			->get();
 
