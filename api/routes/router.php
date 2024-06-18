@@ -4,13 +4,14 @@ require_once 'media.php';
 require_once 'mattentaartenOrders.php';
 require_once 'account.php';
 require_once 'inschrijvingen.php';
+require_once 'groups.php';
 
 // Als er geen pagina is opgegeven, zet de page op index
 if(empty($_GET['page'])) {
     $_GET['page'] = 'index';
 }
 
-$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes);
+$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes);
 
 // Als de route niet bestaat, geef een 404
 if (empty($allowedRoutes[$_GET['page']])) {

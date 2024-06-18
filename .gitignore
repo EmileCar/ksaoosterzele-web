@@ -150,3 +150,6 @@ build
 
 # DOCKER
 db
+
+# Assets
+public/assets/media/*

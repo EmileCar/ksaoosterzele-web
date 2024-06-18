@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import EventsList from "../../components/events/eventsList/FeaturedEventsList";
+import Takken from "../../components/takken/Takken";
 
 const Home = () => {
   return (
@@ -22,25 +23,39 @@ const Home = () => {
           <div className="hero__content">
             <h2>KSA Oosterzele</h2>
             <div className="text-container">
-              <p>Elke zondag van 14u-17u organiseren wij activiteiten vol plezier!</p>
+              <p>
+                Elke zondag van 14u-17u organiseren wij activiteiten vol
+                plezier!
+              </p>
             </div>
-            <Link to="/inschrijven" className="inherit-font cursive">Schrijf hier uw kind in</Link>
+            <Link to="/inschrijven" className="inherit-font cursive">
+              Schrijf hier uw kind in
+            </Link>
           </div>
           <BlueBottom />
         </section>
 
         <section className="intro__section page__section">
           <div className="intro__container flex__container">
-            <img src={LeidingsFoto} alt="leiding KSA Oosterzele" className="round-image"/>
+            <img
+              src={LeidingsFoto}
+              alt="leiding KSA Oosterzele"
+              className="round-image"
+            />
             <div className="flex__container--text">
-              <SectionTitle title="Wij zijn wij?" invert/>
-              <p>Elke <strong>zondagnamiddag</strong> organiseren wij toffe activiteiten voor <strong>jongens van
-                  6 tot 16 jaar</strong> waar plezier en vriendschap centraal staat. <br/>Naast de
-                zondagnamiddagen gaan wij elk jaar met alle leden op <strong>weekend en op kamp</strong>. Verder
-                organiseert KSA Oosterzele verschillende <strong>evenementen</strong> zoals een fuif,
-                eetfestijn, quiz, optredens en nog zo veel meer.
+              <SectionTitle title="Wij zijn wij?" invert />
+              <p>
+                Elke <strong>zondagnamiddag</strong> organiseren wij toffe
+                activiteiten voor <strong>jongens van 6 tot 16 jaar</strong>{" "}
+                waar plezier en vriendschap centraal staat. <br />
+                Naast de zondagnamiddagen gaan wij elk jaar met alle leden op{" "}
+                <strong>weekend en op kamp</strong>. Verder organiseert KSA
+                Oosterzele verschillende <strong>evenementen</strong> zoals een
+                fuif, eetfestijn, quiz, optredens en nog zo veel meer.
               </p>
-              <span className="more__link"><a href="#takken">Klik voor meer informatie</a></span>
+              <span className="more__link">
+                <a href="#takken">Klik voor meer informatie</a>
+              </span>
             </div>
           </div>
         </section>
@@ -50,23 +65,31 @@ const Home = () => {
         <section className="page__section">
           <div className="home__section--content">
             <SectionTitle title="Komende evenementen">
-              <p>Hieronder kan u een paar van onze komende evenementen zien die wij organiseren. Klik op een activiteit om meer informatie te krijgen!</p>
+              <p>
+                Hieronder kan u een paar van onze komende evenementen zien die
+                wij organiseren. Klik op een activiteit om meer informatie te
+                krijgen!
+              </p>
             </SectionTitle>
-            <EventsList limit={3}/>
+            <EventsList limit={3} />
           </div>
         </section>
 
         <section className="page__section" id="takken">
-            <div className="home__section--content">
-                <SectionTitle title="Onze leeftijdsgroepen">
-                    <p>Wij geven leiding aan jongens van 6 tot 16 jaar, hier kan u zien tot welke tak jouw kind behoort door te klikken op een leeftijdsgroep.</p>
-                </SectionTitle>
-            </div>
-            {/* <Takken/> */}
+          <div className="home__section--content">
+            <SectionTitle title="Onze leeftijdsgroepen">
+              <p>
+                Wij geven leiding aan jongens van 6 tot 16 jaar, hier kan u zien
+                tot welke tak jouw kind behoort door te klikken op een
+                leeftijdsgroep.
+              </p>
+            </SectionTitle>
+          </div>
+          <Takken />
         </section>
       </div>
     </DefaultLayout>
   );
-}
+};
 
 export default Home;
