@@ -10,6 +10,9 @@ services:
     volumes:
       - ./api:/var/www/html/api
       - ./public/assets:/var/www/html/assets
+      - ./.env:/var/www/html/.env
+    env_file:
+      - .env
 
   database:
     image: mariadb:10.6.17
