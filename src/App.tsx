@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home';
 import EventDetail from './pages/events/EventDetail';
 import Events from './pages/events/Events';
+import Media from './pages/media/Media';
 
 const App = () => {
 
@@ -16,7 +17,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/evenementen" element={<Events />} />
         <Route path='/evenement/:id' element={<EventDetail />} />
-
+        <Route path="/media" element={<Media />} />
         {/* Fallback */}
         <Route path="/*" element={<div>notfound</div>} />
       </Routes>

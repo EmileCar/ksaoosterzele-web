@@ -9,7 +9,7 @@ class Event {
     featured: boolean;
     entryPrice: string | null;
 
-    constructor(eventData: any) {
+    constructor(eventData?: any) {
         this.id = eventData.id || null;
         this.name = eventData.name || null;
         this.description = eventData.description || null;

@@ -1,6 +1,7 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once __DIR__ . "/CollageType.php";
 
 class Collage extends Model
 {

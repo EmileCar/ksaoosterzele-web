@@ -1,7 +1,7 @@
 import "./EventsList.css";
 import Event from "../../../types/Event";
 import useFetch from "../../../hooks/useFetch";
-import { getEvents } from "../../../services/eventsService";
+import { getEvents } from "../../../services/eventService";
 import { useCallback } from "react";
 import EventListItem from "./EventListItem";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";

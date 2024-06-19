@@ -1,5 +1,5 @@
 
-import EventsList from "../../components/events/eventsList/EventsList";
+import EventsList from "../../components/events/list/EventsList";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 

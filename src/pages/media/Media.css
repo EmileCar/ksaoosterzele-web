@@ -1,0 +1,29 @@
+.media__search-options {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: flex-start;
+	margin-bottom: 1.5rem;
+}
+
+.filter-media-form{
+	flex-direction: row;
+	height: 0rem;
+	overflow-y: hidden;
+	padding: 0 1px;
+	transition: height 0.3s ease;
+}
+
+.filter-media-form.show{
+	height: 4.8rem;
+}
+
+@media screen and (max-width: 580px){
+	.filter-media-form{
+		flex-direction: column;
+	}
+}
+
+.filter-media-form .showSorted{
+	flex-direction: column;
+}

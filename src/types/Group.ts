@@ -7,7 +7,7 @@ class Group {
     ageRange: string;
     imageFileName: string;
 
-    constructor(groupData: any) {
+    constructor(groupData?: any) {
         this.id = groupData.id || null;
         this.name = groupData.name || null;
         this.startAge = groupData.start_age || null;

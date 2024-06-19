@@ -19,9 +19,9 @@ class MediaController extends Controller {
 
 	public function getCollages() {
 		if (!empty($_SESSION["admin_ksaoosterzele"]) && isset($_GET['all']) && $_GET["all"] === "1") {
-			$collages = Collage::all();
+			$collages = Collage::with("types")->get();
 		} else {
-			$collages = Collage::where("active", 1)->get();
+			$collages = Collage::where("active", 1)->with("types")->get();
 		}
 
 		exit(json_encode($collages));

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getEvent } from "../../services/eventsService";
+import { getEvent } from "../../services/eventService";
 import useFetch from "../../hooks/useFetch";
 import PageLayout from "../../layouts/PageLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
