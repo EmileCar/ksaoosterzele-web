@@ -22,13 +22,26 @@ const Takken = ({ setTak }: { setTak?: any }) => {
               className="takken-list_item"
               onClick={() => {
                 setSelectedTak(group);
-                setTak(group);
+                if (setTak) setTak(group);
               }}
             >
-              <img src={`assets/takken/${group.imageFileName}`} alt={group.name} loading="lazy" />
-              <span>Jongknapen</span>
+              <img
+                src={`assets/takken/${group.imageFileName}`}
+                alt={group.name}
+                loading="lazy"
+              />
+              <h3>{group.name}</h3>
             </div>
           ))}
+      </div>
+      <div className={`tak__info ${selectedTak ? "active" : ""}`}>
+        {selectedTak && (
+          <>
+            <p className="tak__info-tile">{selectedTak.name}</p>
+            <p className="tak__info-ages">{selectedTak.ageRange}</p>
+            <p>{selectedTak.description}</p>
+          </>
+        )}
       </div>
     </div>
   );

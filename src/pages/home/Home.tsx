@@ -8,7 +8,7 @@ import HeroSlider from "../../components/hero/HeroSlider";
 import { Link } from "react-router-dom";
 import DefaultLayout from "../../layouts/DefaultLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
-import EventsList from "../../components/events/eventsList/FeaturedEventsList";
+import EventsList from "../../components/events/eventsList/EventsList";
 import Takken from "../../components/takken/Takken";
 
 const Home = () => {

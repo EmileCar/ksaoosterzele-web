@@ -4,6 +4,7 @@ class Group {
     startAge: number;
     endAge: number;
     description: string;
+    ageRange: string;
     imageFileName: string;
 
     constructor(groupData: any) {
@@ -12,6 +13,7 @@ class Group {
         this.startAge = groupData.start_age || null;
         this.endAge = groupData.end_age || null;
         this.description = groupData.description || null;
+        this.ageRange = groupData.age_range || null;
         this.imageFileName = groupData.image_file_name || null;
     }
 }

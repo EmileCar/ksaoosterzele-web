@@ -4,6 +4,7 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/home/Home';
 import EventDetail from './pages/events/EventDetail';
+import Events from './pages/events/Events';
 
 const App = () => {
 
@@ -13,6 +14,7 @@ const App = () => {
         {/* Vaste routes */}
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/evenementen" element={<Events />} />
         <Route path='/evenement/:id' element={<EventDetail />} />
 
         {/* Fallback */}
