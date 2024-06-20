@@ -7,6 +7,7 @@ import EventDetail from './pages/events/EventDetail';
 import Events from './pages/events/Events';
 import Media from './pages/media/Media';
 import Contact from './pages/contact/Contact';
+import Register from './pages/inschrijven/Register';
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route path='/evenement/:id' element={<EventDetail />} />
         <Route path="/media" element={<Media />} />
         <Route path="/media/:id" element={<Media />} />
+        <Route path="/inschrijven" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
         {/* Fallback */}
         <Route path="/*" element={<div>notfound</div>} />

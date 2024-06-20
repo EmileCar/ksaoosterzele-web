@@ -1,0 +1,140 @@
+.teaser__wrapper {
+  margin: 2rem 0;
+  display: grid;
+  align-items: center;
+  gap: 10%;
+  grid-template-columns: 45% 45%;
+}
+
+.teaserForm label {
+  margin-bottom: var(--s0);
+}
+
+.submit-button:hover{
+    transform: none;
+}
+
+.takTeaser__container{
+  height: 100%;
+}
+
+.takTeaser__wrapper{
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--s0);
+  position: relative;
+  height: 100%;
+}
+
+.tak-img{
+  width: 45%;
+}
+
+.wrongTak{
+  position: absolute;
+  bottom: 0;
+  left: 48.5%;
+}
+
+.assignedTak{
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.inschrijvenForm{
+  margin-top: var(--s2);
+}
+
+.inschrijvenForm__wrapper{
+  border-top: 3px solid var(--main-color);
+  padding-top: var(--s2);
+  text-align: center;
+}
+
+.geslacht-label{
+  width: 160px !important;
+}
+
+.inschrijvenForm .break{
+  padding: var(--s2);
+  padding-bottom: var(--s0);
+}
+
+.inschrijvenForm .break label{
+  margin-top: var(--s-1);
+}
+
+.inschrijven__container .buttons{
+  display: flex;
+  gap: var(--s0);
+  justify-content: center;
+  margin-top: var(--s0);
+}
+.inschrijven__container .overlay .buttons{
+  margin-bottom: var(--s0);
+}
+@media screen and (min-width: 880px) {
+  .inschrijven__container .overlay .buttons{
+    justify-content: flex-start;
+    align-self: flex-start;
+  }
+}
+
+
+
+.inschrijven__container .buttons .button{
+  width: 5rem;
+}
+
+.inschrijven__container .buttons .button-inverted{
+  border: 2px solid var(--main-color);
+}
+
+.inschrijvenForm .submit-button{
+  width: 50%;
+  margin-top: var(--s0);
+  align-self: center;
+}
+
+.inschrijvenForm .submit-button:hover{
+  transform: scale(1.1);
+}
+
+.takken__submit-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.takken__submit-container .button{
+  width: 15rem;
+}
+
+.takken__submit-container .submit-button:hover{
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 740px) {
+  .teaser__wrapper {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 1fr 1.2fr;
+  }
+  .tak-img{
+    width: 30%;
+  }
+}
+
+.margin-top{
+  margin-top: var(--s0);
+}
+
+/* POPUP */
+.confirm__container{
+  margin-bottom: 2rem;
+}
+
+.confirm__container .buttons{
+  margin-top: 1rem;
+}

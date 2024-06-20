@@ -1,8 +1,4 @@
 import React, { useCallback, useState } from "react";
-import LeeuwkesTak from "../../assets/img/takken/leeuwkes.jpg";
-import JongKnapenTak from "../../assets/img/takken/jongknapen.jpg";
-import Knapen from "../../assets/img/takken/knapen.jpg";
-import JongHernieuwers from "../../assets/img/takken/jonghernieuwers.jpg";
 import "./Takken.css";
 import { getGroups } from "../../services/groupService";
 import Group from "../../types/Group";
