@@ -1,0 +1,97 @@
+.form__container{
+	margin: var(--s2) 0;
+	margin-bottom: var(--s1);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
+    gap: var(--s1);
+}
+.form__wrapper{
+	display: grid;
+	grid-template-areas: "labels"
+	"submit"
+	"img";
+	place-items: center;
+}
+@media screen and (min-width: 55rem) {
+	.form__wrapper {
+		grid-template-areas: 
+		"labels img"
+		"submit .";
+	}
+}
+.contact-wrapper {
+	display: grid;
+	grid-template-areas: "firstname lastname"
+	"email email"
+	"message message";
+	gap: var(--s0);
+	grid-area: labels;
+	justify-self: start;
+	width: 100%;
+}
+.form__wrapper img{
+	grid-area: img;
+	margin-top: var(--s0);
+}
+.form-bottom {
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column-reverse;
+	align-items: center;
+	grid-area: submit;
+	justify-self: end;
+	width: 100%;
+}
+.submit-button {
+	padding: var(--s-1);
+	font-size: var(--s1);
+	text-transform: uppercase;
+	cursor: pointer;
+	font-weight: bold;
+	width: 100%;
+	color: white;
+}
+.submit-button:hover {
+	text-decoration: underline;
+}
+
+@media screen and (min-width: 55rem) {
+	.form-bottom {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.form__wrapper img{
+		margin-left: var(--s3);
+		margin-top: 0;
+	}
+}
+
+/* .error {
+	color: var(--error-color);
+	font-size: 0.8rem;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+} */
+
+.succes-hidden {
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+}
+
+.contact-items{
+	text-align: center;
+}
+
+@media screen and (min-width: 55rem) {
+	.contact-items{
+		text-align: left;
+	}
+	
+}
