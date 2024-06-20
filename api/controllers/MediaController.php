@@ -49,6 +49,11 @@ class MediaController extends Controller {
 		]));
 	}
 
+	public function getCollageTypes() {
+		$types = CollageType::all();
+		exit(json_encode($types));
+	}
+
 	public function addCollage() {
 		if (empty($_SESSION["admin_ksaoosterzele"])) {
 			ErrorResponse::exitWithError(401);

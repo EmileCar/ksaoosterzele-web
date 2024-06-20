@@ -1,26 +1,21 @@
+import { Link } from "react-router-dom";
 import Collage from "../../../types/Collage";
 import CollageType from "../../../types/CollageType";
+import defaultThumbnail from '../../../assets/img/default.jpg';
 
 const CollageGalleryItem = ({ collage } : { collage: Collage }) => {
     return (
-        <div className="collage__container">
-            <div className="collage__header">
-                <h2>{collage.name}</h2>
-                <p>{collage.date.toDateString()}</p>
-            </div>
-            <div className="collage__content">
-                <div className="collage__image">
-                    <img src={collage.name} alt={collage.name} />
-                </div>
-                <div className="collage__details">
-                    <div className="collage__types">
-                        {collage.types.map((type: CollageType) => (
-                            <span key={type.id}>{type.name}</span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+        <Link to={`/collage/${collage.id}`} className="collage-gallery_item">
+            <img
+                src={`assets/media/collages/${collage.name}/thumbnail.png`}
+                // src={`${isAdmin ? "../" : ""}assets/media/collages/${collage.name}/thumbnail.png`}
+                alt={collage.name}
+                onError={(e) => {
+                    (e.target as HTMLImageElement).src = defaultThumbnail;
+                }}
+            />
+            <h3>{collage.displayName}</h3>
+        </Link>
     );
 };
 

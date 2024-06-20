@@ -21,6 +21,42 @@ export async function getCollages(all: boolean = false) {
     }
 }
 
+export async function getCollage(collageId: number) {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=collage&id=${collageId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        return new Collage(data);
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getCollageTypes() {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=collage_types`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}
+
 // export async function getCollage(collageId) {
 //     try {
 //         const response = await fetch(`${API_BASE_URL}?page=collage&id=${collageId}`, {

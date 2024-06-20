@@ -1,3 +1,4 @@
+import './Media.css';
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 import CollageGallery from "../../components/collages/gallery/CollageGallery";

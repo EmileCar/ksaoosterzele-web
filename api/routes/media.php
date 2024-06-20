@@ -28,4 +28,10 @@ $mediaRoutes = [
             'DELETE' => 'deleteCollageImage'
         )
     ),
+    'collage_types' => array(
+        'controller' => 'Media',
+        'methods' => array(
+            'GET' => 'getCollageTypes',
+        )
+    ),
 ];
