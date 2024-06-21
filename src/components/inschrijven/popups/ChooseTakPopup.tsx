@@ -11,17 +11,13 @@ interface ChooseTakPopupProps {
 const ChooseTakPopup: React.FC<ChooseTakPopupProps> = ({ onClose, setTak }) => {
     const [selectedTak, setSelectedTak] = useState<Group | null>(null);
 
-    const closeHandler = () => {
-        onClose(false);
-    };
-
     const submitHandler = () => {
         setTak(selectedTak!);
         onClose(false);
     };
 
     return (
-        <Popup title="Kies een tak" onClose={closeHandler}>
+        <Popup title="Kies een tak" onClose={() => onClose(false)}>
             <Takken setTak={setSelectedTak} />
             <div className="takken__submit-container">
                 {selectedTak && (

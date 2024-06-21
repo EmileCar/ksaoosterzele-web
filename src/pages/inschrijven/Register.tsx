@@ -4,7 +4,7 @@ import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 import { RegistrationProvider } from "../../contexts/RegistrationContext";
 import Teaser from "../../components/inschrijven/Teaser";
-import InschrijvenForm from "../../components/inschrijven/InschrijvenForm";
+import InschrijvenForm from "../../components/inschrijven/RegistrationForm";
 
 const Register = () => {
     return (

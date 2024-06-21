@@ -5,16 +5,17 @@ import Registration from "../types/Registration";
 import Group from "../types/Group";
 
 interface RegistrationContextType {
-    inschrijving: Registration | null;
-    setInschrijving: React.Dispatch<React.SetStateAction<Registration | null>>;
+    inschrijving: any;
+    setInschrijving: React.Dispatch<React.SetStateAction<any>>;
     updateRegistrationValue: (key: string, value: any) => void;
     errorStates: any;
+    submitValues: () => void;
 }
 
 const RegistrationContext = React.createContext<RegistrationContextType | undefined>(undefined);
 
 export const RegistrationProvider = ({ children } : { children: React.ReactNode }) => {
-    const [inschrijving, setInschrijving] = useState<Registration | null>(null);
+    const [inschrijving, setInschrijving] = useState<any>(null);
     const [errorStates, setErrorStates] = useState({
         firstName: "",
         lastName: "",
@@ -39,18 +40,20 @@ export const RegistrationProvider = ({ children } : { children: React.ReactNode 
     });
 
     const updateRegistrationValue = (key: string, value: any) => {
-        setInschrijving(prevInschrijving => {
-            if (prevInschrijving) {
-                const updatedInschrijving = new Registration({ ...prevInschrijving, [key]: value });
-                console.log(updatedInschrijving);
-                return updatedInschrijving;
-            }
-            return null;
-        });
+        const updatedInschrijving = { ...inschrijving };
+        updatedInschrijving[key] = value;
+        setInschrijving(updatedInschrijving);
     };
 
+    const submitValues = async () => {
+        if (inschrijving) {
+            console.log(inschrijving);
+            console.log("JEEEEJ");
+        }
+    }
+
     return (
-        <RegistrationContext.Provider value={{ inschrijving, setInschrijving, updateRegistrationValue, errorStates }}>
+        <RegistrationContext.Provider value={{ inschrijving, setInschrijving, updateRegistrationValue, errorStates, submitValues }}>
             <div className="inschrijven__container">
                 {/* {popupActive && <ConfirmPopup />} */}
                 {children}

@@ -3,12 +3,25 @@ import Label from "../form/Label";
 import Input from "../form/Input";
 import { useRegistrationContext } from "../../contexts/RegistrationContext";
 import Registration from "../../types/Registration";
+import { sendInschrijving } from "../../services/registrationService";
+import ConfirmPopup from "./popups/ConfirmPopup";
 
-const InschrijvenForm = () => {
+const RegistrationForm = () => {
     const { inschrijving, errorStates, updateRegistrationValue } = useRegistrationContext();
     const [isPending, setIsPending] = useState(false);
-    const [tweedeVerblijfplaatsValue, setTweedeVerblijfplaatsValue] = useState("");
-    const [tweedeVerblijfplaatsActive, setTweedeVerblijfplaatsActive] = useState(false);
+    const [tweedeVerblijfplaatsActive, setTweedeVerblijfplaatsActive] = useState<boolean | null>(null);
+    const [showContinueButton, setShowContinueButton] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
+
+    useEffect(() => {
+        if(tweedeVerblijfplaatsActive === null) return; 
+        setShowContinueButton(true);
+    } , [tweedeVerblijfplaatsActive]);
+
+    const handleClickContinueButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setShowPopup(true);
+    };
 
     return (
         inschrijving && <>{isPending ? <p>Verzenden...</p> :
@@ -18,26 +31,26 @@ const InschrijvenForm = () => {
                 <form className="inschrijvenForm form">
                     <div className="form-group">
                         <Label text="Voornaam lid:" errorMessage={errorStates.firstNameError}>
-                            <Input type="text" name="voornaam" value={inschrijving?.firstName} onChange={(e) => updateRegistrationValue("voornaam", e.currentTarget.value)} placeholder="Voornaam" />
+                            <Input type="text" name="voornaam" value={inschrijving?.firstName} onChange={(e) => updateRegistrationValue("firstName", e.currentTarget.value)} placeholder="Voornaam" />
                         </Label>
                         <Label text="Achternaam lid:" errorMessage={errorStates.lastNameError}>
-                            <Input type="text" name="achternaam" value={inschrijving.lastName} onChange={(e) => updateRegistrationValue("achternaam", e.currentTarget.value)} placeholder="Achternaam" />
+                            <Input type="text" name="achternaam" value={inschrijving.lastName} onChange={(e) => updateRegistrationValue("lastName", e.currentTarget.value)} placeholder="Achternaam" />
                         </Label>
                     </div>
                     <div className="form-group">
                         <div className="form-group__half">
                             <Label text="Geboortedatum:" errorMessage={errorStates.geboortedatumError}>
-                                {/* <Input type="date" name="geboortedatum" value={inschrijving.birthdate.toString()} onChange={(e) => inschrijving.updateRegistrationValue("geboortedatum", e.currentTarget.value)} placeholder="Geboortedatum" /> */}
+                                <Input type="date" name="geboortedatum" value={inschrijving.birthdate} onChange={(e) => inschrijving.updateRegistrationValue("geboortedatum", e.currentTarget.value)} placeholder="Geboortedatum" />
                             </Label>
                             <Label text="Geslacht:" errorMessage={errorStates.geslachtError} customClassName={"geslacht-label"}>
-                                <select className="input" name="geslacht" value={inschrijving.gender} onChange={(e) => updateRegistrationValue("geslacht", e.currentTarget.value)}>
+                                <select className="input" name="geslacht" value={inschrijving.gender} onChange={(e) => updateRegistrationValue("gender", e.currentTarget.value)}>
                                     <option value="M">M</option>
                                     <option value="X">X</option>
                                 </select>
                             </Label>
                         </div>
                         <Label text="Geboorteplaats:" errorMessage={errorStates.geboorteplaatsError}>
-                            <Input type="text" name="geboorteplaats" value={inschrijving.birthplace} onChange={(e) => updateRegistrationValue("geboorteplaats", e.currentTarget.value)} placeholder="Geboorteplaats" />
+                            <Input type="text" name="geboorteplaats" value={inschrijving.birthplace} onChange={(e) => updateRegistrationValue("birthplace", e.currentTarget.value)} placeholder="Geboorteplaats" />
                         </Label>
                     </div>
                     <div className="break">
@@ -45,29 +58,29 @@ const InschrijvenForm = () => {
                     </div>
                     <div className="form-group">
                         <Label text="Voornaam ouder/voogd:" errorMessage={errorStates.voornaamOuderError}>
-                            <Input type="text" name="Voornaam ouder/voogd" value={inschrijving.parentFirstName} onChange={(e) => updateRegistrationValue("voornaamOuder", e.currentTarget.value)} placeholder="Voornaam" />
+                            <Input type="text" name="Voornaam ouder/voogd" value={inschrijving.parentFirstName} onChange={(e) => updateRegistrationValue("parentFirstName", e.currentTarget.value)} placeholder="Voornaam" />
                         </Label>
                         <Label text="Achternaam ouder/voogd:" errorMessage={errorStates.achternaamOuderError}>
-                            <Input type="text" name="Achternaam ouder/voogd" value={inschrijving.parentLastName} onChange={(e) => updateRegistrationValue("achternaamOuder", e.currentTarget.value)} placeholder="Achternaam" />
+                            <Input type="text" name="Achternaam ouder/voogd" value={inschrijving.parentLastName} onChange={(e) => updateRegistrationValue("parentLastName", e.currentTarget.value)} placeholder="Achternaam" />
                         </Label>
                     </div>
                     <Label text="Straat + huisnummer:" errorMessage={errorStates.straatEnHuisnummerError}>
-                        <Input type="text" name="straatEnHuisnummer" value={inschrijving.address} onChange={(e) => updateRegistrationValue("straatEnHuisnummer", e.currentTarget.value)} placeholder="Straat + huisnummer" />
+                        <Input type="text" name="straatEnHuisnummer" value={inschrijving.address} onChange={(e) => updateRegistrationValue("address", e.currentTarget.value)} placeholder="Straat + huisnummer" />
                     </Label>
                     <div className="form-group">
                         <Label text="Postcode:" errorMessage={errorStates.postcodeError}>
-                            <Input type="text" name="postcode" value={inschrijving.postalCode} onChange={(e) => updateRegistrationValue("postcode", e.currentTarget.value)} placeholder="Postcode" />
+                            <Input type="text" name="postcode" value={inschrijving.postalCode} onChange={(e) => updateRegistrationValue("postalCode", e.currentTarget.value)} placeholder="Postcode" />
                         </Label>
                         <Label text="Gemeente:" errorMessage={errorStates.gemeenteError}>
-                            <Input type="text" name="gemeente" value={inschrijving.town} onChange={(e) => updateRegistrationValue("gemeente", e.currentTarget.value)} placeholder="Gemeente" />
+                            <Input type="text" name="gemeente" value={inschrijving.town} onChange={(e) => updateRegistrationValue("town", e.currentTarget.value)} placeholder="Gemeente" />
                         </Label>
                     </div>
                     <div className="form-group">
                         <Label text="Gsm-nummer:" errorMessage={errorStates.phoneNumber}>
-                            <Input type="text" name="gsmNummer" value={inschrijving.phoneNumber} onChange={(e) => updateRegistrationValue("gsmNummer", e.currentTarget.value)} placeholder="Gsm-nummer" />
+                            <Input type="text" name="gsmNummer" value={inschrijving.phoneNumber} onChange={(e) => updateRegistrationValue("phoneNumber", e.currentTarget.value)} placeholder="Gsm-nummer" />
                         </Label>
                         <Label text="Telefoonnummer/Gsm 2:" errorMessage={errorStates.telephoneNumber}>
-                            <Input type="text" name="telefoonnummer" value={inschrijving.telephoneNumber} onChange={(e) => updateRegistrationValue("telefoonnummer", e.currentTarget.value)} placeholder="Telefoonnummer" />
+                            <Input type="text" name="telefoonnummer" value={inschrijving.telephoneNumber} onChange={(e) => updateRegistrationValue("telephoneNumber", e.currentTarget.value)} placeholder="Telefoonnummer" />
                         </Label>
                     </div>
                     <div className="form-group">
@@ -79,10 +92,10 @@ const InschrijvenForm = () => {
                         <label>
                             <p>Is er sprake van een eventuele tweede verblijfplaats?</p>
                             <div className="buttons">
-                                <span className={`button inherit-font ${tweedeVerblijfplaatsValue === "ja" ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsValue("ja")}>
+                                <span className={`button inherit-font ${tweedeVerblijfplaatsActive === true ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsActive(true)}>
                                     Ja
                                 </span>
-                                <span className={`button inherit-font ${tweedeVerblijfplaatsValue === "nee" ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsValue("nee")}>
+                                <span className={`button inherit-font ${tweedeVerblijfplaatsActive === false ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsActive(false)}>
                                     Nee
                                 </span>
                             </div>
@@ -125,16 +138,17 @@ const InschrijvenForm = () => {
                             </div>
                         </>
                     )}
-                    {/* {(tweedeVerblijfplaatsValue !== "") && (
-                        <div ref={scrollRef} className="break">
+                    {showContinueButton && (
+                        <div className="break">
                             <p>Als alle gegevens in orde zijn, kun je verdergaan naar het bevestigingscherm met verdere info</p>
                             <button onClick={(e) => handleClickContinueButton(e)} className="button inherit-font submit-button">Ga verder</button>
                         </div>
-                    )} */}
+                    )}
                 </form>
+                {showPopup && <ConfirmPopup onClose={() => setShowPopup(false)} />}
             </div>
         }</>
     );
 }
 
-export default InschrijvenForm;
+export default RegistrationForm;

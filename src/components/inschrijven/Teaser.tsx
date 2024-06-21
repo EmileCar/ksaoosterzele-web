@@ -25,8 +25,7 @@ const Teaser = () => {
 	const { pending, data: groups, error } = useFetch<Group[]>(getGroups);
 	const { inschrijving, setInschrijving, updateRegistrationValue } = useRegistrationContext();
 
-	// Map het geselecteerde studiejaar naar een tak, als Ander is aangeduid dan is het een string
-	const yearToGroupMap: { [key: string]: Group | string | null} = {
+	const yearToGroupMap: { [key: string]: Group | string | null } = {
 		"1l": groups && groups[0],
 		"2l": groups && groups[0],
 		"3l": groups && groups[0],
@@ -41,7 +40,6 @@ const Teaser = () => {
 		"other": "other",
 	};
 
-	// Wanneer de gebruiker een studiejaar selecteert, wordt de tak aangepast
 	const handleTakChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		const selectedYear = e.currentTarget.value;
 		const group = yearToGroupMap[selectedYear];
@@ -51,34 +49,34 @@ const Teaser = () => {
 		setSelectedYear(selectedYear);
 	};
 
-    const validateTeaserForm = useCallback(() => {
-        const temporaryInschrijvingObject = new Registration({});
-        temporaryInschrijvingObject.firstName = name.split(" ")[0];
-        temporaryInschrijvingObject.lastName = name.split(" ").slice(1).join(" ");
-        temporaryInschrijvingObject.group = tak!;
-        const errors = temporaryInschrijvingObject.validateTeaser();
-        if (errors.length === 0) {
-            setInschrijving(temporaryInschrijvingObject);
-        } else {
-            throw errors;
-        }
-    }, [name, tak, setInschrijving]);
+	const validateTeaserForm = useCallback(() => {
+		const temporaryInschrijvingObject = new Registration({});
+		temporaryInschrijvingObject.firstName = name.split(" ")[0];
+		temporaryInschrijvingObject.lastName = name.split(" ").slice(1).join(" ");
+		temporaryInschrijvingObject.group = tak!;
+		const errors = temporaryInschrijvingObject.validateTeaser();
+		if (errors.length === 0) {
+			setInschrijving(temporaryInschrijvingObject);
+		} else {
+			throw errors;
+		}
+	}, [name, tak, setInschrijving]);
 
 	useEffect(() => {
 		if (selectedYear !== "" && !inschrijving) {
-		  try{
-			validateTeaserForm();
-			setErrorStates({ nameError: "", takError: "" });
-		  } catch (errors: any) {
-			console.log(errors)
-			//errors.some((error: ErrorResponse) => error. === "voornaam") ? setErrorStates({ nameError: errors.find(error => error.field === "voornaam").message, takError: "" }) : setErrorStates({ nameError: "", takError: "" });
-			//errors.some((error: ErrorResponse) => error.field === "tak") ? setErrorStates({ nameError: "", takError: errors.find(error => error.field === "tak").message }) : setErrorStates({ nameError: "", takError: "" });
-		  }
+			try {
+				validateTeaserForm();
+				setErrorStates({ nameError: "", takError: "" });
+			} catch (errors: any) {
+				console.log(errors)
+				//errors.some((error: ErrorResponse) => error. === "voornaam") ? setErrorStates({ nameError: errors.find(error => error.field === "voornaam").message, takError: "" }) : setErrorStates({ nameError: "", takError: "" });
+				//errors.some((error: ErrorResponse) => error.field === "tak") ? setErrorStates({ nameError: "", takError: errors.find(error => error.field === "tak").message }) : setErrorStates({ nameError: "", takError: "" });
+			}
 		}
 	}, [selectedYear, inschrijving, validateTeaserForm]);
 
 	const updateTak = (tak: Group) => {
-		if(tak){
+		if (tak) {
 			if (inschrijving) {
 				updateRegistrationValue("group", tak);
 			} else {
