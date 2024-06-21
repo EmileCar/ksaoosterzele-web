@@ -3,7 +3,7 @@ import React from "react";
 interface InputProps {
     type: string;
     name: string;
-    value: string;
+    value: string | number;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
     placeholder?: string;
@@ -23,6 +23,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
     return (
         <input
+            type={type}
             name={name}
             value={value}
             onChange={onChange}

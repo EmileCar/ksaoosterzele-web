@@ -11,9 +11,9 @@ const LoadingText = () => {
     }, []);
 
     return (
-        <div className="loading__text" style={{ fontStyle: "italic" }}>
+        <p className="loading__text" style={{ fontStyle: "italic" }}>
             Bezig met laden{Array(dots).fill(".").join("")}
-        </div>
+        </p>
     );
 };
 
