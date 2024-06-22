@@ -15,15 +15,12 @@ import FetchedDataLayout from "../../layouts/FetchedDataLayout";
  */
 const Teaser = () => {
 	const [name, setName] = useState<string>("");
-	const [tak, setTak] = useState<Group | null>(null);
 	const [selectedYear, setSelectedYear] = useState<string>("");
-	const [errorStates, setErrorStates] = useState({
-		nameError: "",
-		takError: "",
-	});
+
+	const [tak, setTak] = useState<Group | null>(null);
 	const [isPopupActive, setIsPopupActive] = useState(false);
 	const { pending, data: groups, error } = useFetch<Group[]>(getGroups);
-	const { inschrijving, setInschrijving, updateRegistrationValue } = useRegistrationContext();
+	const { inschrijving, setInschrijving, errorStates, updateRegistrationValue } = useRegistrationContext();
 
 	const yearToGroupMap: { [key: string]: Group | string | null } = {
 		"1l": groups && groups[0],
@@ -40,58 +37,47 @@ const Teaser = () => {
 		"other": "other",
 	};
 
-	const handleTakChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		const selectedYear = e.currentTarget.value;
-		const group = yearToGroupMap[selectedYear];
-		if (group instanceof Group) {
-			setTak(group);
-		}
-		setSelectedYear(selectedYear);
-	};
-
-	const validateTeaserForm = useCallback(() => {
-		const temporaryInschrijvingObject = new Registration({});
-		temporaryInschrijvingObject.firstName = name.split(" ")[0];
-		temporaryInschrijvingObject.lastName = name.split(" ").slice(1).join(" ");
-		temporaryInschrijvingObject.group = tak!;
-		const errors = temporaryInschrijvingObject.validateTeaser();
-		if (errors.length === 0) {
-			setInschrijving(temporaryInschrijvingObject);
+	const handleSelectedYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const selectedYearValue = e.currentTarget.value;
+		if(selectedYearValue === "other") {
+			setTak(null);
 		} else {
-			throw errors;
-		}
-	}, [name, tak, setInschrijving]);
-
-	useEffect(() => {
-		if (selectedYear !== "" && !inschrijving) {
-			try {
-				validateTeaserForm();
-				setErrorStates({ nameError: "", takError: "" });
-			} catch (errors: any) {
-				console.log(errors)
-				//errors.some((error: ErrorResponse) => error. === "voornaam") ? setErrorStates({ nameError: errors.find(error => error.field === "voornaam").message, takError: "" }) : setErrorStates({ nameError: "", takError: "" });
-				//errors.some((error: ErrorResponse) => error.field === "tak") ? setErrorStates({ nameError: "", takError: errors.find(error => error.field === "tak").message }) : setErrorStates({ nameError: "", takError: "" });
+			const group = yearToGroupMap[selectedYearValue] as Group;
+			if (group) {
+				updateTak(group);
 			}
 		}
-	}, [selectedYear, inschrijving, validateTeaserForm]);
+		setSelectedYear(selectedYearValue);
+	};
+
+	useEffect(() => {
+		if (inschrijving || selectedYear === "") return;
+
+		if (selectedYear === "other" && !tak) return;
+
+		const registration = new Registration({});
+		registration.groupId = selectedYear === "other" ? tak?.id! : (yearToGroupMap[selectedYear] as Group).id!;
+
+		const [firstName, ...lastNameParts] = name.split(" ");
+		registration.firstName = firstName;
+		registration.lastName = lastNameParts.join(" ");
+
+		setInschrijving(registration);
+	}, [tak, selectedYear, inschrijving, groups, name]);
 
 	const updateTak = (tak: Group) => {
 		if (tak) {
 			if (inschrijving) {
-				updateRegistrationValue("group", tak);
-			} else {
-				setTak(tak);
+				updateRegistrationValue("groupId", tak.id);
 			}
+			setTak(tak);
 		}
 	};
 
 	return (
 		<div className="teaser__wrapper">
 			<form className="teaserForm form">
-				<Label
-					text="Vul hier de naam van uw kind in:"
-					errorMessage={errorStates.nameError}
-				>
+				<Label text="Vul hier de naam van uw kind in:">
 					<Input
 						type="text"
 						name="name"
@@ -105,14 +91,11 @@ const Teaser = () => {
 						disabled={inschrijving !== null}
 					/>
 				</Label>
-				<Label
-					text="In welk studiejaar zit uw kind?"
-					errorMessage={errorStates.takError}
-				>
+				<Label text="In welk studiejaar zit uw kind?" errorMessage={errorStates.groupError}>
 					<select
 						className="input"
 						value={selectedYear}
-						onChange={handleTakChange}
+						onChange={handleSelectedYearChange}
 						name="tak"
 					>
 						<option value="" disabled>
@@ -134,11 +117,11 @@ const Teaser = () => {
 				</Label>
 			</form>
 			<div className="takTeaser__container">
-				{selectedYear && (
+				{selectedYear &&
 					<div className="takTeaser__wrapper">
-						{(selectedYear === 'other' && !tak) ? (
+						{(selectedYear === 'other' && !tak) ?
 							<p className="cursive" onClick={() => setIsPopupActive(true)}>Klik hier om de leeftijdsgroep te kiezen</p>
-						) : (
+						:
 							<FetchedDataLayout isPending={pending} error={error}>
 								<img src={`assets/takken/${tak && tak.imageFileName}`} alt={`${tak && tak.name} KSA Oosterzele tak`} className="tak-img" />
 								<div>
@@ -147,9 +130,9 @@ const Teaser = () => {
 								</div>
 								<p className="wrongTak cursive" onClick={() => setIsPopupActive(true)}>Niet juist? Klik hier</p>
 							</FetchedDataLayout>
-						)}
+						}
 					</div>
-				)}
+				}
 				{isPopupActive && <ChooseTakPopup onClose={setIsPopupActive} setTak={(tak) => updateTak(tak)} />}
 			</div>
 		</div>

@@ -16,7 +16,6 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
 
 
     useEffect(() => {
-        console.log(inschrijving)
         if(inschrijving.allowMedia !== null) {
             setShowConfirm(true);
             setTimeout(() => {
@@ -48,6 +47,11 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
         }
     }, [confirmFinal]);
 
+    const handleSubmit = () => {
+        submitValues();
+        onClose(false);
+    };
+
     return (
         <Popup title="Bevestiging inschrijving" onClose={() => onClose(false)}>
             <div className="confirm__container">
@@ -61,20 +65,20 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                         onClick={() => updateRegistrationValue("allowMedia", true)}
                     >
                         Ja
-                    </span>                        
+                    </span>
                     <span
                         className={`button inherit-font ${inschrijving.allowMedia === false ? "active" : "button-inverted"}`}
                         onClick={() => updateRegistrationValue("allowMedia", false)}
                     >
                         Nee
-                    </span>                     
+                    </span>
                 </div>
             </div>
             {showConfirm &&
             <div className="confirm__container">
                 <p>
                     De ingevulde persoonsgegevens worden bewaard en verwerkt door KSA Reik je hand Oosterzele. 
-                </p>    
+                </p>
                 <p>
                     De gegevens gebruiken we om u te contacteren en op de hoogte te houden van onze werking en activiteiten. 
                 </p>
@@ -91,10 +95,10 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                         onClick={() => setConfirmPrivacy(true)}
                     >
                         Ja
-                    </span>                                           
+                    </span>
                 </div>
             </div>}
-            {showFinal && 
+            {showFinal &&
             <div className="confirm__container">
                 <p><strong>
                     De verstuurder verklaart dat de ingevulde gegevens volledig en correct zijn, en geeft de uitdrukkelijke toestemming met de verwerking ervan. 
@@ -106,14 +110,14 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                         onClick={() => setConfirmFinal(true)}
                     >
                         Ja
-                    </span>                                           
+                    </span>
                 </div>
             </div>}
             {confirmFinal &&
             <div className="takken__submit-container" ref={scrollRefFinal}>
                 <button
                     className={`button submit-button inherit-font`}
-                    onClick={submitValues}
+                    onClick={handleSubmit}
                 >
                     Verstuur inschrijving
                 </button>

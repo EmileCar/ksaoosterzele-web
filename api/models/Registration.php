@@ -13,120 +13,120 @@ class Registration extends Model
 	public static function validate($data) {
 		$errors = [];
 
-		$takError = self::validateTak($data['tak']);
-		if (!empty($takError)) {
-				$errors["takError"] = $takError;
+		$group_error = self::validate_group($data['groupId']);
+		if (!empty($group_error)) {
+				$errors["groupError"] = $group_error;
 		}
 
-		$voornaamError = self::validateVoornaam($data['voornaam']);
-		if (!empty($voornaamError)) {
-				$errors["voornaamError"] = $voornaamError;
+		$first_name_error = self::validate_first_name($data['firstName']);
+		if (!empty($first_name_error)) {
+				$errors["firstNameError"] = $first_name_error;
 		}
 
-		$achternaamError = self::validateAchternaam($data['achternaam']);
-		if (!empty($achternaamError)) {
-				$errors["achternaamError"] = $achternaamError;
+		$last_name_error = self::validate_last_name($data['lastName']);
+		if (!empty($last_name_error)) {
+				$errors["lastNameError"] = $last_name_error;
 		}
 
-		$geboortedatumError = self::validateGeboortedatum($data['geboortedatum']);
-		if (!empty($geboortedatumError)) {
-				$errors["geboortedatumError"] = $geboortedatumError;
+		$birthdate_error = self::validate_birth_date($data['birthdate']);
+		if (!empty($birthdate_error)) {
+				$errors["birthdateError"] = $birthdate_error;
 		}
 
-		$geslachtError = self::validateGeslacht($data['geslacht']);
-		if (!empty($geslachtError)) {
-				$errors["geslachtError"] = $geslachtError;
+		$gender_error = self::validate_gender($data['gender']);
+		if (!empty($gender_error)) {
+				$errors["genderError"] = $gender_error;
 		}
 
-		$geboorteplaatsError = self::validateGeboorteplaats($data['geboorteplaats']);
-		if (!empty($geboorteplaatsError)) {
-				$errors["geboorteplaatsError"] = $geboorteplaatsError;
+		$birthplace_error = self::validate_birth_place($data['birthplace']);
+		if (!empty($birthplace_error)) {
+				$errors["birthplaceError"] = $birthplace_error;
 		}
 
-		$voornaamOuderError = self::validateVoornaamOuder($data['voornaamOuder'], false);
-		if (!empty($voornaamOuderError)) {
-				$errors["voornaamOuderError"] = $voornaamOuderError;
+        $parent_first_name_error = self::validate_parent_first_name($data['parentFirstName'], false);
+        if (!empty($parent_first_name_error)) {
+            $errors["parentFirstNameError"] = $parent_first_name_error;
+        }
+
+        $parent_last_name_error = self::validate_parent_last_name($data['parentLastName'], false);
+        if (!empty($parent_last_name_error)) {
+            $errors["parentLastNameError"] = $parent_last_name_error;
+        }
+
+        $address_error = self::validate_address($data['address'], false);
+        if (!empty($address_error)) {
+            $errors["addressError"] = $address_error;
+        }
+
+        $postal_code_error = self::validate_postal_code($data['postalCode'], false);
+        if (!empty($postal_code_error)) {
+            $errors["postalCodeError"] = $postal_code_error;
+        }
+
+        $town_error = self::validate_town($data['town'], false);
+        if (!empty($town_error)) {
+            $errors["townError"] = $town_error;
+        }
+
+        $phone_number_error = self::validate_phone_number($data['phoneNumber'], false);
+        if (!empty($phone_number_error)) {
+            $errors["phoneNumberError"] = $phone_number_error;
+        }
+
+		$telephone_number_error = self::validate_telephone_number($data['telephoneNumber'], false);
+		if (!empty($telephone_number_error)) {
+				$errors["telephoneNumberError"] = $telephone_number_error;
 		}
 
-		$achternaamOuderError = self::validateAchternaamOuder($data['achternaamOuder'], false);
-		if (!empty($achternaamOuderError)) {
-				$errors["achternaamOuderError"] = $achternaamOuderError;
-		}
+        $email_error = self::validate_email($data['email'], false);
+        if (!empty($email_error)) {
+            $errors["emailError"] = $email_error;
+        }
 
-		$straatEnHuisnummerError = self::validateStraatEnHuisnummer($data['straatEnHuisnummer'], false);
-		if (!empty($straatEnHuisnummerError)) {
-				$errors["straatEnHuisnummerError"] = $straatEnHuisnummerError;
-		}
+        $second_parent_first_name_error = self::validate_parent_first_name($data['secondParentFirstName'], true);
+        if (!empty($second_parent_first_name_error)) {
+            $errors["secondParentFirstNameError"] = $second_parent_first_name_error;
+        }
 
-		$postcodeError = self::validatePostcode($data['postcode'], false);
-		if (!empty($postcodeError)) {
-				$errors["postcodeError"] = $postcodeError;
-		}
+        $second_parent_last_name_error = self::validate_parent_last_name($data['secondParentLastName'], true);
+        if (!empty($second_parent_last_name_error)) {
+            $errors["secondParentLastNameError"] = $second_parent_last_name_error;
+        }
 
-		$gemeenteError = self::validateGemeente($data['gemeente'], false);
-		if (!empty($gemeenteError)) {
-				$errors["gemeenteError"] = $gemeenteError;
-		}
+        $second_address_error = self::validate_address($data['secondAddress'], true);
+        if (!empty($second_address_error)) {
+            $errors["secondAddressError"] = $second_address_error;
+        }
 
-		$gsmNummerError = self::validateGsmNummer($data['gsmNummer'], false);
-		if (!empty($gsmNummerError)) {
-				$errors["gsmNummerError"] = $gsmNummerError;
-		}
+        $second_postal_code_error = self::validate_postal_code($data['secondPostalCode'], true);
+        if (!empty($second_postal_code_error)) {
+            $errors["secondPostalCodeError"] = $second_postal_code_error;
+        }
 
-		$telefoonnummerError = self::validateTelefoonnummer($data['telefoonnummer']);
-		if (!empty($telefoonnummerError)) {
-				$errors["telefoonnummerError"] = $telefoonnummerError;
-		}
+        $second_town_error = self::validate_town($data['secondTown'], true);
+        if (!empty($second_town_error)) {
+            $errors["secondTownError"] = $second_town_error;
+        }
 
-		$emailError = self::validateEmail($data['email'], false);
-		if (!empty($emailError)) {
-				$errors["emailError"] = $emailError;
-		}
+        $second_phone_number_error = self::validate_phone_number($data['secondPhoneNumber'], true);
+        if (!empty($second_phone_number_error)) {
+            $errors["secondPhoneNumberError"] = $second_phone_number_error;
+        }
 
-		$tweedeVoornaamOuderError = self::validateVoornaamOuder($data['tweedeVoornaamOuder'], true);
-		if (!empty($tweedeVoornaamOuderError)) {
-				$errors["tweedeVoornaamOuderError"] = $tweedeVoornaamOuderError;
-		}
-
-		$tweedeAchternaamOuderError = self::validateAchternaamOuder($data['tweedeAchternaamOuder'], true);
-		if (!empty($tweedeAchternaamOuderError)) {
-				$errors["tweedeAchternaamOuderError"] = $tweedeAchternaamOuderError;
-		}
-
-		$tweedeStraatEnHuisnummerError = self::validateStraatEnHuisnummer($data['tweedeStraatEnHuisnummer'], true);
-		if (!empty($tweedeStraatEnHuisnummerError)) {
-				$errors["tweedeStraatEnHuisNummerError"] = $tweedeStraatEnHuisnummerError;
-		}
-
-		$tweedePostcodeError = self::validatePostcode($data['tweedePostcode'], true);
-		if (!empty($tweedePostcodeError)) {
-				$errors["tweedePostcodeError"] = $tweedePostcodeError;
-		}
-
-		$tweedeGemeenteError = self::validateGemeente($data['tweedeGemeente'], true);
-		if (!empty($tweedeGemeenteError)) {
-				$errors["tweedeGemeenteError"] = $tweedeGemeenteError;
-		}
-
-		$tweedeGsmNummerError = self::validateGsmNummer($data['tweedeGsmNummer'], true);
-		if (!empty($tweedeGsmNummerError)) {
-				$errors["tweedeGsmNummerError"] = $tweedeGsmNummerError;
-		}
-
-		$tweedeTelefoonnummerError = self::validateTelefoonnummer($data['tweedeTelefoonnummer']);
+		$tweedeTelefoonnummerError = self::validate_telephone_number($data['secondPhoneNumber'], true);
 		if (!empty($tweedeTelefoonnummerError)) {
-				$errors["tweedeTelefoonnummerError"] = $tweedeTelefoonnummerError;
+				$errors["secondPhoneNumberError"] = $tweedeTelefoonnummerError;
 		}
 
-		$tweedeEmailError = self::validateEmail($data['tweedeEmail'], true);
-		if (!empty($tweedeEmailError)) {
-				$errors["tweedeEmailError"] = $tweedeEmailError;
-		}
+        $second_email_error = self::validate_email($data['secondEmail'], true);
+        if (!empty($second_email_error)) {
+            $errors["secondEmailError"] = $second_email_error;
+        }
 
 		return $errors;
 	}
 
-	private static function validateTak($tak) {
+	private static function validate_group($group) {
 		$error = null;
 
 		if (empty($tak)) {
@@ -138,7 +138,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateVoornaam($voornaam) {
+	private static function validate_first_name($first_name) {
 		$error = null;
 
 		if (empty($voornaam)) {
@@ -152,7 +152,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateAchternaam($achternaam) {
+	private static function validate_last_name($last_name) {
 		$error = null;
 
 		if (empty($achternaam)) {
@@ -166,21 +166,21 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateGeboortedatum($geboortedatum) {
+	private static function validate_birth_date($birth_date) {
 		$error = null;
 
 		if (empty($geboortedatum)) {
 				$error = 'Gelieve een geboortedatum in te vullen';
-		} elseif (self::calculateAge($geboortedatum) < 5) {
+		} elseif (self::calculate_age($geboortedatum) < 5) {
 				$error = 'Uw kind is te jong om deel te maken van de ksa.';
-		} elseif (self::calculateAge($geboortedatum) > 16) {
+		} elseif (self::calculate_age($geboortedatum) > 16) {
 				$error = 'Uw kind is te oud om deel te maken van de ksa. Hij zou al leiding moeten zijn.';
 		}
 
 		return $error;
 	}
 
-	private static function validateGeslacht($geslacht) {
+	private static function validate_gender($gender) {
 		$error = null;
 
 		if (empty($geslacht)) {
@@ -192,13 +192,13 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateGeboorteplaats($geboorteplaats) {
+	private static function validate_birth_place($birth_place) {
 		$error = null;
 
 		return $error;
 	}
 
-	private static function validateVoornaamOuder($voornaamOuder, $second) {
+	private static function validate_parent_first_name($parent_first_name, $second) {
 		$error = null;
 
 		if (empty($voornaamOuder)) {
@@ -215,7 +215,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateAchternaamOuder($achternaamOuder, $second) {
+	private static function validate_parent_last_name($parent_last_name, $second) {
 		$error = null;
 
 		if (empty($achternaamOuder)) {
@@ -232,7 +232,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateStraatEnHuisnummer($straatEnHuisnummer, $second) {
+	private static function validate_address($address, $second) {
 		$error = null;
 
 		if (empty($straatEnHuisnummer)) {
@@ -245,7 +245,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validatePostcode($postcode, $second) {
+	private static function validate_postal_code($postal_code, $second) {
 		$error = null;
 
 		if (empty($postcode)) {
@@ -260,7 +260,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateGemeente($gemeente, $second) {
+	private static function validate_town($town, $second) {
 		$error = null;
 
 		if (empty($gemeente)) {
@@ -273,7 +273,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateGsmNummer($gsmNummer, $second) {
+	private static function validate_phone_number($phone_number, $second) {
 		$error = null;
 
 		if (empty($gsmNummer)) {
@@ -288,7 +288,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateTelefoonnummer($telefoonnummer) {
+	private static function validate_telephone_number($telephone_number, $second) {
 		$error = null;
 
 		if (empty($telefoonnummer)) {
@@ -300,7 +300,7 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function validateEmail($email, $second) {
+	private static function validate_email($email, $second) {
 		$error = null;
 
 		if (empty($email)) {
@@ -315,17 +315,17 @@ class Registration extends Model
 		return $error;
 	}
 
-	private static function calculateAge($geboortedatum) {
-		if (empty($geboortedatum)) {
+	private static function calculate_age($birthdate) {
+		if (empty($birthdate)) {
 				return null;
 		}
 
 		$today = new DateTime();
-		$birthDate = new DateTime($geboortedatum);
-		$age = $today->format('Y') - $birthDate->format('Y');
-		$monthDifference = $today->format('m') - $birthDate->format('m');
+		$birthdate = new DateTime($birthdate);
+		$age = $today->format('Y') - $birthdate->format('Y');
+		$month_difference = $today->format('m') - $birthdate->format('m');
 
-		if ($monthDifference < 0 || ($monthDifference === 0 && $today->format('d') < $birthDate->format('d'))) {
+		if ($month_difference < 0 || ($month_difference === 0 && $today->format('d') < $birthdate->format('d'))) {
 				$age--;
 		}
 

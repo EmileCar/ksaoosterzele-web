@@ -7,7 +7,7 @@
 	background: rgba(0, 0, 0, 0.7);
 	transition: opacity 500ms;
 	z-index: 2;
-    padding: var(--s0);
+    padding: var(--s2) var(--s0);
 	overflow-y: auto;
 	display: grid;
 	place-items: center;
@@ -39,7 +39,7 @@
 
 @media screen and (min-width: 55rem) {
     .overlay {
-		padding: 20px;
+		padding: 40px 20px;
         text-align: left;
     }
 	.popup {

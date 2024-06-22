@@ -124,10 +124,13 @@
 @media screen and (max-width: 740px) {
   .teaser__wrapper {
     grid-template-columns: 1fr;
-    grid-auto-rows: 1fr 1.2fr;
+    grid-auto-rows: 1fr 1fr;
   }
   .tak-img{
     width: 30%;
+  }
+  .takTeaser__wrapper{
+    height: 70%;
   }
 }
 
