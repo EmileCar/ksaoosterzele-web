@@ -2,7 +2,7 @@ import Group from "./Group";
 
 class Registration {
     id: number | null;
-    group: Group;
+    groupId: number | null;
     firstName: string;
     lastName: string;
     birthdate: Date;
@@ -28,7 +28,7 @@ class Registration {
 
     constructor(registrationData?: any) {
         this.id = registrationData.id || null;
-        this.group = registrationData.tak || null;
+        this.groupId = registrationData.group_id || null;
 
         this.firstName = registrationData.first_name || null;
         this.lastName = registrationData.last_name || null;
@@ -55,14 +55,6 @@ class Registration {
         this.secondEmail = registrationData.second_email || null;
 
         this.allowMedia = registrationData.allow_media || null;
-    }
-
-    validateTeaser() {
-        const errors = [];
-        if (!this.group) {
-            errors.push('Tak is verplicht');
-        }
-        return errors;
     }
 }
 
