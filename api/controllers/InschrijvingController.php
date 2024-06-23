@@ -15,33 +15,33 @@ class InschrijvingController extends Controller {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
 
-		$inschrijving = new Registration();
-		$inschrijving->group_id = $data["groupId"];
-		$inschrijving->first_name = $data["firstName"];
-		$inschrijving->last_name = $data["lastName"];
-		$inschrijving->birthDate = $data["birthDate"];
-		$inschrijving->gender = $data["gender"];
-		$inschrijving->birthplace = $data["birthplace"];
-		$inschrijving->parent_first_name = $data["parentFirstName"];
-		$inschrijving->parent_last_name = $data["parentLastName"];
-		$inschrijving->address = $data["address"];
-		$inschrijving->postal_code = $data["postalCode"];
-		$inschrijving->town = $data["town"];
-		$inschrijving->phone_number = $data["phoneNumber"];
-		$inschrijving->telephone_number = $data["telephoneNumber"];
-		$inschrijving->email = $data["email"];
-		$inschrijving->second_parent_first_name = $data["secondParentFirstName"];
-		$inschrijving->second_parent_last_name = $data["secondParentLastName"];
-		$inschrijving->second_address = $data["secondAddress"];
-		$inschrijving->second_postal_code = $data["secondPostalCode"];
-		$inschrijving->second_town = $data["secondTown"];
-		$inschrijving->second_phone_number = $data["secondPhoneNumber"];
-		$inschrijving->second_telephone_number = $data["secondTelephoneNumber"];
-		$inschrijving->second_email = $data["secondEmail"];
-		$inschrijving->allowMedia = $data["allowMedia"];
-		$inschrijving->save();
+		$registration = new Registration();
+		$registration->group_id = $data["groupId"];
+		$registration->first_name = $data["firstName"];
+		$registration->last_name = $data["lastName"];
+		$registration->birthdate = $data["birthdate"];
+		$registration->gender = $data["gender"];
+		$registration->birthplace = $data["birthplace"];
+		$registration->parent_first_name = $data["parentFirstName"];
+		$registration->parent_last_name = $data["parentLastName"];
+		$registration->address = $data["address"];
+		$registration->postal_code = $data["postalCode"];
+		$registration->town = $data["town"];
+		$registration->phone_number = $data["phoneNumber"];
+		$registration->telephone_number = $data["telephoneNumber"];
+		$registration->email = $data["email"];
+		$registration->second_parent_first_name = $data["secondParentFirstName"];
+		$registration->second_parent_last_name = $data["secondParentLastName"];
+		$registration->second_address = $data["secondAddress"];
+		$registration->second_postal_code = $data["secondPostalCode"];
+		$registration->second_town = $data["secondTown"];
+		$registration->second_phone_number = $data["secondPhoneNumber"];
+		$registration->second_telephone_number = $data["secondTelephoneNumber"];
+		$registration->second_email = $data["secondEmail"];
+		$registration->allow_media = $data["allowMedia"];
+		$registration->save();
 
-		$this->_sendConfirmationMail($data);
+		$this->_sendConfirmationMail($registration);
 
 		http_response_code(201);
 		exit();
@@ -107,14 +107,14 @@ class InschrijvingController extends Controller {
 		exit();
 	}
 
-	private static function _sendConfirmationMail($data) {
-		$to = $data["email"];
+	private static function _sendConfirmationMail($registration) {
+		$to = $registration->email;
 		$subject = "Inschrijving Bevestiging";
 		$message = '<html>
 		<body style="background-color: #1576D1;font-size: 1.4rem">
 			<div class="container" style="background-color: #fff;padding:1rem">
 				<h2>Bedankt voor uw inschrijving!</h2>
-				<p>Wij hebben uw inschrijvingsgegevens succesvol ontvangen voor ' . $data["voornaam"] . ' ' . $data["achternaam"] . '!
+				<p>Wij hebben uw inschrijvingsgegevens succesvol ontvangen voor ' . $registration->first_name . ' ' . $registration->last_name . '!
 				Bedankt voor het inschrijven bij KSA Oosterzele!
 				</p>
 				<p>Bij opmerkingen of vragen kan u ons altijd bereiken: <a href="https://ksaoosterzele.be/contact">contacteerpagina</a></p>
@@ -139,31 +139,31 @@ class InschrijvingController extends Controller {
 		<body style="background-color: #1576D1;font-size: 1.4rem">
 			<div class="container" style="background-color: #fff;padding:1rem">
 				<h2>Nieuwe inschrijving binnengekomen!</h2>
-				<p>Voor ' . $data["voornaam"] . ' ' . $data["achternaam"] . ' bij de ' . $data["tak"] .'</p>
+				<p>Voor ' . $registration->first_name . ' ' . $registration->last_name . ' bij de ' . $registration->group->name .'</p>
 				<p>Deze gegevens zijn ontvangen:</p>
 				<ul>
-					<li>Voornaam: ' . $data["voornaam"] . '</li>
-					<li>Achternaam: ' . $data["achternaam"] . '</li>
-					<li>Geboortedatum: ' . $data["geboortedatum"] . '</li>
-					<li>Geslacht: ' . $data["geslacht"] . '</li>
-					<li>Geboorteplaats: ' . $data["geboorteplaats"] . '</li>
-					<li>Voornaam ouder: ' . $data["voornaamOuder"] . '</li>
-					<li>Achternaam ouder: ' . $data["achternaamOuder"] . '</li>
-					<li>Straat en huisnummer: ' . $data["straatEnHuisnummer"] . '</li>
-					<li>Postcode: ' . $data["postcode"] . '</li>
-					<li>Gemeente: ' . $data["gemeente"] . '</li>
-					<li>Gsm nummer: ' . $data["gsmNummer"] . '</li>
-					<li>Telefoonnummer: ' . $data["telefoonnummer"] . '</li>
-					<li>Email: ' . $data["email"] . '</li>
-					<li>Tweede voornaam ouder: ' . $data["tweedeVoornaamOuder"] . '</li>
-					<li>Tweede achternaam ouder: ' . $data["tweedeAchternaamOuder"] . '</li>
-					<li>Tweede straat en huisnummer: ' . $data["tweedeStraatEnHuisnummer"] . '</li>
-					<li>Tweede postcode: ' . $data["tweedePostcode"] . '</li>
-					<li>Tweede gemeente: ' . $data["tweedeGemeente"] . '</li>
-					<li>Tweede gsm nummer: ' . $data["tweedeGsmNummer"] . '</li>
-					<li>Tweede telefoonnummer: ' . $data["tweedeTelefoonnummer"] . '</li>
-					<li>Tweede email: ' . $data["tweedeEmail"] . '</li>
-					<li>Toestemming media: ' . $data["allowMedia"] . '</li>
+					<li>Voornaam: ' . $registration->first_name . '</li>
+					<li>Achternaam: ' . $registration->last_name . '</li>
+					<li>Geboortedatum: ' . $registration->birthdate . '</li>
+					<li>Geslacht: ' . $registration->gender . '</li>
+					<li>Geboorteplaats: ' . $registration->birthplace . '</li>
+					<li>Voornaam ouder: ' . $registration->parent_first_name . '</li>
+					<li>Achternaam ouder: ' . $registration->parent_last_name . '</li>
+					<li>Straat en huisnummer: ' . $registration->address . '</li>
+					<li>Postcode: ' . $registration->postal_code . '</li>
+					<li>Gemeente: ' . $registration->town . '</li>
+					<li>Gsm nummer: ' . $registration->phone_number . '</li>
+					<li>Telefoonnummer: ' . $registration->telephone_number . '</li>
+					<li>Email: ' . $registration->email . '</li>
+					<li>Tweede voornaam ouder: ' . $registration->second_parent_first_name . '</li>
+					<li>Tweede achternaam ouder: ' . $registration->second_parent_last_name . '</li>
+					<li>Tweede straat en huisnummer: ' . $registration->second_address . '</li>
+					<li>Tweede postcode: ' . $registration->second_postal_code . '</li>
+					<li>Tweede gemeente: ' . $registration->second_town . '</li>
+					<li>Tweede gsm nummer: ' . $registration->second_phone_number . '</li>
+					<li>Tweede telefoonnummer: ' . $registration->second_telephone_number . '</li>
+					<li>Tweede email: ' . $registration->second_email . '</li>
+					<li>Toestemming media: ' . $registration->allow_media . '</li>
 				</ul>
 				<p>Bij problemen of bij fouten contacteer Emile aub</p>
 				<img src="https://www.ksaoosterzele.be/static/media/ksaLogo.687c0869c73880822b5702fbd8a23ada.svg" alt="KSA Oosterzele logo" style="width: 100px; height: 100px;">

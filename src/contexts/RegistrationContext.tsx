@@ -28,14 +28,16 @@ export const RegistrationProvider = ({ children } : { children: React.ReactNode 
     const submitValues = async () => {
         setIsPending(true);
         setErrors(null);
-        await sendInschrijving(values).catch((errors: any) => {
-            console.log(errors)
+        await sendInschrijving(values).then(() => {
+            setIsPending(false);
+            localStorage.setItem("inschrijvingData", JSON.stringify(values));
+            navigate('/inschrijven/bevestiging');
+        }).catch((errors: any) => {
             setTimeout(() => {
-                setIsPending(false);
                 setErrors(errors.errorFields);
+                setIsPending(false);
             }, 800)
         });
-        setIsPending(false);
     }
 
     return (

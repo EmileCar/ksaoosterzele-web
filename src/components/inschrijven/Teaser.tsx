@@ -60,6 +60,7 @@ const Teaser = () => {
 		changeValue("groupId", (selectedYear === "other" ? tak?.id! : (yearToGroupMap[selectedYear] as Group).id!).toString());
 		changeValue("firstName", firstName);
 		changeValue("lastName", lastNameParts.join(" "));
+		changeValue("gender", "M");
 	}, [tak, selectedYear, name]);
 
 	const updateTak = (tak: Group) => {

@@ -48,6 +48,7 @@ const RegistrationForm = () => {
                 {isPending ? <LoadingSpinner text={"Bezig met het controleren van de inschrijving"}/> : <>
                     <p>Vul hier de rest van de gegevens in</p>
                     {errorStates.groupError && <p className="error" style={{paddingTop: "1rem"}}>{errorStates.groupError}</p>}
+                    {errorStates.error && <p className="error" style={{paddingTop: "1rem"}}>Er is een probleem opgetreden: {errorStates.error}</p>}
                     <form className="inschrijvenForm form">
                         <div className="form-group">
                             <Label text="Voornaam lid:" errorMessage={errorStates.firstNameError} required>
@@ -64,7 +65,7 @@ const RegistrationForm = () => {
                                 </Label>
                                 <Label text="Geslacht:" errorMessage={errorStates.genderError} customClassName={"geslacht-label"} required>
                                     <select className="input" name="gender" value={values.gender} onChange={handleValueChange}>
-                                        <option value="M">M</option>
+                                        <option value="M" selected>M</option>
                                         <option value="X">X</option>
                                     </select>
                                 </Label>

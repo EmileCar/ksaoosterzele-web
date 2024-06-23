@@ -3,7 +3,7 @@ import PageLayout from "../../../layouts/PageLayout";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import { useNavigate } from "react-router-dom";
 
-const Bevestiging = () => {
+const RegisterConfirmation = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,4 +24,4 @@ const Bevestiging = () => {
     )
 }
 
-export default Bevestiging;
+export default RegisterConfirmation;

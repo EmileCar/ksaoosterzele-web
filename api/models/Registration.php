@@ -1,6 +1,7 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once 'Group.php';
 
 class Registration extends Model
 {
@@ -15,32 +16,32 @@ class Registration extends Model
 
 		$group_error = self::validate_group($data['groupId']);
 		if (!empty($group_error)) {
-				$errors["groupError"] = $group_error;
+			$errors["groupError"] = $group_error;
 		}
 
 		$first_name_error = self::validate_first_name($data['firstName']);
 		if (!empty($first_name_error)) {
-				$errors["firstNameError"] = $first_name_error;
+			$errors["firstNameError"] = $first_name_error;
 		}
 
 		$last_name_error = self::validate_last_name($data['lastName']);
 		if (!empty($last_name_error)) {
-				$errors["lastNameError"] = $last_name_error;
+			$errors["lastNameError"] = $last_name_error;
 		}
 
 		$birthdate_error = self::validate_birth_date($data['birthdate']);
 		if (!empty($birthdate_error)) {
-				$errors["birthdateError"] = $birthdate_error;
+			$errors["birthdateError"] = $birthdate_error;
 		}
 
 		$gender_error = self::validate_gender($data['gender']);
 		if (!empty($gender_error)) {
-				$errors["genderError"] = $gender_error;
+			$errors["genderError"] = $gender_error;
 		}
 
 		$birthplace_error = self::validate_birth_place($data['birthplace']);
 		if (!empty($birthplace_error)) {
-				$errors["birthplaceError"] = $birthplace_error;
+			$errors["birthplaceError"] = $birthplace_error;
 		}
 
         $parent_first_name_error = self::validate_parent_first_name($data['parentFirstName'], false);
@@ -75,7 +76,7 @@ class Registration extends Model
 
 		$telephone_number_error = self::validate_telephone_number($data['telephoneNumber'], false);
 		if (!empty($telephone_number_error)) {
-				$errors["telephoneNumberError"] = $telephone_number_error;
+			$errors["telephoneNumberError"] = $telephone_number_error;
 		}
 
         $email_error = self::validate_email($data['email'], false);
@@ -115,7 +116,7 @@ class Registration extends Model
 
 		$tweedeTelefoonnummerError = self::validate_telephone_number($data['secondPhoneNumber'], true);
 		if (!empty($tweedeTelefoonnummerError)) {
-				$errors["secondPhoneNumberError"] = $tweedeTelefoonnummerError;
+			$errors["secondPhoneNumberError"] = $tweedeTelefoonnummerError;
 		}
 
         $second_email_error = self::validate_email($data['secondEmail'], true);
@@ -126,13 +127,13 @@ class Registration extends Model
 		return $errors;
 	}
 
-	private static function validate_group($group) {
+	private static function validate_group($group_id) {
 		$error = null;
 
-		if (empty($tak)) {
-				$error = 'Gelieve een tak in te vullen';
-		} elseif ($tak !== "Leeuwkes" && $tak !== "Jongknapen" && $tak !== "Knapen" && $tak !== "Jonghernieuwers") {
-				$error = 'Tak is niet geldig';
+		if (empty($group_id)) {
+			$error = 'Gelieve een tak in te vullen';
+		} elseif (!Group::find($group_id)) {
+			$error = 'Tak bestaat niet';
 		}
 
 		return $error;
@@ -141,12 +142,12 @@ class Registration extends Model
 	private static function validate_first_name($first_name) {
 		$error = null;
 
-		if (empty($voornaam)) {
-				$error = 'Gelieve een voornaam in te vullen';
-		} elseif (strlen($voornaam) < 2) {
-				$error = 'Voornaam moet minstens 2 karakters bevatten';
-		} elseif (strlen($voornaam) > 50) {
-				$error = 'Voornaam mag maximum 50 karakters bevatten';
+		if (empty($first_name)) {
+			$error = 'Gelieve een voornaam in te vullen';
+		} elseif (strlen($first_name) < 2) {
+			$error = 'Voornaam moet minstens 2 karakters bevatten';
+		} elseif (strlen($first_name) > 50) {
+			$error = 'Voornaam mag maximum 50 karakters bevatten';
 		}
 
 		return $error;
@@ -155,12 +156,12 @@ class Registration extends Model
 	private static function validate_last_name($last_name) {
 		$error = null;
 
-		if (empty($achternaam)) {
-				$error = 'Gelieve een achternaam in te vullen';
-		} elseif (strlen($achternaam) < 2) {
-				$error = 'Achternaam moet minstens 2 karakters bevatten';
-		} elseif (strlen($achternaam) > 50) {
-				$error = 'Achternaam mag maximum 50 karakters bevatten';
+		if (empty($last_name)) {
+			$error = 'Gelieve een achternaam in te vullen';
+		} elseif (strlen($last_name) < 2) {
+			$error = 'Achternaam moet minstens 2 karakters bevatten';
+		} elseif (strlen($last_name) > 50) {
+			$error = 'Achternaam mag maximum 50 karakters bevatten';
 		}
 
 		return $error;
@@ -169,12 +170,12 @@ class Registration extends Model
 	private static function validate_birth_date($birth_date) {
 		$error = null;
 
-		if (empty($geboortedatum)) {
-				$error = 'Gelieve een geboortedatum in te vullen';
-		} elseif (self::calculate_age($geboortedatum) < 5) {
-				$error = 'Uw kind is te jong om deel te maken van de ksa.';
-		} elseif (self::calculate_age($geboortedatum) > 16) {
-				$error = 'Uw kind is te oud om deel te maken van de ksa. Hij zou al leiding moeten zijn.';
+		if (empty($birth_date)) {
+			$error = 'Gelieve een geboortedatum in te vullen';
+		} elseif (self::calculate_age($birth_date) < 5) {
+			$error = 'Uw kind is te jong om deel te maken van de ksa.';
+		} elseif (self::calculate_age($birth_date) > 16) {
+			$error = 'Uw kind is te oud om deel te maken van de ksa. Hij zou al leiding moeten zijn.';
 		}
 
 		return $error;
@@ -183,10 +184,10 @@ class Registration extends Model
 	private static function validate_gender($gender) {
 		$error = null;
 
-		if (empty($geslacht)) {
-				$error = 'Gelieve een geslacht in te vullen';
-		} elseif ($geslacht !== 'M' && $geslacht !== 'V' && $geslacht !== 'X') {
-				$error = 'Geslacht moet M, V of X zijn';
+		if (empty($gender)) {
+			$error = 'Gelieve een geslacht in te vullen';
+		} elseif ($gender !== 'M' && $gender !== 'V' && $gender !== 'X') {
+			$error = 'Geslacht moet M, V of X zijn';
 		}
 
 		return $error;
@@ -201,15 +202,15 @@ class Registration extends Model
 	private static function validate_parent_first_name($parent_first_name, $second) {
 		$error = null;
 
-		if (empty($voornaamOuder)) {
+		if (empty($parent_first_name)) {
 			if($second) {
 				return $error;
 			}
 			$error = 'Gelieve een voornaam in te vullen';
-		} elseif (strlen($voornaamOuder) < 2) {
-				$error = 'Voornaam moet minstens 2 karakters bevatten';
-		} elseif (strlen($voornaamOuder) > 50) {
-				$error = 'Voornaam mag maximum 50 karakters bevatten';
+		} elseif (strlen($parent_first_name) < 2) {
+			$error = 'Voornaam moet minstens 2 karakters bevatten';
+		} elseif (strlen($parent_first_name) > 50) {
+			$error = 'Voornaam mag maximum 50 karakters bevatten';
 		}
 
 		return $error;
@@ -218,15 +219,15 @@ class Registration extends Model
 	private static function validate_parent_last_name($parent_last_name, $second) {
 		$error = null;
 
-		if (empty($achternaamOuder)) {
+		if (empty($parent_last_name)) {
 			if($second) {
 				return $error;
 			}
-				$error = 'Gelieve een achternaam in te vullen';
-		} elseif (strlen($achternaamOuder) < 2) {
-				$error = 'Achternaam moet minstens 2 karakters bevatten';
-		} elseif (strlen($achternaamOuder) > 50) {
-				$error = 'Achternaam mag maximum 50 karakters bevatten';
+			$error = 'Gelieve een achternaam in te vullen';
+		} elseif (strlen($parent_last_name) < 2) {
+			$error = 'Achternaam moet minstens 2 karakters bevatten';
+		} elseif (strlen($parent_last_name) > 50) {
+			$error = 'Achternaam mag maximum 50 karakters bevatten';
 		}
 
 		return $error;
@@ -235,7 +236,7 @@ class Registration extends Model
 	private static function validate_address($address, $second) {
 		$error = null;
 
-		if (empty($straatEnHuisnummer)) {
+		if (empty($address)) {
 			if($second) {
 				return $error;
 			}
@@ -248,13 +249,13 @@ class Registration extends Model
 	private static function validate_postal_code($postal_code, $second) {
 		$error = null;
 
-		if (empty($postcode)) {
+		if (empty($postal_code)) {
 			if($second) {
 				return $error;
 			}
-				$error = 'Gelieve een postcode in te vullen';
-		} elseif (!preg_match('/^[0-9]{4}$/', $postcode)) {
-				$error = 'Postcode moet 4 cijfers bevatten';
+			$error = 'Gelieve een postcode in te vullen';
+		} elseif (!preg_match('/^[0-9]{4}$/', $postal_code)) {
+			$error = 'Postcode moet 4 cijfers bevatten';
 		}
 
 		return $error;
@@ -263,11 +264,11 @@ class Registration extends Model
 	private static function validate_town($town, $second) {
 		$error = null;
 
-		if (empty($gemeente)) {
+		if (empty($town)) {
 			if($second) {
 				return $error;
 			}
-				$error = 'Gelieve een gemeente in te vullen';
+			$error = 'Gelieve een gemeente in te vullen';
 		}
 
 		return $error;
@@ -276,13 +277,13 @@ class Registration extends Model
 	private static function validate_phone_number($phone_number, $second) {
 		$error = null;
 
-		if (empty($gsmNummer)) {
+		if (empty($phone_number)) {
 			if($second) {
 				return $error;
 			}
-				$error = 'Gelieve een gsm nummer in te vullen';
-		} elseif (!preg_match('/^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/', $gsmNummer)) {
-				$error = 'Gsm nummer is niet geldig (formaat: 04xxxxxxxx of +324xxxxxxxx)';
+			$error = 'Gelieve een gsm nummer in te vullen';
+		} elseif (!preg_match('/^((\+|00)32\s?|0)4(60|[789]\d)(\s?\d{2}){3}$/', $phone_number)) {
+			$error = 'Gsm nummer is niet geldig (formaat: 04xxxxxxxx of +324xxxxxxxx)';
 		}
 
 		return $error;
@@ -291,10 +292,10 @@ class Registration extends Model
 	private static function validate_telephone_number($telephone_number, $second) {
 		$error = null;
 
-		if (empty($telefoonnummer)) {
-				return $error;
-		} elseif (!preg_match('/^(((\+|00)32[ ]?(?:\(0\)[ ]?)?)|0){1}(4(60|[789]\d)\/?(\s?\d{2}\.?){2}(\s?\d{2})|(\d\/?\s?\d{3}|\d{2}\/?\s?\d{2})(\.?\s?\d{2}){2})$/', $telefoonnummer)) {
-				$error = 'Telefoonnummer is niet geldig (gebruik geen / en spaties)';
+		if (empty($telephone_number)) {
+			return $error;
+		} elseif (!preg_match('/^(((\+|00)32[ ]?(?:\(0\)[ ]?)?)|0){1}(4(60|[789]\d)\/?(\s?\d{2}\.?){2}(\s?\d{2})|(\d\/?\s?\d{3}|\d{2}\/?\s?\d{2})(\.?\s?\d{2}){2})$/', $telephone_number)) {
+			$error = 'Telefoonnummer is niet geldig (gebruik geen / en spaties)';
 		}
 
 		return $error;
@@ -307,9 +308,9 @@ class Registration extends Model
 			if($second) {
 				return $error;
 			}
-				$error = 'Gelieve een email in te vullen';
+			$error = 'Gelieve een email in te vullen';
 		} elseif (!preg_match('/^.+?@.+?\..+$/', $email)) {
-				$error = 'Email is niet geldig (moet een @ en een . bevatten)';
+			$error = 'Email is niet geldig (moet een @ en een . bevatten)';
 		}
 
 		return $error;
@@ -317,7 +318,7 @@ class Registration extends Model
 
 	private static function calculate_age($birthdate) {
 		if (empty($birthdate)) {
-				return null;
+			return null;
 		}
 
 		$today = new DateTime();
@@ -326,7 +327,7 @@ class Registration extends Model
 		$month_difference = $today->format('m') - $birthdate->format('m');
 
 		if ($month_difference < 0 || ($month_difference === 0 && $today->format('d') < $birthdate->format('d'))) {
-				$age--;
+			$age--;
 		}
 
 		return $age;
