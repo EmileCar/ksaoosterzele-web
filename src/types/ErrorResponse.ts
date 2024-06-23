@@ -13,9 +13,9 @@ class ErrorResponse {
     try {
       const errorResponse = await response.json();
       return new ErrorResponse(
-        errorResponse.errorMessage,
+        errorResponse.error_message,
         response.status,
-        errorResponse.errorFields
+        errorResponse.error_fields
       );
     } catch (error) {
       return new ErrorResponse(

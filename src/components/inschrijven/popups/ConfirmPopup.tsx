@@ -12,11 +12,11 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
     const scrollRef2 = useRef<HTMLDivElement>(null);
     const scrollRefFinal = useRef<HTMLDivElement>(null);
 
-    const { inschrijving, updateRegistrationValue, submitValues } = useRegistrationContext();
+    const { values, changeValue, submitValues } = useRegistrationContext();
 
 
     useEffect(() => {
-        if(inschrijving.allowMedia !== null) {
+        if(values.allowMedia !== null) {
             setShowConfirm(true);
             setTimeout(() => {
                 if (scrollRef.current) {
@@ -24,7 +24,7 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                 }
             }, 100);
         }
-    }, [inschrijving]);
+    }, [values]);
 
     useEffect(() => {
         if(confirmPrivacy || confirmPrivacy) {
@@ -61,14 +61,14 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                 </div>
                 <div className="buttons">
                     <span
-                        className={`button inherit-font ${inschrijving.allowMedia ? "active" : "button-inverted"}`}
-                        onClick={() => updateRegistrationValue("allowMedia", true)}
+                        className={`button inherit-font ${values.allowMedia ? "active" : "button-inverted"}`}
+                        onClick={() => changeValue("allowMedia", true)}
                     >
                         Ja
                     </span>
                     <span
-                        className={`button inherit-font ${inschrijving.allowMedia === false ? "active" : "button-inverted"}`}
-                        onClick={() => updateRegistrationValue("allowMedia", false)}
+                        className={`button inherit-font ${values.allowMedia === false ? "active" : "button-inverted"}`}
+                        onClick={() => changeValue("allowMedia", false)}
                     >
                         Nee
                     </span>

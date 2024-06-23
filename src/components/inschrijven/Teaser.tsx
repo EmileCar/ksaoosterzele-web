@@ -20,7 +20,7 @@ const Teaser = () => {
 	const [tak, setTak] = useState<Group | null>(null);
 	const [isPopupActive, setIsPopupActive] = useState(false);
 	const { pending, data: groups, error } = useFetch<Group[]>(getGroups);
-	const { inschrijving, setInschrijving, errorStates, updateRegistrationValue } = useRegistrationContext();
+	const { values, changeValue, errorStates } = useRegistrationContext();
 
 	const yearToGroupMap: { [key: string]: Group | string | null } = {
 		"1l": groups && groups[0],
@@ -51,24 +51,21 @@ const Teaser = () => {
 	};
 
 	useEffect(() => {
-		if (inschrijving || selectedYear === "") return;
+		if (!values.notEmpty() || selectedYear === "") return;
 
 		if (selectedYear === "other" && !tak) return;
 
-		const registration = new Registration({});
-		registration.groupId = selectedYear === "other" ? tak?.id! : (yearToGroupMap[selectedYear] as Group).id!;
-
 		const [firstName, ...lastNameParts] = name.split(" ");
-		registration.firstName = firstName;
-		registration.lastName = lastNameParts.join(" ");
 
-		setInschrijving(registration);
-	}, [tak, selectedYear, inschrijving, groups, name]);
+		changeValue("groupId", (selectedYear === "other" ? tak?.id! : (yearToGroupMap[selectedYear] as Group).id!).toString());
+		changeValue("firstName", firstName);
+		changeValue("lastName", lastNameParts.join(" "));
+	}, [tak, selectedYear, name]);
 
 	const updateTak = (tak: Group) => {
 		if (tak) {
-			if (inschrijving) {
-				updateRegistrationValue("groupId", tak.id);
+			if (values) {
+				changeValue("groupId", tak.id!.toString());
 			}
 			setTak(tak);
 		}
@@ -82,13 +79,13 @@ const Teaser = () => {
 						type="text"
 						name="name"
 						value={
-							inschrijving
-								? `${inschrijving.firstName} ${inschrijving.lastName}`
+							values.notEmpty()
+								? `${values.firstName} ${values.lastName}`
 								: name
 						}
 						onChange={(e) => setName(e.currentTarget.value)}
 						placeholder="Voornaam Achternaam"
-						disabled={inschrijving !== null}
+						disabled={values.notEmpty()}
 					/>
 				</Label>
 				<Label text="In welk studiejaar zit uw kind?" errorMessage={errorStates.groupError}>

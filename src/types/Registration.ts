@@ -2,7 +2,7 @@ import Group from "./Group";
 
 class Registration {
     id: number | null;
-    groupId: number | null;
+    group: Group | null;
     firstName: string;
     lastName: string;
     birthdate: Date;
@@ -28,7 +28,7 @@ class Registration {
 
     constructor(registrationData?: any) {
         this.id = registrationData.id || null;
-        this.groupId = registrationData.group_id || null;
+        this.group = registrationData.group || null;
 
         this.firstName = registrationData.first_name || null;
         this.lastName = registrationData.last_name || null;
@@ -58,4 +58,57 @@ class Registration {
     }
 }
 
+class SendRegistration {
+    groupId: number;
+    firstName: string;
+    lastName: string;
+    birthdate: Date;
+    gender: string;
+    birthplace: string;
+    parentFirstName: string;
+    parentLastName: string;
+    address: string;
+    postalCode: number;
+    town: string;
+    phoneNumber: string;
+    telephoneNumber: string;
+    email: string;
+    secondParentFirstName: string;
+    secondParentLastName: string;
+    secondAddress: string;
+    secondPostalCode: number;
+    secondTown: string;
+    secondPhoneNumber: string;
+    secondTelephoneNumber: string;
+    secondEmail: string;
+    allowMedia: boolean;
+
+    constructor(registration?: any) {
+        this.groupId = registration?.group?.id ?? null;
+        this.firstName = registration.firstName || null;
+        this.lastName = registration.lastName || null;
+        this.birthdate = registration.birthdate || null;
+        this.gender = registration.gender || null;
+        this.birthplace = registration.birthplace || null;
+        this.parentFirstName = registration.parentFirstName || null;
+        this.parentLastName = registration.parentLastName || null;
+        this.address = registration.address || null;
+        this.postalCode = registration.postalCode || null;
+        this.town = registration.town || null;
+        this.phoneNumber = registration.phoneNumber || null;
+        this.telephoneNumber = registration.telephoneNumber || null;
+        this.email = registration.email || null;
+        this.secondParentFirstName = registration.secondParentFirstName || null;
+        this.secondParentLastName = registration.secondParentLastName || null;
+        this.secondAddress = registration.secondAddress || null;
+        this.secondPostalCode = registration.secondPostalCode || null;
+        this.secondTown = registration.secondTown || null;
+        this.secondPhoneNumber = registration.secondPhoneNumber || null;
+        this.secondTelephoneNumber = registration.secondTelephoneNumber || null;
+        this.secondEmail = registration.secondEmail || null;
+        this.allowMedia = registration.allowMedia || null;
+    }
+}
+
 export default Registration;
+export { SendRegistration };

@@ -1,15 +1,15 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from '../types/ErrorResponse';
-import Registration from "../types/Registration";
+import Registration, { SendRegistration } from "../types/Registration";
 
-export async function sendInschrijving(registration: Registration) {
+export async function sendInschrijving(request: SendRegistration) {
     try {
         const response = await fetch(`${API_BASE_URL}?page=inschrijving`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(registration),
+            body: JSON.stringify(request),
         });
 
         if(!response.ok){
