@@ -25,12 +25,22 @@ const useForm = <T extends Record<string, any>>(initialValues: T) => {
             ...prevState,
             [name]: value,
         }));
+
+        setErrorStates((prevErrors: any) => ({
+            ...prevErrors,
+            [`${name}Error`]: '',        
+        }));
     };
 
     const changeValue = (name: string, value: any) => {
         setValues((prevState) => ({
             ...prevState,
             [name]: value,
+        }));
+
+        setErrorStates((prevErrors: any) => ({
+            ...prevErrors,
+            [`${name}Error`]: '',
         }));
     }
 

@@ -69,7 +69,7 @@ const RegistrationForm = () => {
                                     </select>
                                 </Label>
                             </div>
-                            <Label text="Geboorteplaats:" errorMessage={errorStates.birthplaceError} required>
+                            <Label text="Geboorteplaats:" errorMessage={errorStates.birthplaceError}>
                                 <Input type="text" name="birthplace" value={values.birthplace} onChange={handleValueChange} placeholder="Geboorteplaats" />
                             </Label>
                         </div>
