@@ -43,7 +43,7 @@
 }
 
 .tak__info.active{
-	max-height: 300px;
+	max-height: 800px;
 	margin-bottom: var(--s2);
 }
 

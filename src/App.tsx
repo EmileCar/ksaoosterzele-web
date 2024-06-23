@@ -9,6 +9,7 @@ import Media from './pages/media/Media';
 import Contact from './pages/contact/Contact';
 import Register from './pages/inschrijven/Register';
 import RegisterConfirmation from './pages/inschrijven/bevestiging/RegisterConfirmation';
+import NotFound from './pages/notfound/NotFound';
 
 const App = () => {
 
@@ -26,7 +27,7 @@ const App = () => {
         <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />
         <Route path="/contact" element={<Contact />} />
         {/* Fallback */}
-        <Route path="/*" element={<div>notfound</div>} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
