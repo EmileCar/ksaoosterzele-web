@@ -46,8 +46,8 @@ const EventPopup = ({ event, onClose } : { event: Event | null | undefined, onCl
     }
 
     useEffect(() => {
-        console.log(values)
-    } , [values])
+        console.log(errorStates)
+    }, [errorStates])
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>

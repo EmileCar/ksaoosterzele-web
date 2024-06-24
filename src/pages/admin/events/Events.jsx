@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
-import Popup from "../../../components/popup/Popup";
 import EventPopup from "../../../components/events/popups/EventPopup";
+import EventsListAdmin from "../../../components/events/list/EventsListAdmin";
 
 const EventsAdmin = () => {
     const [showCreatePopup, setShowCreatePopup] = useState(false);
@@ -18,7 +18,7 @@ const EventsAdmin = () => {
                 </SectionTitle>
                 <button onClick={() => setShowCreatePopup(true)} className="button button-admin inherit-font">+ Activiteit toevoegen</button>
             </div>
-            {/* <EventsListAdmin/> */}
+            <EventsListAdmin />
             {showCreatePopup && <EventPopup onClose={closeHandler} />}
         </>
     );

@@ -10,7 +10,7 @@ class Event extends Model
 		$errors = [];
 
 		if (empty($data["name"])) {
-			$errors["name"] = "Naam is verplicht.";
+			$errors["nameError"] = "Naam is verplicht.";
 		}
 
 		return $errors;

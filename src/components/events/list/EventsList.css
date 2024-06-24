@@ -12,9 +12,14 @@
 	color: inherit;
 	overflow: hidden;
 	transition: box-shadow 0.3s, transform 0.3s;
+	cursor: default;
 }
 
-.event-list_item:hover {
+.event-list_item.clickable {
+	cursor: pointer;
+}
+
+.event-list_item.clickable:hover {
 	transform: scale(1.02);
 }
 
@@ -47,6 +52,35 @@
 	gap: var(--s-1);
 }
 
+.event-buttons{
+	display: flex;
+	gap: var(--s0);
+	padding: var(--s0);
+	padding-top: 10px;
+}
+
+.event-buttons_button{
+	width: 100%;
+	padding: 1rem;
+	text-align: center;
+	color: white;
+	text-decoration: none;
+	border-radius: 0.5rem;
+	transition: filter 0.3s;
+}
+
+.event-buttons_button.aanpassen {
+	background-color: var(--main-color);
+}
+
+.event-buttons_button.verwijderen {
+	background-color: var(--error-color);
+}
+
+.event-buttons_button:hover{
+	filter: brightness(0.8);
+}
+
 @media screen and (min-width: 600px){
 	.event-list_item{
 		display: flex;
@@ -56,6 +90,12 @@
 	.event-list_item .event-list_item--body{
 		padding: 1rem;
 		text-align: left;
+	}
+
+	.event-buttons{
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
 	}
 
 	.event-list_item img{
@@ -76,6 +116,9 @@
     .events-list {
 		grid-template-columns: repeat(3, 1fr);
     }
+	.events-list_admin .event-list_item{
+		min-width: 320px;
+	}
 	.event-list_item{
 		flex-direction: column;
 		align-items: unset;
@@ -85,6 +128,10 @@
 	}
 	.event-list_item .event-list_item--body{
 		padding: 10px var(--s0);
+	}
+	.event-buttons {
+		flex-direction: row;
+		height: unset;
 	}
 	.event-list_item--image{
 		flex: unset;
