@@ -1,0 +1,111 @@
+.drawer{
+    display: none;
+}
+.drawer__content{
+    padding-top: 1.5rem;
+    padding-right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.drawer__content h2{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.drawer .drawer-resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 6px;
+    cursor: col-resize;
+}
+
+.drawer .drawer-resizer:hover {
+    width: 6px;
+    background: #c1c3c5b4;
+}
+
+.drawer__toggle{
+    width: 1.5rem;
+    height: 1.8rem;
+    font-size: 2rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    line-height: 0.7;
+    color: var(--main-color);
+}
+
+@media screen and (min-width: 880px){ /* Groot scherm  */
+
+    .drawer{
+        background-color: var(--lighter-color);
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        box-shadow: 1px 0px 15px rgb(197, 197, 197);
+        max-width: 30rem;
+        padding: 1rem;
+    }
+
+    .drawer-minWidth{
+        min-width: 15rem;
+    }
+}
+
+.drawer-title{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.drawer__blockItems{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.drawer__blockItem--selected{
+    background-color: rgba(255, 149, 149, 0.774) !important;
+}
+
+.drawer__blockItem{
+    padding: var(--s0);
+    border-radius: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+    background-color: var(--background-color);
+    box-shadow: 0px 4px 0px lightgray;
+    cursor: pointer;
+}
+
+.drawer__content .button{
+    border-radius: 1rem;
+    text-align: center;
+}
+
+.admin-drawer-links{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-drawer-link{
+    color: var(--main-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: bold;
+    padding: var(--s-1);
+    border-radius: 10px;
+}
+
+.admin-drawer-link:hover{
+    outline: 2px solid var(--main-color);
+}

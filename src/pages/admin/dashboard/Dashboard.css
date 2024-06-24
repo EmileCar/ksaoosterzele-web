@@ -1,0 +1,60 @@
+.dashboard-top{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
+.dashboard-grid{
+    display: grid;
+    grid-template-columns: 1fr;    gap: 1rem;
+}
+
+.dashboard-card{
+    padding: 1rem;
+    border: 5px solid var(--darker-main-color);
+    background-color: var(--main-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dashboard-card:hover{
+    transform: scale(1.02);
+}
+
+@media screen and (min-width: 55rem) {
+    .dashboard-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.p-inputtext {
+    border: 1px solid black !important;
+}
+
+.p-multiselect{
+    border: 1px solid black !important;
+}
+
+.gap{
+    gap: 1rem;
+    display: flex;
+}
+
+.p-column-title{
+    white-space: nowrap;
+}
+
+.exportToExcel__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-style: italic;
+}

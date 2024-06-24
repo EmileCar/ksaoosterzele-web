@@ -10,6 +10,8 @@ import Contact from './pages/contact/Contact';
 import Register from './pages/inschrijven/Register';
 import RegisterConfirmation from './pages/inschrijven/bevestiging/RegisterConfirmation';
 import NotFound from './pages/notfound/NotFound';
+import { AccountProvider } from './contexts/AccountContext';
+import DashboardAdmin from './pages/admin/dashboard/Dashboard';
 
 const App = () => {
 
@@ -26,6 +28,11 @@ const App = () => {
         <Route path="/inschrijven" element={<Register />} />
         <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />
         <Route path="/contact" element={<Contact />} />
+
+        {/* Admin */}
+        <Route path="/admin" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
+
+
         {/* Fallback */}
         <Route path="/*" element={<NotFound />} />
       </Routes>

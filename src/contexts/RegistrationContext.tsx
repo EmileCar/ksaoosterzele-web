@@ -17,7 +17,7 @@ interface RegistrationContextType {
     changeValue: (name: string, value: any) => void;
 }
 
-const RegistrationContext = React.createContext<RegistrationContextType | undefined>(undefined);
+const RegistrationContext = createContext<RegistrationContextType | undefined>(undefined);
 
 export const RegistrationProvider = ({ children } : { children: React.ReactNode }) => {
     const { values, errorStates, handleValueChange, setErrors, changeValue } = useForm<SendRegistration>(new SendRegistration({}));
