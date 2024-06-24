@@ -23,6 +23,7 @@ class Event {
 }
 
 class SendEvent {
+    id: number | null;
     name: string;
     description: string;
     location: string;
@@ -33,6 +34,7 @@ class SendEvent {
     entryPrice: string;
 
     constructor(eventData?: any) {
+        this.id = eventData.id || null;
         this.name = eventData.name || null;
         this.description = eventData.description || null;
         this.location = eventData.location || null;

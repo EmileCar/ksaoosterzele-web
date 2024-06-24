@@ -11,7 +11,7 @@ import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import useFetch from "../../../hooks/useFetch";
 
-const EventPopup = ({ event, onClose } : { event: Event | null | undefined, onClose: () => void }) => {
+const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
     const [isPending, setIsPending] = useState<boolean>(false);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
@@ -46,8 +46,8 @@ const EventPopup = ({ event, onClose } : { event: Event | null | undefined, onCl
     }
 
     useEffect(() => {
-        console.log(errorStates)
-    }, [errorStates])
+        console.log(event);
+    }, [event]);
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>

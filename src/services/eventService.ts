@@ -44,26 +44,6 @@ export async function sendEvent(request: SendEvent, method: string) : Promise<vo
     }
 }
 
-export async function updateEvent(event: Event) {
-    try {
-        const response = await fetch(`${API_BASE_URL}?page=event`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(event),
-            credentials: 'include',
-        });
-
-        if (!response.ok) {
-            throw await ErrorResponse.createFromResponse(response);
-        }
-    } catch (error) {
-        throw error;
-    }
-}
-
-
 export async function getEvent(id: number): Promise<Event> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=event&id=${id}`, {
@@ -99,7 +79,7 @@ export async function getImagePaths(): Promise<string[]> {
     }
 }
 
-export async function deleteEvent(id: number) {
+export async function deleteEvent(id: number): Promise<void> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=event&id=${id}`, {
             method: 'DELETE',
