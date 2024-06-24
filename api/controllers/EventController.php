@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../models/Event.php';
+require_once __DIR__ . '/../models/Account.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
 use Carbon\Carbon;
 
@@ -16,9 +17,7 @@ class EventController extends Controller {
 	}
 
 	public function addEvent() {
-		if (empty($_SESSION["admin_ksaoosterzele"])){
-			ErrorResponse::exitWithError(401);
-		}
+		$account = Account::is_authenticated();
 
 		$data = json_decode(file_get_contents('php://input'), true);
 

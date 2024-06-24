@@ -1,8 +1,8 @@
 import React from "react";
+import "./form.css";
 
 interface CheckboxProps {
     name: string;
-    value: string;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     checked: boolean;
     customClassName?: string;
@@ -10,7 +10,6 @@ interface CheckboxProps {
 
 const Checkbox: React.FC<CheckboxProps> = ({
     name,
-    value,
     onChange,
     checked,
     customClassName = ""
@@ -19,14 +18,12 @@ const Checkbox: React.FC<CheckboxProps> = ({
         <>
             <input
                 id="customCheckbox"
-                className={`custom-checkbox ${customClassName}`}
+                className={`checkbox ${customClassName}`}
                 onChange={onChange}
                 type="checkbox"
                 name={name}
-                value={value}
                 checked={checked}
             />
-            <label htmlFor="customCheckbox" className="checkbox-label"></label>
         </>
     );
 }

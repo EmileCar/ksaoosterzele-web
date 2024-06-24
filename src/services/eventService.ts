@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import Event from "../types/Event";
+import Event, { SendEvent } from "../types/Event";
 
 export async function getEvents(limit?: number): Promise<Event[]> {
     try {
@@ -21,22 +21,22 @@ export async function getEvents(limit?: number): Promise<Event[]> {
     }
 }
 
-export async function addEvent(event: Event) {
+export async function sendEvent(request: SendEvent, method: string) : Promise<void> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=event`, {
-            method: 'POST',
+            method: method ?? 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 page: 'addEvent',
-                name: event.name,
-                description: event.description,
-                location: event.location,
-                date: event.datetime,
-                imgpath: event.imageFileName,
-                url: event.url,
-                bigEvent: event.featured,
+                name: request.name,
+                description: request.description,
+                location: request.location,
+                date: request.datetime,
+                imgpath: request.imageFileName,
+                url: request.url,
+                bigEvent: request.featured,
             }),
             credentials: 'include',
         });
@@ -86,7 +86,7 @@ export async function getEvent(id: number): Promise<Event> {
     }
 }
 
-export async function getImagePaths() {
+export async function getImagePaths(): Promise<string[]> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=event_images`, {
             method: 'GET',

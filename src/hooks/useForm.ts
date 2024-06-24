@@ -19,8 +19,8 @@ const useForm = <T extends Record<string, any>>(initialValues: T) => {
     
     const [errorStates, setErrorStates] = useState<any>([]);
 
-    const handleValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement >) => {
-        const { name, value } = e.target;
+    const handleValueChange = (e: any) => {
+        const { name, value } = e.target ? e.target : e;
         setValues((prevState) => ({
             ...prevState,
             [name]: value,
@@ -28,7 +28,7 @@ const useForm = <T extends Record<string, any>>(initialValues: T) => {
 
         setErrorStates((prevErrors: any) => ({
             ...prevErrors,
-            [`${name}Error`]: '',        
+            [`${name}Error`]: '',
         }));
     };
 

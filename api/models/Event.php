@@ -20,11 +20,8 @@ class Event extends Model
 		if (!empty($data["name"])) {
 			$event->name = $data["name"];
 		}
-		if (!empty($data["date"])) {
-			$event->date = $data["date"];
-		}
-		if (!empty($data["time"])) {
-			$event->time = $data["time"];
+		if (!empty($data["datetime"])) {
+			$event->date = $data["datetime"];
 		}
 		if (!empty($data["location"])) {
 			$event->location = $data["location"];
@@ -39,10 +36,13 @@ class Event extends Model
 			$event->featured = $data["featured"];
 		}
 		if (!empty($data["imgpath"])) {
-			$event->imgpath = $data["imgpath"];
+			$event->image_file_name = $data["imgpath"];
 		}
 		if (!empty($data["url"])) {
 			$event->url = $data["url"];
+		}
+		if (!empty($data["entryPrice"])) {
+			$event->entry_price = $data["entryPrice"];
 		}
 		return $event;
 	}

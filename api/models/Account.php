@@ -21,7 +21,7 @@ class Account extends Model
         $account = Account::find($accountId);
 
         if (empty($account)) {
-            ErrorResponse::exitWithError(404, "Admin niet gevonden. Log uit en probeer opnieuw in te loggen.");
+            ErrorResponse::exitWithError(404, "Account niet gevonden. Log uit en probeer opnieuw in te loggen.");
         }
 
         return $account;

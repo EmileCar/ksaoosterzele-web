@@ -1,0 +1,181 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s0);
+}
+
+.form .label {
+    width: 100%;
+    align-self: flex-start !important;
+}
+
+.form .label {
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.form .label.flex-column {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.form label.error {
+    color: var(--error-color);
+    position: relative;
+}
+
+.form .error-message {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.form .label.error .error-message {
+    opacity: 1;
+    pointer-events: initial;
+    visibility: visible;
+    position: relative;
+    top: 100%;
+    text-align: left;
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+.form .label.error .input {
+    border: var(--s-2) solid var(--error-color);
+    outline: none;
+}
+
+.form .input {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    padding: var(--s-1);
+    display: block;
+    width: 100%;
+    outline: var(--s-99) solid var(--main-color);
+    border: var(--s-2) solid transparent;
+    border-radius: 5px;
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+.form .input:focus {
+    box-shadow: 0 0 2px 2px rgb(94, 162, 224);
+}
+
+.form .input::placeholder {
+    color: var(--main-color);
+    opacity: 0.5;
+}
+
+.form .checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+
+.form.disabled {
+    pointer-events: none;
+}
+
+.form.disabled .input {
+    background-color: rgb(228, 228, 228);
+    outline: var(--s-99) solid gray;
+    color: gray;
+}
+
+.form .input:disabled {
+    background-color: rgb(228, 228, 228);
+    outline: var(--s-99) solid gray;
+    color: gray;
+}
+
+.form select.input option {
+    cursor: pointer;
+}
+
+.form .form-group {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+form .form-group__half {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+form .verplicht {
+    color: var(--error-color);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+form .form-text {
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 740px) {
+    form .form-group {
+        flex-wrap: wrap;
+    }
+
+    form .form-text {
+        margin-bottom: 0;
+        align-self: center;
+        width: 100%;
+    }
+}
+
+.form .input-wrapper{
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+.form .input-wrapper .input{
+    border-radius: 5px 0 0 5px;
+}
+
+.form .input-wrapper button{
+    border-radius: 0 5px 5px 0;
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: var(--s-1);
+    cursor: pointer;
+    outline: var(--s-99) solid var(--main-color);
+    transition: background-color 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+.form .input-wrapper span{
+    flex: 0 0 auto;
+    visibility: hidden;
+    width: 0;
+}
+
+.form .input-wrapper svg{
+    position: absolute;
+    right: 2.5rem;
+    top: 35%;
+}
+
+.form .input-wrapper button svg{
+    position: initial;
+    transform: unset;
+}
+
+.form .input-wrapper button:hover{
+    background-color: var(--darker-main-color);
+}

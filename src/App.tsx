@@ -1,4 +1,3 @@
-import 'primereact/resources/themes/bootstrap4-light-blue/theme.css'
 import 'primeicons/primeicons.css';
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'

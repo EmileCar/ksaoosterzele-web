@@ -22,6 +22,7 @@
     font-weight: bold;
     font-size: 1.5rem;
     transition: transform 0.2s ease-in-out;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
 .dashboard-card:hover{
@@ -32,14 +33,6 @@
     .dashboard-grid{
         grid-template-columns: 1fr 1fr;
     }
-}
-
-.p-inputtext {
-    border: 1px solid black !important;
-}
-
-.p-multiselect{
-    border: 1px solid black !important;
 }
 
 .gap{

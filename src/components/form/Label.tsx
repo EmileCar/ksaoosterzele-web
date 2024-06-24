@@ -1,4 +1,5 @@
 import React from "react";
+import "./form.css";
 
 interface LabelProps {
     text: string;

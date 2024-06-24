@@ -19,7 +19,7 @@ export const formatDatabaseDateTime = (dateTimeString: string): string => {
 
 /**
  * Deze functie zet de DateTime vanuit een input om naar database DateTime value.
- * @param {string} dateTimeString - De DateTime string afkomstig van een input.
+ * @param {string} date - De DateTime string afkomstig van een input.
  * @returns {string} De geformatteerde DateTime string voor de database.
 **/
 export const formatCustomDateTime = (date: Date): string => {
@@ -43,6 +43,15 @@ export const isDatabaseDateTimeInPast = (dateTimeString: string): boolean => {
 }
 
 /**
+ * Deze functie controleert of een Date of die in het verleden ligt.
+ * @param {Date} date - De DateTime string afkomstig van de database.
+ * @returns {boolean} Of de DateTime in het verleden ligt.
+ **/
+export const isDateTimeInPast = (date: Date): boolean => {
+  return date < new Date();
+}
+
+/**
  * Deze functie zet een input date om naar een database date. !GEEN DATETIME!
  * @param {string} date - De input date string.
  * @returns {string} De geformatteerde database date string.
@@ -58,7 +67,7 @@ export const convertInputDateToDatabaseDate = (date: Date): string => {
 /**
  * Deze functie zet een Date om naar een leesbare date.
  * Bv. "Dinsdag 1 januari"
- * @param {date} date - De database date string.
+ * @param {Date} date - De database date string.
  * @returns {string} De geformatteerde input date string.
  * */
 export const formatDate = (date: Date): string => {
@@ -74,7 +83,7 @@ export const formatDate = (date: Date): string => {
 /**
  * Deze functie zet een Date om naar een leesbare tijd.
  * Bv. "19u00"
- * @param {date} date - De database date string.
+ * @param {Date} date - De database date string.
  * @returns {string} De geformatteerde input time string.
  * */
 export const formatTime = (date: Date): string => {
@@ -86,12 +95,12 @@ export const formatTime = (date: Date): string => {
   return new Intl.DateTimeFormat('nl-NL', options).format(new Date(date));
 };
 
-export const formatDatabaseDateTimeToDate = (date: Date): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  };
+export const formatDateToInputDateTime = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
-  return new Intl.DateTimeFormat('nl-NL', options).format(date);
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
 };

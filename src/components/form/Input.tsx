@@ -1,4 +1,5 @@
 import React from "react";
+import "./form.css";
 
 interface InputProps {
     type: string;
@@ -9,6 +10,7 @@ interface InputProps {
     placeholder?: string;
     disabled?: boolean;
     customClassName?: string;
+    focus?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -19,7 +21,8 @@ const Input: React.FC<InputProps> = ({
     onBlur,
     placeholder,
     disabled,
-    customClassName = ""
+    customClassName = "",
+    focus = false
 }) => {
     return (
         <input
@@ -31,6 +34,7 @@ const Input: React.FC<InputProps> = ({
             placeholder={placeholder}
             disabled={disabled}
             className={`input ${customClassName}`}
+            autoFocus={focus}
         />
     );
 }

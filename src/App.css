@@ -146,166 +146,7 @@ strong {
 	border-radius: 100%;
 }
 
-.form {
-	display: flex;
-	flex-direction: column;
-	gap: var(--s0);
-}
 
-.form .label {
-	width: 100%;
-	align-self: flex-start !important;
-}
-
-.form .label{
-	font-weight: bold;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 0.2rem;
-}
-
-label.error {
-	color: var(--error-color);
-  	position: relative;
-}
-.error-message{
-	position: absolute;
-	visibility: hidden;
-	opacity: 0;
-}
-.label.error .error-message {
-	opacity: 1;
-	pointer-events: initial;
-	visibility: visible;
-	position: relative;
-	top: 100%;
-	text-align: left;
-	font-style: italic;
-	font-size: 1.1rem;
-}
-.label.error .input {
-	border: var(--s-2) solid var(--error-color);
-	outline: none;
-}
-
-.form .input {
-	font-family: inherit;
-	font-size: inherit;
-	color: inherit;
-	padding: var(--s-1);
-	display: block;
-	width: 100%;
-	outline: var(--s-99) solid var(--main-color);
-	border: var(--s-2) solid transparent;
-	border-radius: 5px;
-	transition: box-shadow 0.1s ease-in-out;
-}
-.form .input:focus {
-	box-shadow: 0 0 2px 2px rgb(94, 162, 224);
-}
-.form .input::placeholder{
-    color: var(--main-color);
-    opacity: 0.5;
-}
-.form.disabled{
-	pointer-events: none;
-}
-.form.disabled .input{
-	background-color: rgb(228, 228, 228);
-	outline: var(--s-99) solid gray;
-	color: gray;
-}
-.form .input:disabled{
-	background-color: rgb(228, 228, 228);
-	outline: var(--s-99) solid gray;
-	color: gray;
-}
-.form select.input option{
-	cursor: pointer;
-}
-.form .form-group{
-	display: flex;
-	gap: 1rem;
-	align-items: flex-end;
-}
-form .form-group__half{
-	display: flex;
-	gap: 1rem;
-	width: 100%;
-}
-form .verplicht{
-	color: var(--error-color);
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-form .form-text{
-	margin-bottom: 1rem;
-}
-@media screen and (max-width: 740px) {
-	form .form-group{
-		flex-wrap: wrap;
-	}
-	form .form-text{
-		margin-bottom: 0;
-		align-self: center;
-		width: 100%;
-	}
-}
-
-
-/* Hide the default checkbox */
-.custom-checkbox {
-    display: none;
-  }
-  
-  /* Style the custom checkbox */
-  .checkbox-label {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    background-color: #fff;
-    border: 2px solid var(--main-color);
-    border-radius: 4px;
-    cursor: pointer;
-	margin-left: 1rem;
-  }
-  
-  /* Style the custom checkbox when checked */
-  .custom-checkbox:checked + .checkbox-label {
-    background-color: var(--main-color);
-	background-image: url("assets/img/icons/checkIcon.svg");
-	background-position: center;
-	background-repeat: no-repeat;
-  }
-  
-  /* Add a checkmark inside the checked checkbox */
-  .custom-checkbox:checked + .checkbox-label::after {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 7px;
-    width: 6px;
-    height: 12px;
-    border: solid #fff;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-  
-  /* Style the label text (optional) */
-  .checkbox-label::before {
-  }
-
-.input-dropdown{
-  padding: 0px !important;
-  width: 100% !important;
-  display: flex !important;
-}
-
-.p-component{
-	font-family: inherit !important;
-	font-size: inherit !important;
-	color: inherit !important;
-}
 
 /* 
 @media screen and (max-width: 700px) {
@@ -324,7 +165,31 @@ form .form-text{
     color: white;
 }
 
-.p-toast{
+
+
+
+/* PRIMEREACT OVERLOADS */
+.p-component * {
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit ;
+}
+
+.p-button {
+	background-color: var(--main-color);
+	padding: var(--s-1);
+	border-radius: 5px;
+	color: white;
+	text-decoration: none;
+	display: inline-block;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	font-size: unset;
+}
+
+.p-toast {
 	opacity: 1 !important;
-    z-index: 999 !important;
+	z-index: 999 !important;
 }

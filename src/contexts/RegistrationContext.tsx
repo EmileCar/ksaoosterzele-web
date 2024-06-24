@@ -1,10 +1,8 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { sendInschrijving, updateInschrijving } from "../services/registrationService";
-import { Navigate, useNavigate } from "react-router-dom";
-import Registration, { SendRegistration } from "../types/Registration";
-import Group from "../types/Group";
-import FetchedDataLayout from "../layouts/FetchedDataLayout";
+import React, { createContext, useContext, useState } from "react";
+import { sendInschrijving } from "../services/registrationService";
+import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
+import { SendRegistration } from "../types/Registration";
 
 interface RegistrationContextType {
     values: any;
