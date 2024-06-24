@@ -1,0 +1,13 @@
+.fileInput{
+    cursor: pointer;
+}
+
+.label.file{
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.form-group.images{
+    flex-direction: column;
+}

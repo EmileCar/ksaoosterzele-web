@@ -24,9 +24,9 @@ const DashboardAdmin = () => {
                 <button className="button button-admin inherit-font" onClick={handleClickLogout}>Uitloggen </button>
             </div>
             <div className="dashboard-grid">
-                <Link className="dashboard-card" to="/admin/activiteiten">
+                <Link className="dashboard-card" to="/admin/evenementen">
                     <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />
-                    <h3>Activiteiten</h3>
+                    <h3>Evenementen</h3>
                 </Link>
                 <Link className="dashboard-card" to="/admin/media">
                     <i className="pi pi-images" style={{ color: "white", fontSize: 50 }} />
