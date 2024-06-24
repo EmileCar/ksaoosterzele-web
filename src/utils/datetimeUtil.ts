@@ -19,7 +19,7 @@ export const formatDatabaseDateTime = (dateTimeString: string): string => {
 
 /**
  * Deze functie zet de DateTime vanuit een input om naar database DateTime value.
- * @param {string} date - De DateTime string afkomstig van een input.
+ * @param {Date} date - De DateTime string afkomstig van een input.
  * @returns {string} De geformatteerde DateTime string voor de database.
 **/
 export const formatCustomDateTime = (date: Date): string => {

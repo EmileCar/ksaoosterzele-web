@@ -21,7 +21,7 @@ class Event extends Model
 			$event->name = $data["name"];
 		}
 		if (!empty($data["datetime"])) {
-			$event->date = $data["datetime"];
+			$event->datetime = $data["datetime"];
 		}
 		if (!empty($data["location"])) {
 			$event->location = $data["location"];

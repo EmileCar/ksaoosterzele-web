@@ -20,10 +20,6 @@ class Event {
         this.featured = eventData.featured || false;
         this.entryPrice = eventData.entry_price || null;
     }
-
-    getImageSource = (): string => {
-        return `assets/events/${this.imageFileName}`;
-    };
 }
 
 class SendEvent {

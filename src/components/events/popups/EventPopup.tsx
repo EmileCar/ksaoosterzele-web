@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
-import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
+import { convertInputDateToDatabaseDate, formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
@@ -45,10 +45,14 @@ const EventPopup = ({ event, onClose } : { event: Event | null | undefined, onCl
         });
     }
 
+    useEffect(() => {
+        console.log(values)
+    } , [values])
+
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
-                {isDateTimeInPast(values.datetime) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
+                {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
                 <form className="eventForm form">
                     <div className="form-group">
                         <Label text="Naam" errorMessage={errorStates.nameError}>
@@ -60,7 +64,7 @@ const EventPopup = ({ event, onClose } : { event: Event | null | undefined, onCl
                     </div>
                     <div className="form-group">
                         <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
-                            <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime)} onChange={handleCalendarChange} />
+                            <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
                             <AutoComplete className="input-wrapper" inputClassName="input" value={values.imageFileName} placeholder="afbeeldingNaam.jpeg" suggestions={[]} completeMethod={search} onChange={(e) => changeValue("imageFileName", e.target.value)} name="imgpath" dropdown/>

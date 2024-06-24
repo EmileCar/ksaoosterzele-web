@@ -1,6 +1,7 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
 import Event, { SendEvent } from "../types/Event";
+import { formatCustomDateTime } from "../utils/datetimeUtil";
 
 export async function getEvents(limit?: number): Promise<Event[]> {
     try {
@@ -26,17 +27,11 @@ export async function sendEvent(request: SendEvent, method: string) : Promise<vo
         const response = await fetch(`${API_BASE_URL}?page=event`, {
             method: method ?? 'POST',
             headers: {
-                'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                page: 'addEvent',
-                name: request.name,
-                description: request.description,
-                location: request.location,
-                date: request.datetime,
-                imgpath: request.imageFileName,
-                url: request.url,
-                bigEvent: request.featured,
+            ...request,
+            datetime: formatCustomDateTime(request.datetime),
             }),
             credentials: 'include',
         });
