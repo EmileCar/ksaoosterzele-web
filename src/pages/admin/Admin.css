@@ -8,8 +8,7 @@
 }
 
 .button-admin{
-    display: none;
-    align-self: flex-start;
+    align-self: center;
 }
 
 .container-admin{
@@ -28,9 +27,11 @@
     margin-bottom: 1.5rem;
 }
 
-.adminLink{
-    cursor: pointer;
-    overflow: visible;
+.admin__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
 }
 
 @media screen and (min-width: 55rem) {
@@ -44,8 +45,7 @@
         text-align: left;
     }
     .button-admin{
-        display: flex;
-        gap: 0.5rem;
+        align-self: flex-start;
     }
     .admin__top {
         display: grid;

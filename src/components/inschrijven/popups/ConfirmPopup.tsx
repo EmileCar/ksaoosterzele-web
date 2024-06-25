@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRegistrationContext } from "../../../contexts/RegistrationContext";
 import Popup from "../../popup/Popup";
+import Button from "../../button/Button";
 
 const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
     const [showConfirm, setShowConfirm] = useState<boolean | null>(null);
@@ -60,27 +61,17 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                     <p>Geeft u toestemming dat er beeldmateriaal van uw kind gemaakt mag worden voor deze publicatie?</p>
                 </div>
                 <div className="buttons">
-                    <span
-                        className={`button inherit-font ${values.allowMedia ? "active" : "button-inverted"}`}
-                        onClick={() => changeValue("allowMedia", true)}
-                    >
-                        Ja
-                    </span>
-                    <span
-                        className={`button inherit-font ${values.allowMedia === false ? "active" : "button-inverted"}`}
-                        onClick={() => changeValue("allowMedia", false)}
-                    >
-                        Nee
-                    </span>
+                    <Button text="Ja" onClick={() => changeValue("allowMedia", true)} customClassName={`inschrijving-button ${values.allowMedia ? "active" : "button-inverted"}`} round/>
+                    <Button text="Nee" onClick={() => changeValue("allowMedia", false)} customClassName={`inschrijving-button ${values.allowMedia === false ? "active" : "button-inverted"}`} round/>
                 </div>
             </div>
             {showConfirm &&
             <div className="confirm__container">
                 <p>
-                    De ingevulde persoonsgegevens worden bewaard en verwerkt door KSA Reik je hand Oosterzele. 
+                    De ingevulde persoonsgegevens worden bewaard en verwerkt door KSA Reik je hand Oosterzele.
                 </p>
                 <p>
-                    De gegevens gebruiken we om u te contacteren en op de hoogte te houden van onze werking en activiteiten. 
+                    De gegevens gebruiken we om u te contacteren en op de hoogte te houden van onze werking en activiteiten.
                 </p>
                 <p>
                     Bovendien geven we de gegevens door aan KSA Nationaal vzw via het digitaal ledenbestand (Digit) voor de aansluiting bij KSA Nationaal vzw, voor het afsluiten van de nodige verzekeringen en het versturen van de leden- en leidingstijdschriften. 
@@ -90,12 +81,7 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                     Begrijpt u deze privacyverklaring en gaat u ermee akkoord?
                 </p>
                 <div className="buttons" ref={scrollRef}>
-                    <span
-                        className={`button inherit-font ${confirmPrivacy ? "active" : "button-inverted"}`}
-                        onClick={() => setConfirmPrivacy(true)}
-                    >
-                        Ja
-                    </span>
+                    <Button text="Ja" onClick={() => setConfirmPrivacy(true)} customClassName={`inschrijving-button ${confirmPrivacy ? "active" : "button-inverted"}`} round/>
                 </div>
             </div>}
             {showFinal &&
@@ -105,22 +91,12 @@ const ConfirmPopup = ({onClose} : {onClose: (state: boolean) => void}) => {
                 </strong></p>
                 <p>De inschrijving wordt pas volledig voltooid wanneer het lidgeld (50 euro) gestort is op de KSA-Rekening BE22390023172547</p>
                 <div className="buttons"  ref={scrollRef2}>
-                    <span
-                        className={`button inherit-font ${confirmFinal ? "active" : "button-inverted"}`}
-                        onClick={() => setConfirmFinal(true)}
-                    >
-                        Ja
-                    </span>
+                    <Button text="Ja" onClick={() => setConfirmFinal(true)} customClassName={`inschrijving-button ${confirmFinal ? "active" : "button-inverted"}`} round/>
                 </div>
             </div>}
             {confirmFinal &&
             <div className="takken__submit-container" ref={scrollRefFinal}>
-                <button
-                    className={`button submit-button inherit-font`}
-                    onClick={handleSubmit}
-                >
-                    Verstuur inschrijving
-                </button>
+                <Button text="Verstuur inschrijving" onClick={handleSubmit} submit uppercase darken round/>
             </div>}
         </Popup>
     )

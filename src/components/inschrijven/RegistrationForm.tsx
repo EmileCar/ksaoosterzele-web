@@ -6,6 +6,7 @@ import Registration from "../../types/Registration";
 import { sendInschrijving } from "../../services/registrationService";
 import ConfirmPopup from "./popups/ConfirmPopup";
 import LoadingSpinner from "../loading/LoadingSpinner";
+import Button from "../button/Button";
 
 const RegistrationForm = () => {
     const { values, errorStates, handleValueChange, isPending } = useRegistrationContext();
@@ -110,17 +111,13 @@ const RegistrationForm = () => {
                             </Label>
                         </div>
                         <div className="break">
-                            <label>
+                            <div>
                                 <p>Is er sprake van een eventuele tweede verblijfplaats?</p>
                                 <div className="buttons">
-                                    <span className={`button inherit-font ${tweedeVerblijfplaatsActive === true ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsActive(true)}>
-                                        Ja
-                                    </span>
-                                    <span className={`button inherit-font ${tweedeVerblijfplaatsActive === false ? "active" : "button-inverted"}`} onClick={() => setTweedeVerblijfplaatsActive(false)}>
-                                        Nee
-                                    </span>
+                                    <Button text="Ja" onClick={() => setTweedeVerblijfplaatsActive(true)} customClassName={`inschrijving-button ${tweedeVerblijfplaatsActive === true ? "active" : "button-inverted"}`} hover round />
+                                    <Button text="Nee" onClick={() => setTweedeVerblijfplaatsActive(false)} customClassName={`inschrijving-button ${tweedeVerblijfplaatsActive === false ? "active" : "button-inverted"}`} hover round/>
                                 </div>
-                            </label>
+                            </div>
                         </div>
                         {tweedeVerblijfplaatsActive && (
                             <>
@@ -162,7 +159,7 @@ const RegistrationForm = () => {
                         {showContinueButton && (
                             <div className="break" ref={scrollRef}>
                                 <p>Als alle gegevens in orde zijn, kun je verdergaan naar het bevestigingscherm met verdere info</p>
-                                <button onClick={(e) => handleClickContinueButton(e)} className="button inherit-font submit-button">Ga verder</button>
+                                <Button text="Ga verder" onClick={() => setShowPopup(true)} round darken uppercase submit/>
                             </div>
                         )}
                     </form>

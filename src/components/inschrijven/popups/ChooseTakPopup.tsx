@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Takken from "../../takken/Takken";
 import Popup from "../../popup/Popup";
 import Group from "../../../types/Group";
+import Button from "../../button/Button";
 
 interface ChooseTakPopupProps {
     onClose: (state: boolean) => void;
@@ -21,9 +22,7 @@ const ChooseTakPopup: React.FC<ChooseTakPopupProps> = ({ onClose, setTak }) => {
             <Takken setTak={setSelectedTak} />
             <div className="takken__submit-container">
                 {selectedTak && (
-                    <button className="submit-button button inherit-font" onClick={submitHandler}>
-                        Kies deze tak
-                    </button>
+                    <Button text="Kies deze tak" onClick={submitHandler} fullWidth darken uppercase />
                 )}
             </div>
         </Popup>

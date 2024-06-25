@@ -5,6 +5,7 @@ import AdminLayout from "../../../layouts/AdminLayout";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import { useAccountContext } from "../../../contexts/AccountContext";
 import { logout } from "../../../services/accountService";
+import Button from "../../../components/button/Button";
 
 const DashboardAdmin = () => {
     const { account } = useAccountContext();
@@ -21,7 +22,7 @@ const DashboardAdmin = () => {
                     <p>Vanuit hier kan je de activiteiten, media, inschrijvingen en mattentaarten beheren.</p>
                     <p>Je bent ingelogd als {account && account.username} met {account && account.role.name} als rol.</p>
                 </SectionTitle>
-                <button className="button button-admin inherit-font" onClick={handleClickLogout}>Uitloggen </button>
+                <Button text="Uitloggen" onClick={handleClickLogout} customClassName="button-admin" hover/>
             </div>
             <div className="dashboard-grid">
                 <Link className="dashboard-card" to="/admin/evenementen">

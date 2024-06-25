@@ -5,29 +5,6 @@
 	font-size: inherit;
 }
 
-.button {
-	background-color: var(--main-color);
-	padding: var(--s0);
-	border-radius: 4rem;
-	color: white;
-	text-decoration: none;
-	transition: transform 0.1s ease-in-out;
-	display: inline-block;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-}
-
-.button:hover {
-	transform: scale(1.05);
-}
-
-.button-inverted {
-	background-color: white;
-	color: var(--main-color);
-}
-
 .link {
 	color: white;
 	text-decoration: none;

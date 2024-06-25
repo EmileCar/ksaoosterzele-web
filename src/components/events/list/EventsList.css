@@ -54,30 +54,8 @@
 	padding-top: 10px;
 }
 
-.event-buttons_button{
-	width: 100%;
-	padding: 1rem;
-	text-align: center;
-	color: white;
-	text-decoration: none;
-	border-radius: 0.5rem;
-	transition: filter 0.3s;
-	font-family: inherit;
-	font-size: inherit;
-	border: none;
-	cursor: pointer;
-}
-
-.event-buttons_button.aanpassen {
-	background-color: var(--main-color);
-}
-
 .event-buttons_button.verwijderen {
 	background-color: var(--error-color);
-}
-
-.event-buttons_button:hover{
-	filter: brightness(0.8);
 }
 
 @media screen and (min-width: 600px){

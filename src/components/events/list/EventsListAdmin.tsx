@@ -6,6 +6,7 @@ import { useCallback, useState } from "react";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import EventListItemAdmin from "./EventListItemAdmin";
 import EventPopup from "../popups/EventPopup";
+import Button from "../../button/Button";
 
 /**
  * Renders a list of events
@@ -26,7 +27,9 @@ const EventsListAdmin = ({ limit }: { limit?: number }): JSX.Element => {
 
   return (
     <div className="events__container">
-      <button onClick={() => setShowCreatePopup(true)} className="button button-admin inherit-font">+ Activiteit toevoegen</button>
+      <div className="admin__actions">
+        <Button text="+ Activiteit toevoegen" onClick={() => setShowCreatePopup(true)} hover/>
+      </div>
       <FetchedDataLayout isPending={pending} error={error}>
         {events && events.length === 0 && (
           <p>

@@ -10,13 +10,14 @@ import { getImagePaths, sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import useFetch from "../../../hooks/useFetch";
+import Button from "../../button/Button";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
     const [isPending, setIsPending] = useState<boolean>(false);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
     const [imagePathError, setImagePathError] = useState<string>("");
-    
+
     const handleSubmitForm = async () => {
         setIsPending(true);
         setErrors(null);
@@ -44,10 +45,6 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
             setImagePaths(event.query ? data.filter((path) => path.toLowerCase().includes(event.query.toLowerCase())) : data);
         });
     }
-
-    useEffect(() => {
-        console.log(event);
-    }, [event]);
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>
@@ -91,9 +88,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             </Label>
                         </div>
                     </div>
-                    <button className="submit-button button inherit-font" onClick={handleSubmitForm}>
-                        Save
-                    </button>
+                    <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
                 </form>
             </FetchedDataLayout>
         </Popup>

@@ -1,11 +1,11 @@
 import Event from '../../../types/Event';
 import './EventsList.css';
-import { Link } from 'react-router-dom';
 import Default from '../../../assets/img/default.jpg';
 import { formatDate, formatTime } from '../../../utils/datetimeUtil';
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import EventPopup from '../popups/EventPopup';
 import ConfirmEventDeletionPopup from '../popups/ConfirmEventDeletionPopup';
+import Button from '../../button/Button';
 
 const EventListItemAdmin = ({ event, enableWrap = false, reload } : { event: Event, enableWrap?: boolean, isAdmin?: boolean, reload: () => void }) => {
 	const [showChangePopup, setShowChangePopup] = useState<boolean>(false);
@@ -40,8 +40,8 @@ const EventListItemAdmin = ({ event, enableWrap = false, reload } : { event: Eve
 				</div>
 			</div>
 			<div className='event-buttons'>
-				<button className='event-buttons_button aanpassen' onClick={() => setShowChangePopup(true)}>Aanpassen</button>
-				<button className='event-buttons_button verwijderen' onClick={() => setShowDeletePopup(true)}>Verwijderen</button>
+				<Button text="Aanpassen" onClick={() => setShowChangePopup(true)} darken fullWidth/>
+				<Button text="Verwijderen" onClick={() => setShowDeletePopup(true)} darken fullWidth customClassName='event-buttons_button verwijderen'/>
 			</div>
 			{showChangePopup && <EventPopup event={event} onClose={handlePopupClose} />}
 			{showDeletePopup && <ConfirmEventDeletionPopup event={event} onClose={handlePopupClose} />}
