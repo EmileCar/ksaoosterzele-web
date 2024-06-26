@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <PrimeReactProvider value={{ unstyled: true }}>
+  <PrimeReactProvider>
     <App />
   </PrimeReactProvider>
 );

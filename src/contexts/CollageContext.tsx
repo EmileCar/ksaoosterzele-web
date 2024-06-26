@@ -34,9 +34,9 @@ export const CollageProvider = ({
 
 	const {
 		pending: collageTypesPending,
-		error : collageTypesError,
+		error: collageTypesError,
 		data: collageTypes,
-	} = useFetch<Collage[]>(getCollageTypes);
+	} = useFetch<CollageType[]>(getCollageTypes);
 
 	const filterCollages = useCallback(
 		(collages: Collage[]): Collage[] => {

@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
-import { convertInputDateToDatabaseDate, formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
+import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
@@ -9,7 +9,6 @@ import { AutoComplete } from 'primereact/autocomplete';
 import { getImagePaths, sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
-import useFetch from "../../../hooks/useFetch";
 import Button from "../../button/Button";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
@@ -40,8 +39,8 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         changeValue("datetime", datetime);
     }
 
-    const search = (event: any) => {
-        getImagePaths().then((data) => {
+    const search = async (event: any) => {
+        await getImagePaths().then((data) => {
             setImagePaths(event.query ? data.filter((path) => path.toLowerCase().includes(event.query.toLowerCase())) : data);
         });
     }

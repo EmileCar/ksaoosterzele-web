@@ -4,6 +4,17 @@
     gap: var(--s0);
 }
 
+.form .form-group {
+    display: flex;
+    gap: var(--s0);
+}
+
+form .form-group__half {
+    display: flex;
+    width: 100%;
+    gap: var(--s0);
+}
+
 .form .label {
     width: 100%;
     align-self: flex-start !important;
@@ -100,17 +111,6 @@
     cursor: pointer;
 }
 
-.form .form-group {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-end;
-}
-
-form .form-group__half {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-}
 
 form .verplicht {
     color: var(--error-color);
@@ -139,8 +139,13 @@ form .form-text {
     position: relative;
 }
 
-.form .input-wrapper .input{
+.form .input-wrapper.autocomplete{
+    position: relative;
     border-radius: 5px 0 0 5px;
+}
+
+.form .input-wrapper.autocomplete input{
+    outline: none;
 }
 
 .form .input-wrapper button{
@@ -157,18 +162,6 @@ form .form-text {
     justify-content: center;
     vertical-align: bottom;
     text-align: center;
-}
-
-.form .input-wrapper span{
-    flex: 0 0 auto;
-    visibility: hidden;
-    width: 0;
-}
-
-.form .input-wrapper svg{
-    position: absolute;
-    right: 2.5rem;
-    top: 35%;
 }
 
 .form .input-wrapper button svg{

@@ -19,7 +19,7 @@ const RegistrationContext = createContext<RegistrationContextType | undefined>(u
 
 export const RegistrationProvider = ({ children } : { children: React.ReactNode }) => {
     const { values, errorStates, handleValueChange, setErrors, changeValue } = useForm<SendRegistration>(new SendRegistration({}));
-   
+
     const [isPending, setIsPending] = useState<boolean>(false);
     const navigate = useNavigate();
 

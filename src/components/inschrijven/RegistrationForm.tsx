@@ -7,6 +7,8 @@ import { sendInschrijving } from "../../services/registrationService";
 import ConfirmPopup from "./popups/ConfirmPopup";
 import LoadingSpinner from "../loading/LoadingSpinner";
 import Button from "../button/Button";
+import Form from "../form/Form";
+import Group from "../form/Group";
 
 const RegistrationForm = () => {
     const { values, errorStates, handleValueChange, isPending } = useRegistrationContext();
@@ -50,16 +52,16 @@ const RegistrationForm = () => {
                     <p>Vul hier de rest van de gegevens in</p>
                     {errorStates.groupError && <p className="error" style={{paddingTop: "1rem"}}>{errorStates.groupError}</p>}
                     {errorStates.error && <p className="error" style={{paddingTop: "1rem"}}>Er is een probleem opgetreden: {errorStates.error}</p>}
-                    <form className="inschrijvenForm form">
-                        <div className="form-group">
+                    <Form customClassName="inschrijvenForm">
+                        <Group>
                             <Label text="Voornaam lid:" errorMessage={errorStates.firstNameError} required>
                                 <Input type="text" name="firstName" value={values?.firstName} onChange={handleValueChange} placeholder="Voornaam" />
                             </Label>
                             <Label text="Achternaam lid:" errorMessage={errorStates.lastNameError} required>
                                 <Input type="text" name="lastName" value={values.lastName} onChange={handleValueChange} placeholder="Achternaam" />
                             </Label>
-                        </div>
-                        <div className="form-group">
+                        </Group>
+                        <Group>
                             <div className="form-group__half">
                                 <Label text="Geboortedatum:" errorMessage={errorStates.birthdateError} required>
                                     <Input type="date" name="birthdate" value={values.birthdate} onChange={handleValueChange} placeholder="Geboortedatum" />
@@ -74,42 +76,42 @@ const RegistrationForm = () => {
                             <Label text="Geboorteplaats:" errorMessage={errorStates.birthplaceError}>
                                 <Input type="text" name="birthplace" value={values.birthplace} onChange={handleValueChange} placeholder="Geboorteplaats" />
                             </Label>
-                        </div>
+                        </Group>
                         <div className="break">
                             <p>Vul hier de gegevens van de eerste verblijfplaats in</p>
                         </div>
-                        <div className="form-group">
+                        <Group>
                             <Label text="Voornaam ouder/voogd:" errorMessage={errorStates.parentFirstNameError} required>
                                 <Input type="text" name="parentFirstName" value={values.parentFirstName} onChange={handleValueChange} placeholder="Voornaam" />
                             </Label>
                             <Label text="Achternaam ouder/voogd:" errorMessage={errorStates.parentLastNameError} required>
                                 <Input type="text" name="parentLastName" value={values.parentLastName} onChange={handleValueChange} placeholder="Achternaam" />
                             </Label>
-                        </div>
+                        </Group>
                         <Label text="Straat + huisnummer:" errorMessage={errorStates.addressError} required>
                             <Input type="text" name="address" value={values.address} onChange={handleValueChange} placeholder="Straat + huisnummer" />
                         </Label>
-                        <div className="form-group">
+                        <Group>
                             <Label text="Postcode:" errorMessage={errorStates.postalCodeError} required>
                                 <Input type="text" name="postalCode" value={values.postalCode} onChange={handleValueChange} placeholder="Postcode" />
                             </Label>
                             <Label text="Gemeente:" errorMessage={errorStates.townError} required>
                                 <Input type="text" name="town" value={values.town} onChange={handleValueChange} placeholder="Gemeente" />
                             </Label>
-                        </div>
-                        <div className="form-group">
+                        </Group>
+                        <Group>
                             <Label text="Gsm-nummer:" errorMessage={errorStates.phoneNumberError} required>
                                 <Input type="text" name="phoneNumber" value={values.phoneNumber} onChange={handleValueChange} placeholder="Gsm-nummer" />
                             </Label>
                             <Label text="Telefoonnummer/Gsm 2:" errorMessage={errorStates.telephoneNumber}>
                                 <Input type="text" name="telephoneNumber" value={values.telephoneNumber} onChange={handleValueChange} placeholder="Telefoonnummer" />
                             </Label>
-                        </div>
-                        <div className="form-group">
+                        </Group>
+                        <Group>
                             <Label text="Email:" errorMessage={errorStates.emailError} required>
                                 <Input type="text" name="email" value={values.email} onChange={handleValueChange} placeholder="Email" />
                             </Label>
-                        </div>
+                        </Group>
                         <div className="break">
                             <div>
                                 <p>Is er sprake van een eventuele tweede verblijfplaats?</p>
@@ -122,38 +124,38 @@ const RegistrationForm = () => {
                         {tweedeVerblijfplaatsActive && (
                             <>
                                 <p>Vul hier de gegevens van de tweede verblijfplaats in</p>
-                                <div className="form-group">
+                                <Group>
                                     <Label text="Voornaam ouder/voogd:" errorMessage={errorStates.secondParentFirstNameError}>
                                         <Input type="text" name="secondParentFirstName" value={values.secondParentFirstName} onChange={handleValueChange} placeholder="Voornaam" />
                                     </Label>
                                     <Label text="Achternaam ouder/voogd:" errorMessage={errorStates.secondParentLastNameError}>
                                         <Input type="text" name="secondParentLastName" value={values.secondParentLastName} onChange={handleValueChange} placeholder="Achternaam" />
                                     </Label>
-                                </div>
+                                </Group>
                                 <Label text="Straat + huisnummer:" errorMessage={errorStates.secondAddressError}>
                                     <Input type="text" name="secondAddress" value={values.secondAddress} onChange={handleValueChange} placeholder="Straat + huisnummer" />
                                 </Label>
-                                <div className="form-group">
+                                <Group>
                                     <Label text="Postcode:" errorMessage={errorStates.secondPostalCodeError}>
                                         <Input type="text" name="secondPostalCode" value={values.secondPostalCode} onChange={handleValueChange} placeholder="Postcode" />
                                     </Label>
                                     <Label text="Gemeente:" errorMessage={errorStates.secondTownError}>
                                         <Input type="text" name="secondTown" value={values.secondTown} onChange={handleValueChange} placeholder="Gemeente" />
                                     </Label>
-                                </div>
-                                <div className="form-group">
+                                </Group>
+                                <Group>
                                     <Label text="Gsm-nummer:" errorMessage={errorStates.secondPhoneNumberError}>
                                         <Input type="text" name="secondPhoneNumber" value={values.secondPhoneNumber} onChange={handleValueChange} placeholder="Gsm-nummer" />
                                     </Label>
                                     <Label text="Telefoonnummer/Gsm 2:" errorMessage={errorStates.secondTelephoneNumberError}>
                                         <Input type="text" name="secondTelephoneNumber" value={values.secondTelephoneNumber} onChange={handleValueChange} placeholder="Telefoonnummer" />
                                     </Label>
-                                </div>
-                                <div className="form-group">
+                                </Group>
+                                <Group>
                                     <Label text="Email:" errorMessage={errorStates.secondEmailError}>
                                         <Input type="text" name="secondEmail" value={values.secondEmail} onChange={handleValueChange} placeholder="Email" />
                                     </Label>
-                                </div>
+                                </Group>
                             </>
                         )}
                         {showContinueButton && (
@@ -162,7 +164,7 @@ const RegistrationForm = () => {
                                 <Button text="Ga verder" onClick={() => setShowPopup(true)} round darken uppercase submit/>
                             </div>
                         )}
-                    </form>
+                    </Form>
                     {showPopup && <ConfirmPopup onClose={() => setShowPopup(false)} />}
                 </>}
             </div>

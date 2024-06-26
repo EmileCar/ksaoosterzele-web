@@ -147,7 +147,7 @@ strong {
 
 /* PRIMEREACT OVERLOADS */
 .p-component * {
-	font-family: inherit;
+	font-family: var(--main-font);
 	font-size: inherit;
 	color: inherit ;
 }
@@ -169,4 +169,32 @@ strong {
 .p-toast {
 	opacity: 1 !important;
 	z-index: 999 !important;
+}
+
+.p-autocomplete-multiple-container{
+    overflow: visible;
+}
+
+.p-autocomplete-items-wrapper{
+	box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
+.p-autocomplete-item{
+	padding: var(--s-1);
+	border: 1px solid var(--main-color);
+	border-top: none;
+}
+
+.p-autocomplete-item:first-child{
+	border-top: 1px solid var(--main-color);
+}
+
+.p-autocomplete-token{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.p-autocomplete-token.p-highlight{
+	position: absolute;
 }

@@ -4,6 +4,7 @@ class Collage {
     id: number | null;
     displayName: string;
     name: string;
+    description: string;
     date: Date;
     active: boolean;
     types: CollageType[];
@@ -12,28 +13,30 @@ class Collage {
         this.id = collageData.id || null;
         this.displayName = collageData.display_name || null;
         this.name = collageData.internal_name || null;
+        this.description = collageData.description || null;
         this.date = new Date(collageData.date) || new Date();
+        this.active = collageData.active || false;
+        this.types = collageData.types.map((type: any) => new CollageType(type)) || [];
+    }
+}
+
+class SendCollage {
+    id: number | null;
+    name: string;
+    description: string;
+    date: Date;
+    active: boolean;
+    types: string[];
+
+    constructor(collageData?: any) {
+        this.id = collageData.id || null;
+        this.name = collageData.name || null;
+        this.description = collageData.description || null;
+        this.date = collageData.date ? new Date(collageData.date) : new Date();
         this.active = collageData.active || false;
         this.types = collageData.types || [];
     }
-
-    // validate(){
-    //     let errors = {};
-
-    //     if(this.displayName === ""){
-    //         errors.displayName = "Zichtbare naam mag niet leeg zijn";
-    //     }
-
-    //     if(this.name === ""){
-    //         errors.name = "Naam mag niet leeg zijn";
-    //     }
-
-    //     if(this.date === ""){
-    //         errors.date = "Datum mag niet leeg zijn";
-    //     }
-
-    //     return errors;
-    // }
 }
 
 export default Collage;
+export { SendCollage };

@@ -1,8 +1,10 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from '../types/ErrorResponse';
-import Collage from '../types/Collage';
+import Collage, { SendCollage } from '../types/Collage';
+import { formatCustomDateTime } from "../utils/datetimeUtil";
+import CollageType from "../types/CollageType";
 
-export async function getCollages(all: boolean = false) {
+export async function getCollages(all: boolean = false) : Promise<Collage[]> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=collages${all ? "&all=1" : ""}`, {
             method: 'GET',
@@ -39,7 +41,7 @@ export async function getCollage(collageId: number) {
     }
 }
 
-export async function getCollageTypes() {
+export async function getCollageTypes() : Promise<CollageType[]> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=collage_types`, {
             method: 'GET',
@@ -51,7 +53,30 @@ export async function getCollageTypes() {
         }
 
         const data = await response.json();
-        return data;
+        const types = data.map((type: any) => new CollageType(type));
+        return types;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function sendCollage(request: SendCollage, method: string) : Promise<void> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=collage`, {
+            method: method ?? 'POST',
+            headers: {
+            'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+            ...request,
+            date: formatCustomDateTime(request.date),
+            }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
     } catch (error) {
         throw error;
     }
