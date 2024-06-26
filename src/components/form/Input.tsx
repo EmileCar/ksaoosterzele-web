@@ -1,5 +1,6 @@
 import React from "react";
 import "./form.css";
+import { useFormContext } from "../../contexts/FormContext";
 
 interface InputProps {
     type: string;
@@ -24,6 +25,8 @@ const Input: React.FC<InputProps> = ({
     customClassName = "",
     focus = false
 }) => {
+    useFormContext();
+
     return (
         <input
             type={type}

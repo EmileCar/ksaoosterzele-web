@@ -5,7 +5,7 @@ const FormContext = createContext<boolean | null>(null);
 export const useFormContext = () => {
     const context = useContext(FormContext);
     if (context === null) {
-        throw new Error('Group component must be used within a Form component');
+        throw new Error('Component <Group, Label, Input> must be used within a Form component');
     }
     return context;
 };

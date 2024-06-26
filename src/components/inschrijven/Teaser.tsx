@@ -8,6 +8,7 @@ import { getGroups } from "../../services/groupService";
 import Registration from "../../types/Registration";
 import ChooseTakPopup from "./popups/ChooseTakPopup";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
+import Form from "../form/Form";
 
 /**
  * De teaser is een component om de gebruiker een simpel startform te geven voor hun inschrijving.
@@ -74,7 +75,7 @@ const Teaser = () => {
 
 	return (
 		<div className="teaser__wrapper">
-			<form className="teaserForm form">
+			<Form customClassName="teaserForm">
 				<Label text="Vul hier de naam van uw kind in:">
 					<Input
 						type="text"
@@ -113,7 +114,7 @@ const Teaser = () => {
 						<option value="other">Ander</option>
 					</select>
 				</Label>
-			</form>
+			</Form>
 			<div className="takTeaser__container">
 				{selectedYear &&
 					<div className="takTeaser__wrapper">

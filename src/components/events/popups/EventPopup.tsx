@@ -10,6 +10,8 @@ import { getImagePaths, sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
+import Form from "../../form/Form";
+import Group from "../../form/Group";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
@@ -49,23 +51,23 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
                 {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
-                <form className="eventForm form">
-                    <div className="form-group">
+                <Form>
+                    <Group>
                         <Label text="Naam" errorMessage={errorStates.nameError}>
                             <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Locatie" errorMessage={errorStates.locationError}>
                             <Input type={"text"} name="location" value={values.location} onChange={handleValueChange}/>
                         </Label>
-                    </div>
-                    <div className="form-group">
+                    </Group>
+                    <Group>
                         <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
                             <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
                             <AutoComplete className="input-wrapper" inputClassName="input" value={values.imageFileName} placeholder="afbeeldingNaam.jpeg" suggestions={[]} completeMethod={search} onChange={(e) => changeValue("imageFileName", e.target.value)} name="imgpath" dropdown/>
                         </Label>
-                    </div>
+                    </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
                         <textarea
                             className="input"
@@ -74,7 +76,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             value={values.description}
                         />
                     </Label>
-                    <div className="form-group">
+                    <Group>
                         <Label text="URL" errorMessage={errorStates.urlError}>
                             <Input type="text" name="url" value={values.url} onChange={handleValueChange} />
                         </Label>
@@ -86,9 +88,9 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                                 <Checkbox name="featured" checked={values.featured} onChange={(e) => changeValue("featured", e.target.checked)} />
                             </Label>
                         </div>
-                    </div>
+                    </Group>
                     <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
-                </form>
+                </Form>
             </FetchedDataLayout>
         </Popup>
     )
