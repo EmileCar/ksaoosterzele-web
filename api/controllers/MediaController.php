@@ -70,6 +70,7 @@ class MediaController extends Controller {
 		$collage = new Collage();
 		$collage->internal_name = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $data["name"]));
 		$collage->display_name = $data["name"];
+		$collage->description = $data["description"];
 		$collage->date = $data["date"];
 		$collage->active = $data["active"];
 
@@ -86,9 +87,7 @@ class MediaController extends Controller {
 	}
 
 	public function updateCollage() {
-		if (empty($_SESSION["admin_ksaoosterzele"])) {
-			ErrorResponse::exitWithError(401, "U bent niet gemachtigd om deze actie uit te voeren.");
-		}
+		$account = Account::is_authenticated();
 
 		$data = json_decode(file_get_contents('php://input'), true);
 
@@ -108,7 +107,8 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
 
-		$collage->displayName = $data["displayName"];
+		$collage->display_name = $data["name"];
+		$collage->description = $data["description"];
 		$collage->date = $data["date"];
 		$collage->active = !empty($data["active"]);
 		$collage->save();

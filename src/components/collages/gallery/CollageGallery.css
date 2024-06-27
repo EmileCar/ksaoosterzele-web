@@ -32,3 +32,32 @@
 .collage-gallery_item img{
     border-radius: 5px;
 }
+
+.collage-gallery_item-admin{
+    cursor: default;
+}
+
+.collage-gallery_item-admin:hover{
+    transform: none;
+}
+
+.collage-buttons{
+    display: flex;
+	gap: var(--s0);
+}
+.collage-buttons .button{
+    width: 100%;
+}
+.collage-buttons_button.verwijderen {
+	background-color: var(--error-color);
+}
+
+.collage-active{
+    color: green;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.collage-inactive{
+    color: var(--error-color);
+}

@@ -38,7 +38,7 @@ const MediaAdmin = () => {
           <div className={`collage_gallery`}>
             {collages &&
               collages.map((collage) => (
-                <CollageGalleryItemAdmin key={collage.id} collage={collage} />
+                <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch}/>
               ))}
           </div>
         </FetchedDataLayout>
