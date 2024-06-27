@@ -11,11 +11,14 @@ import Checkbox from "../../form/Checkbox";
 import { getCollageTypes, sendCollage } from "../../../services/mediaService";
 import CollageType from "../../../types/CollageType";
 import AutoComplete from "../../form/AutoComplete";
+import Form from "../../form/Form";
+import Group from "../../form/Group";
+import useFetch from "../../../hooks/useFetch";
 
 const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
+    const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
     const [isPending, setIsPending] = useState<boolean>(false);
-    const [collageTypes, setCollageTypes] = useState<CollageType[]>([]);
     const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
 
     const handleSubmitForm = async () => {
@@ -33,14 +36,20 @@ const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | unde
         });
     }
 
+    useEffect(() => {
+        if (collageTypes) {
+            search({ query: "" });
+        }
+    } , [collageTypes])
+
     const handleCalendarChange = (e: any) => {
         const date = new Date(e.target.value);
         changeValue("date", date);
     }
 
     const search = async (e: any) => {
-        const allTypes = await getCollageTypes();
-        const allTypeNames = allTypes.map((type : CollageType) => type.name);
+        if (!collageTypes) return;
+        const allTypeNames = collageTypes.map((type : CollageType) => type.name);
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
@@ -51,23 +60,23 @@ const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | unde
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
-                <form className="collageForm form">
-                    <div className="form-group">
+                <Form>
+                    <Group>
                         <Label text="Naam" errorMessage={errorStates.nameError}>
                             <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Datum" errorMessage={errorStates.dateError}>
                             <Input type={"date"} name="date" value={formatDateToInputDateTime(values.date as Date)} onChange={handleCalendarChange}/>
                         </Label>
-                    </div>
-                    <div className="form-group">
+                    </Group>
+                    <Group>
                         <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
-                            <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" />
+                            <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown />
                         </Label>
                         <Label text="Tonen?" customClassName="flex-column">
                             <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />
                         </Label>
-                    </div>
+                    </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
                         <textarea
                             className="input"
@@ -77,7 +86,7 @@ const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | unde
                         />
                     </Label>
                     <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
-                </form>
+                </Form>
             </FetchedDataLayout>
         </Popup>
 	)

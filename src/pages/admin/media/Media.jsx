@@ -6,9 +6,10 @@ import useFetch from "../../../hooks/useFetch";
 import Collage from "../../../types/Collage";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import MediaItemPopup from "../../../components/collages/popups/MediaItemPopup";
+import CollageGalleryItemAdmin from "../../../components/collages/gallery/CollageGalleryItemAdmin";
 
 const MediaAdmin = () => {
-  const fetchCollages = useCallback(() => getCollages(), []);
+  const fetchCollages = useCallback(() => getCollages(true), []);
   const { pending, data: collages, error, refetch } = useFetch(fetchCollages);
   const [showCreatePopup, setShowCreatePopup] = useState(false);
 
@@ -34,10 +35,10 @@ const MediaAdmin = () => {
               Er zijn nog geen collages aangemaakt.
             </p>
           )}
-          <div className={`collage-list collage-list_admin`}>
+          <div className={`collage_gallery`}>
             {collages &&
               collages.map((collage) => (
-                <p>{collage.name}</p>
+                <CollageGalleryItemAdmin key={collage.id} collage={collage} />
               ))}
           </div>
         </FetchedDataLayout>

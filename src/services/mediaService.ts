@@ -1,7 +1,7 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from '../types/ErrorResponse';
 import Collage, { SendCollage } from '../types/Collage';
-import { formatCustomDateTime } from "../utils/datetimeUtil";
+import { formatCustomDate, formatCustomDateTime } from "../utils/datetimeUtil";
 import CollageType from "../types/CollageType";
 
 export async function getCollages(all: boolean = false) : Promise<Collage[]> {
@@ -69,7 +69,7 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
             },
             body: JSON.stringify({
             ...request,
-            date: formatCustomDateTime(request.date),
+            date: formatCustomDate(request.date),
             }),
             credentials: 'include',
         });

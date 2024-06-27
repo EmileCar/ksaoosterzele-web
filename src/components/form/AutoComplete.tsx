@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 interface AutoCompleteProps {
     value: string[];
@@ -7,7 +7,6 @@ interface AutoCompleteProps {
     completeMethod: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     name: string;
-    inputClassName?: string;
     dropdown?: boolean;
 }
 
@@ -18,32 +17,94 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     completeMethod,
     onChange,
     name,
-    inputClassName = "",
     dropdown = false
 }) => {
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+    const [inputValue, setInputValue] = useState("");
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (inputValue === "") {
+            setFilteredSuggestions(suggestions);
+        } else {
+            setFilteredSuggestions(suggestions.filter(suggestion =>
+                suggestion.toLowerCase().includes(inputValue.toLowerCase())
+            ));
+        }
+    }, [inputValue, suggestions]);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+                setShowSuggestions(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [wrapperRef]);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value;
+        setInputValue(newValue);
+        completeMethod(event);
+    };
+
+    const handleSuggestionClick = (suggestion: string) => {
+        const newValues = [...value, suggestion];
+        onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        setInputValue("");
+        setShowSuggestions(false);
+    };
+
+    const handleRemoveValue = (index: number) => {
+        const newValues = value.filter((_, i) => i !== index);
+        onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+    };
 
     return (
-        <div className="input-wrapper input autocomplete">
+        <div className="autocomplete-wrapper" ref={wrapperRef}>
+            <div className="autocomplete-values">
+                {value.map((val, index) => (
+                    <div key={index} className="autocomplete-value">
+                        {val}
+                        <span onClick={() => handleRemoveValue(index)} className="autocomplete-value-delete">&times;</span>
+                    </div>
+                ))}
+            </div>
             <input
                 type="text"
-                className={`input ${inputClassName}`}
-                value={value}
+                className={`inherit-font autocomplete-input`}
+                value={inputValue}
                 placeholder={placeholder}
-                onChange={onChange}
+                onChange={handleInputChange}
                 name={name}
-                onFocus={() => setShowDropdown(true)}
-                onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                onFocus={() => setShowSuggestions(true)}
             />
-            {showDropdown && (
-                <div className="autocomplete-dropdown">
-                    {suggestions.map((suggestion, index) => (
-                        <div key={index} className="autocomplete-item">
+            {showSuggestions && (
+                <div className="autocomplete-suggestions">
+                    {filteredSuggestions.length === 0 ? (
+                        <div className="autocomplete-suggestion no-suggestions">
+                            Geen beschikbare types
+                        </div>
+                    ) : filteredSuggestions.map((suggestion, index) => (
+                        <div
+                            key={index}
+                            className="autocomplete-suggestion"
+                            onClick={() => handleSuggestionClick(suggestion)}
+                        >
                             {suggestion}
                         </div>
                     ))}
                 </div>
             )}
+            {dropdown &&
+                <div className="autocomplete-dropdown" onClick={() => setShowSuggestions(!showSuggestions)}>
+                    <i className="pi pi-chevron-down" style={{color: "white"}}></i>
+                </div>
+            }
         </div>
     );
 }

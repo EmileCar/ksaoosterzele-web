@@ -92,7 +92,7 @@ const Teaser = () => {
 				</Label>
 				<Label text="In welk studiejaar zit uw kind?" errorMessage={errorStates.groupError}>
 					<select
-						className="input"
+						className="input inherit-font"
 						value={selectedYear}
 						onChange={handleSelectedYearChange}
 						name="tak"

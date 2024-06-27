@@ -21,7 +21,7 @@ const Label: React.FC<LabelProps> = ({
 
     return (
         <label className={`label ${customClassName} ${errorMessage ? "error" : ''}`}>
-            {text} {required && <span className="verplicht">*</span>}
+            {text} {required && <span className="required">*</span>}
             {children}
             {errorMessage && <small className="error-message">{errorMessage}</small>}
         </label>

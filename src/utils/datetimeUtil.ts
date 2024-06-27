@@ -32,6 +32,14 @@ export const formatCustomDateTime = (date: Date): string => {
   return `${year}-${month}-${day} ${hours}:${minutes}:00`;
 }
 
+export const formatCustomDate = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
+
 /**
  * Deze functie controleert of een DateTime vanuit de database in het verleden ligt.
  * @param {string} dateTimeString - De DateTime string afkomstig van de database.

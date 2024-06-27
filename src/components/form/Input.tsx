@@ -36,7 +36,7 @@ const Input: React.FC<InputProps> = ({
             onBlur={onBlur}
             placeholder={placeholder}
             disabled={disabled}
-            className={`input ${customClassName}`}
+            className={`input inherit-font ${customClassName}`}
             autoFocus={focus}
         />
     );

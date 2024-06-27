@@ -4,6 +4,7 @@ import { validateCredentials } from "../../../services/accountService";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import Label from "../../../components/form/Label";
 import Input from "../../../components/form/Input";
+import Form from "../../../components/form/Form";
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -30,7 +31,7 @@ const Login = () => {
                 <p style={{marginBottom: "1.5rem"}}>Log in als admin om aanpassingen te doen</p>
             </SectionTitle>
             {error && <p className="error" style={{marginBottom: "1.5rem"}}>{error}</p>}
-            <form className="form loginForm">
+            <Form customClassName="loginForm">
                 <Label text="Gebruikersnaam">
                     <Input value={username} onChange={(e) => setUsername(e.target.value)} type="text" name="username" placeholder="Gebruikersnaam" />
                 </Label>
@@ -39,7 +40,7 @@ const Login = () => {
                 </Label>
 
                 <input type="submit" onClick={handleSubmit} value="Log in" className="button submit-button inherit-font"/>
-            </form>
+            </Form>
         </>
     );
 }

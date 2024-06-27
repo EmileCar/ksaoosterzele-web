@@ -4,6 +4,7 @@ import Input from "../form/Input";
 import { useCollageContext } from "../../contexts/CollageContext";
 import { Dropdown } from 'primereact/dropdown';
 import CollageType from "../../types/CollageType";
+import Form from "../form/Form";
 
 const MediaSearchOptions = () => {
     const [showSearchOptions, setShowSearchOptions] = useState(false);
@@ -28,6 +29,7 @@ const MediaSearchOptions = () => {
                     </>
                 )}
             </button>
+            <Form>
             <form className={`form filter-media-form ${showSearchOptions ? "show" : ""}`}>
                 <Label text="Zoeken">
                     <Input type="search" name={"search"} placeholder="Zoeken..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
@@ -48,6 +50,7 @@ const MediaSearchOptions = () => {
                     </select>
                 </Label>
             </form>
+            </Form>
         </div>
     );
 }

@@ -1,3 +1,4 @@
+/* FORM & GROUP STYLING */
 .form {
     display: flex;
     flex-direction: column;
@@ -15,27 +16,25 @@ form .form-group__half {
     gap: var(--s0);
 }
 
-.form .label {
-    width: 100%;
-    align-self: flex-start !important;
+@media screen and (max-width: 740px) {
+    form .form-group {
+        flex-wrap: wrap;
+    }
 }
 
+/* LABEL & ERROR STYLING */
 .form .label {
     font-weight: bold;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     gap: 0.2rem;
+    width: 100%;
+    align-self: flex-start;
 }
 
 .form .label.flex-column {
     flex-direction: column;
     align-items: flex-start;
-}
-
-.form label.error {
-    color: var(--error-color);
-    position: relative;
 }
 
 .form .error-message {
@@ -45,14 +44,13 @@ form .form-group__half {
 }
 
 .form .label.error .error-message {
+    position: relative;
+    visibility: visible;
     opacity: 1;
     pointer-events: initial;
-    visibility: visible;
-    position: relative;
-    top: 100%;
     text-align: left;
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .form .label.error .input {
@@ -60,12 +58,9 @@ form .form-group__half {
     outline: none;
 }
 
+/* INPUT STYLING */
 .form .input {
-    font-family: inherit;
-    font-size: inherit;
-    color: inherit;
     padding: var(--s-1);
-    display: block;
     width: 100%;
     outline: var(--s-99) solid var(--main-color);
     border: var(--s-2) solid transparent;
@@ -77,11 +72,16 @@ form .form-group__half {
     box-shadow: 0 0 2px 2px rgb(94, 162, 224);
 }
 
+.form .label.error .input:focus {
+    box-shadow: 0 0 2px 2px rgb(255, 154, 154);
+}
+
 .form .input::placeholder {
     color: var(--main-color);
     opacity: 0.5;
 }
 
+/* CHECKBOX STYLING */
 .form .checkbox {
     display: flex;
     align-items: center;
@@ -91,6 +91,7 @@ form .form-group__half {
     cursor: pointer;
 }
 
+/* DISABLED STYLING */
 .form.disabled {
     pointer-events: none;
 }
@@ -107,39 +108,98 @@ form .form-group__half {
     color: gray;
 }
 
+/* VARIOUS STYLING */
 .form select.input option {
     cursor: pointer;
 }
 
-
-form .verplicht {
+form .label .required {
     color: var(--error-color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-form .form-text {
-    margin-bottom: 1rem;
-}
-
-@media screen and (max-width: 740px) {
-    form .form-group {
-        flex-wrap: wrap;
-    }
-
-    form .form-text {
-        margin-bottom: 0;
-        align-self: center;
-        width: 100%;
-    }
-}
-
-.form .input-wrapper{
-    width: 100%;
+/* AUTOCOMPLETE STYLING */
+.form .autocomplete-wrapper {
     display: flex;
+    width: 100%;
+    outline: var(--s-99) solid var(--main-color);
+    border-radius: 5px;
     position: relative;
 }
 
-.form .input-wrapper.autocomplete{
+.form .autocomplete-input{
+    width: 100%;
+    padding: var(--s-1);
+    border: var(--s-2) solid transparent;
+    outline: none;
+}
+
+.form .autocomplete-dropdown{
+    height: 100%;
+    padding: 0 var(--s-1);
+    background-color: var(--main-color);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.form .autocomplete-dropdown:hover{
+    background-color: var(--darker-main-color);
+}
+
+.form .autocomplete-suggestions{
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    max-height: 10rem;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 1;
+    box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.4);
+}
+
+.form .autocomplete-suggestion{
+	padding: var(--s-1);
+	border: 2px solid var(--main-color);
+	border-top: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.form .autocomplete-suggestion:not(.no-suggestions){
+    cursor: pointer;
+}
+
+.form .autocomplete-suggestion:not(.no-suggestions):hover{
+    background-color: rgb(185, 210, 255);
+}
+
+.form .autocomplete-suggestion:first-child{
+    border-top: 2px solid var(--main-color);
+}
+
+.autocomplete-values{
+    display: flex;
+    gap: var(--s-1);
+    align-self: center;
+    padding: 0 var(--s-1);
+}
+
+.autocomplete-value{
+    background-color: var(--main-color);
+    color: white;
+    padding: var(--s-2) var(--s-1);
+    border-radius: 15px;
+    display: flex;
+    gap: var(--s-1);
+}
+
+.autocomplete-value-delete{
+    cursor: pointer;
+}
+
+
+/* .form .input-wrapper.autocomplete{
     position: relative;
     border-radius: 5px 0 0 5px;
 }
@@ -171,4 +231,4 @@ form .form-text {
 
 .form .input-wrapper button:hover{
     background-color: var(--darker-main-color);
-}
+} */

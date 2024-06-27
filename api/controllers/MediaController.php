@@ -5,6 +5,8 @@ require_once __DIR__ . '/../models/Collage.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
 require_once __DIR__ . '/../models/internal/DirectoryManager.php';
 require_once __DIR__ . '/../models/internal/ImageManager.php';
+require_once __DIR__ . '/../models/CollageType.php';
+require_once __DIR__ . '/../models/Account.php';
 
 class MediaController extends Controller {
 	private $directoryManager;
@@ -18,7 +20,7 @@ class MediaController extends Controller {
 	}
 
 	public function getCollages() {
-		if (!empty($_SESSION["admin_ksaoosterzele"]) && isset($_GET['all']) && $_GET["all"] === "1") {
+		if (!empty($_SESSION["account_ksaoosterzele"]) && isset($_GET['all']) && $_GET["all"] === "1") {
 			$collages = Collage::with("types")->get();
 		} else {
 			$collages = Collage::where("active", 1)->with("types")->get();
@@ -55,9 +57,7 @@ class MediaController extends Controller {
 	}
 
 	public function addCollage() {
-		if (empty($_SESSION["admin_ksaoosterzele"])) {
-			ErrorResponse::exitWithError(401);
-		}
+		$account = Account::is_authenticated();
 
 		$data = json_decode(file_get_contents('php://input'), true);
 
@@ -68,12 +68,12 @@ class MediaController extends Controller {
 		}
 
 		$collage = new Collage();
-		$collage->name = $data["name"];
-		$collage->displayName = $data["displayName"];
+		$collage->internal_name = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $data["name"]));
+		$collage->display_name = $data["name"];
 		$collage->date = $data["date"];
 		$collage->active = $data["active"];
 
-		if ($this->directoryManager->doesDirectoryExist($collage->name)) {
+		if ($this->directoryManager->doesDirectoryExist($collage->internal_name)) {
 			ErrorResponse::exitWithError(400, "De directory van deze collagenaam bestaat al.");
 		}
 
@@ -82,7 +82,7 @@ class MediaController extends Controller {
 		$collage->save();
 
 		http_response_code(201);
-		exit(json_encode(["id" => $collage->id]));
+		exit();
 	}
 
 	public function updateCollage() {

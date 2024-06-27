@@ -26,7 +26,7 @@ class EventController extends Controller {
 		if (!empty($errors)) {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
-		
+
 		$event = new Event();
 		$event = Event::create($data, $event);
 		$event->save();
