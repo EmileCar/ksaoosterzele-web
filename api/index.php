@@ -11,7 +11,7 @@
 
 // Zet error handling uit
 ini_set('display_errors', false);
-error_reporting(0);
+error_reporting(1);
 
 set_error_handler(function($errno, $errstr, $errfile, $errline) {
     throw new ErrorException($errstr, 0, $errno, $errfile, $errline);

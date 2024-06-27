@@ -1,4 +1,4 @@
-export const exportToExcel = (data, name) => {
+export const exportToExcel = (data: any[], name: string) => {
     import('xlsx').then((xlsx) => {
         const worksheet = xlsx.utils.json_to_sheet(data);
         const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
@@ -11,7 +11,7 @@ export const exportToExcel = (data, name) => {
     });
 };
 
-const saveAsExcelFile = (buffer, fileName) => {
+const saveAsExcelFile = (buffer: any, fileName: string) => {
     import('file-saver').then((module) => {
         if (module && module.default) {
             let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';

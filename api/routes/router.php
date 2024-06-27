@@ -3,7 +3,7 @@ require_once 'events.php';
 require_once 'media.php';
 require_once 'mattentaartenOrders.php';
 require_once 'account.php';
-require_once 'inschrijvingen.php';
+require_once 'registrations.php';
 require_once 'groups.php';
 
 // Als er geen pagina is opgegeven, zet de page op index

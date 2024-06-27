@@ -14,7 +14,7 @@ import { AccountProvider } from './contexts/AccountContext';
 import DashboardAdmin from './pages/admin/dashboard/Dashboard';
 import EventsAdmin from './pages/admin/events/Events';
 import MediaAdmin from './pages/admin/media/Media';
-import InschrijvingenAdmin from './pages/admin/registrations/Inschrijvingen';
+import RegistrationsAdmin from './pages/admin/registrations/Inschrijvingen';
 
 const App = () => {
 
@@ -36,7 +36,7 @@ const App = () => {
         <Route path="/admin" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
         <Route path="/admin/evenementen" element={<AccountProvider><EventsAdmin /></AccountProvider>} />
         <Route path="/admin/media" element={<AccountProvider><MediaAdmin/></AccountProvider>} />
-        <Route path="/admin/inschrijvingen" element={<AccountProvider><InschrijvingenAdmin /></AccountProvider>} />
+        <Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
         <Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
 
         {/* Fallback */}

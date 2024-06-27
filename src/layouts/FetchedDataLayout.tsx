@@ -11,7 +11,7 @@ const FetchedDataLayout = ({isPending, error, children} : {isPending: boolean, e
                 <LoadingSpinner text={<LoadingText />}/>
             :
             <>
-                {error &&
+                {(error !== null && typeof error === 'string') &&
                     <div className="error">{error}</div>
                 }
                 {children}

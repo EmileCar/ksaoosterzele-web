@@ -4,7 +4,7 @@ import Registration, { SendRegistration } from "../types/Registration";
 
 export async function sendInschrijving(request: SendRegistration) {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=inschrijving`, {
+        const response = await fetch(`${API_BASE_URL}?page=registration`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -20,9 +20,9 @@ export async function sendInschrijving(request: SendRegistration) {
     }
 }
 
-export async function getInschrijvingen() {
+export async function getRegistrations() : Promise<Registration[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=inschrijvingen`, {
+        const response = await fetch(`${API_BASE_URL}?page=registrations`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,7 +35,8 @@ export async function getInschrijvingen() {
         }
 
         const data = await response.json();
-        return data;
+        const registrations = data.map((registration: any) => new Registration(registration));
+        return registrations;
     } catch (error) {
         throw error;
     }

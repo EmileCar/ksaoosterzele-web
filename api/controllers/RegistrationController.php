@@ -3,10 +3,11 @@
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../models/Registration.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
+require_once __DIR__ . '/../models/Account.php';
 
-class InschrijvingController extends Controller {
+class RegistrationController extends Controller {
 
-	public function sendInschrijving() {
+	public function sendRegistration() {
 		$data = json_decode(file_get_contents('php://input'), true);
 
 		$errors = Registration::validate($data);
@@ -47,13 +48,11 @@ class InschrijvingController extends Controller {
 		exit();
 	}
 
-    public function getInschrijvingen() {
-		if (empty($_SESSION["admin_ksaoosterzele"])){
-			ErrorResponse::exitWithError(401);
-		}
+    public function getRegistrations() {
+		$account = Account::is_authenticated();
 
-        $inschrijvingen = Registration::get();
-        exit(json_encode($inschrijvingen));
+        $registrations = Registration::get();
+        exit(json_encode($registrations));
     }
 
 	public function updateInschrijving() {
@@ -71,13 +70,13 @@ class InschrijvingController extends Controller {
 		if (empty($inschrijving)) {
 			ErrorResponse::exitWithError(404, "Inschrijving niet gevonden.");
 		}
-	
+
 		$errors = Registration::validate($data);
 
 		if(!empty($errors)){
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
-		
+
 		$inschrijving->tak = $data["tak"];
 		$inschrijving->voornaam = $data["voornaam"];
 		$inschrijving->achternaam = $data["achternaam"];

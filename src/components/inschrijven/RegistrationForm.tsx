@@ -67,7 +67,7 @@ const RegistrationForm = () => {
                                     <Input type="date" name="birthdate" value={values.birthdate} onChange={handleValueChange} placeholder="Geboortedatum" />
                                 </Label>
                                 <Label text="Geslacht:" errorMessage={errorStates.genderError} customClassName={"geslacht-label"} required>
-                                    <select className="input" name="gender" value={values.gender} onChange={handleValueChange}>
+                                    <select className="input inherit-font" name="gender" value={values.gender} onChange={handleValueChange}>
                                         <option value="M" selected>M</option>
                                         <option value="X">X</option>
                                     </select>
