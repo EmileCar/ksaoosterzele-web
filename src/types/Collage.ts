@@ -29,8 +29,9 @@ class SendCollage {
     types: string[];
 
     constructor(collageData?: any) {
+        console.log(collageData)
         this.id = collageData.id || null;
-        this.name = collageData.name || null;
+        this.name = collageData.displayName || null;
         this.description = collageData.description || null;
         this.date = collageData.date ? new Date(collageData.date) : new Date();
         this.active = collageData.active || false;

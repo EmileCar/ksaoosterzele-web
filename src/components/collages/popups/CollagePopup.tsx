@@ -15,7 +15,7 @@ import Form from "../../form/Form";
 import Group from "../../form/Group";
 import useFetch from "../../../hooks/useFetch";
 
-const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
+const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
     const [isPending, setIsPending] = useState<boolean>(false);
@@ -53,10 +53,6 @@ const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | unde
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
-    useEffect(() => {
-        console.log(values)
-    } , [values])
-0
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
@@ -92,4 +88,4 @@ const MediaItemPopup = ({ collage, onClose } : { collage?: Collage | null | unde
 	)
 };
 
-export default MediaItemPopup;
+export default CollagePopup;

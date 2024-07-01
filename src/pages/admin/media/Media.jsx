@@ -5,7 +5,7 @@ import { getCollages } from "../../../services/mediaService";
 import useFetch from "../../../hooks/useFetch";
 import Collage from "../../../types/Collage";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
-import MediaItemPopup from "../../../components/collages/popups/MediaItemPopup";
+import MediaItemPopup from "../../../components/collages/popups/CollagePopup";
 import CollageGalleryItemAdmin from "../../../components/collages/gallery/CollageGalleryItemAdmin";
 
 const MediaAdmin = () => {

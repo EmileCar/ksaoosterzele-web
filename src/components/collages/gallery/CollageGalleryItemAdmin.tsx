@@ -4,7 +4,7 @@ import CollageType from "../../../types/CollageType";
 import defaultThumbnail from '../../../assets/img/default.jpg';
 import { useState } from "react";
 import Button from "../../button/Button";
-import MediaItemPopup from "../popups/MediaItemPopup";
+import MediaItemPopup from "../popups/CollagePopup";
 import ConfirmCollageDeletionPopup from "../popups/ConfirmCollageDeletionPopup";
 
 const CollageGalleryItemAdmin = ({ collage, reload } : { collage: Collage , reload: () => void }) => {
