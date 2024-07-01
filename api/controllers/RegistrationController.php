@@ -3,6 +3,7 @@
 require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../models/Registration.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
+require_once __DIR__ . '/../responses/RegistrationResponse.php';
 require_once __DIR__ . '/../models/Account.php';
 
 class RegistrationController extends Controller {
@@ -51,14 +52,16 @@ class RegistrationController extends Controller {
     public function getRegistrations() {
 		$account = Account::is_authenticated();
 
-        $registrations = Registration::get();
-        exit(json_encode($registrations));
+        $registrations = Registration::all();
+		$registrationResponses = [];
+		foreach ($registrations as $registration) {
+			$registrationResponses[] = new RegistrationResponse($registration);
+		}
+        exit(json_encode($registrationResponses));
     }
 
-	public function updateInschrijving() {
-		if (empty($_SESSION["admin_ksaoosterzele"])){
-			ErrorResponse::exitWithError(401);
-		}
+	public function updateRegistration() {
+		$account = Account::is_authenticated();
 
 		$data = json_decode(file_get_contents('php://input'), true);
 
@@ -67,6 +70,7 @@ class RegistrationController extends Controller {
 		}
 
 		$inschrijving = Registration::find($data["id"]);
+
 		if (empty($inschrijving)) {
 			ErrorResponse::exitWithError(404, "Inschrijving niet gevonden.");
 		}
@@ -77,30 +81,9 @@ class RegistrationController extends Controller {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
 
-		$inschrijving->tak = $data["tak"];
-		$inschrijving->voornaam = $data["voornaam"];
-		$inschrijving->achternaam = $data["achternaam"];
-		$inschrijving->geboortedatum = $data["geboortedatum"];
-		$inschrijving->geslacht = $data["geslacht"];
-		$inschrijving->geboorteplaats = $data["geboorteplaats"];
-		$inschrijving->voornaamOuder = $data["voornaamOuder"];
-		$inschrijving->achternaamOuder = $data["achternaamOuder"];
-		$inschrijving->straatEnHuisnummer = $data["straatEnHuisnummer"];
-		$inschrijving->postcode = $data["postcode"];
-		$inschrijving->gemeente = $data["gemeente"];
-		$inschrijving->gsmNummer = $data["gsmNummer"];
-		$inschrijving->telefoonnummer = $data["telefoonnummer"];
-		$inschrijving->email = $data["email"];
-		$inschrijving->tweedeVoornaamOuder = $data["tweedeVoornaamOuder"];
-		$inschrijving->tweedeAchternaamOuder = $data["tweedeAchternaamOuder"];
-		$inschrijving->tweedeStraatEnHuisnummer = $data["tweedeStraatEnHuisnummer"];
-		$inschrijving->tweedePostcode = $data["tweedePostcode"];
-		$inschrijving->tweedeGemeente = $data["tweedeGemeente"];
-		$inschrijving->tweedeGsmNummer = $data["tweedeGsmNummer"];
-		$inschrijving->tweedeTelefoonnummer = $data["tweedeTelefoonnummer"];
-		$inschrijving->tweedeEmail = $data["tweedeEmail"];
-		$inschrijving->allowMedia = $data["allowMedia"];
-		$inschrijving->save();
+		$registration = Registration::create($data, $inschrijving);
+
+		$registration->save();
 
 		http_response_code(200);
 		exit();

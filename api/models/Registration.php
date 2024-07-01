@@ -332,4 +332,78 @@ class Registration extends Model
 
 		return $age;
 	}
+
+	public static function create($data, $registration) {
+		if(!empty($data["groupId"])){
+			$registration->group_id = $data["groupId"];
+		}
+		if (!empty($data["firstName"])) {
+			$registration->first_name = $data["firstName"];
+		}
+		if (!empty($data["lastName"])) {
+			$registration->last_name = $data["lastName"];
+		}
+		if (!empty($data["birthdate"])) {
+			$registration->birthdate = $data["birthdate"];
+		}
+		if (!empty($data["gender"])) {
+			$registration->gender = $data["gender"];
+		}
+		if (!empty($data["birthplace"])) {
+			$registration->birthplace = $data["birthplace"];
+		}
+		if (!empty($data["parentFirstName"])) {
+			$registration->parent_first_name = $data["parentFirstName"];
+		}
+		if (!empty($data["parentLastName"])) {
+			$registration->parent_last_name = $data["parentLastName"];
+		}
+		if (!empty($data["address"])) {
+			$registration->address = $data["address"];
+		}
+		if (!empty($data["postalCode"])) {
+			$registration->postal_code = $data["postalCode"];
+		}
+		if (!empty($data["town"])) {
+			$registration->town = $data["town"];
+		}
+		if (!empty($data["phoneNumber"])) {
+			$registration->phone_number = $data["phoneNumber"];
+		}
+		if (!empty($data["telephoneNumber"])) {
+			$registration->telephone_number = $data["telephoneNumber"];
+		}
+		if (!empty($data["email"])) {
+			$registration->email = $data["email"];
+		}
+		if (!empty($data["secondParentFirstName"])) {
+			$registration->second_parent_first_name = $data["secondParentFirstName"];
+		}
+		if (!empty($data["secondParentLastName"])) {
+			$registration->second_parent_last_name = $data["secondParentLastName"];
+		}
+		if (!empty($data["secondAddress"])) {
+			$registration->second_address = $data["secondAddress"];
+		}
+		if (!empty($data["secondPostalCode"])) {
+			$registration->second_postal_code = $data["secondPostalCode"];
+		}
+		if (!empty($data["secondTown"])) {
+			$registration->second_town = $data["secondTown"];
+		}
+		if (!empty($data["secondPhoneNumber"])) {
+			$registration->second_phone_number = $data["secondPhoneNumber"];
+		}
+		if (!empty($data["secondTelephoneNumber"])) {
+			$registration->second_telephone_number = $data["secondTelephoneNumber"];
+		}
+		if (!empty($data["secondEmail"])) {
+			$registration->second_email = $data["secondEmail"];
+		}
+		if (!empty($data["allowMedia"])) {
+			$registration->allow_media = $data["allowMedia"];
+		}
+
+		return $registration;
+	}
 }

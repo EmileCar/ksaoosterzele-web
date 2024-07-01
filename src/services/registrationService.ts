@@ -2,13 +2,14 @@ import API_BASE_URL from "../config";
 import ErrorResponse from '../types/ErrorResponse';
 import Registration, { SendRegistration } from "../types/Registration";
 
-export async function sendInschrijving(request: SendRegistration) {
+export async function sendInschrijving(request: SendRegistration, method: string) {
     try {
         const response = await fetch(`${API_BASE_URL}?page=registration`, {
-            method: 'POST',
+            method: method ?? 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(request),
         });
 
@@ -44,7 +45,7 @@ export async function getRegistrations() : Promise<Registration[]> {
 
 export async function updateInschrijving(registration: Registration) {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=inschrijving`, {
+        const response = await fetch(`${API_BASE_URL}?page=registration`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

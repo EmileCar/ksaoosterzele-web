@@ -26,7 +26,7 @@ export const RegistrationProvider = ({ children } : { children: React.ReactNode 
     const submitValues = async () => {
         setIsPending(true);
         setErrors(null);
-        await sendInschrijving(values).then(() => {
+        await sendInschrijving(values, "POST").then(() => {
             setIsPending(false);
             localStorage.setItem("inschrijvingData", JSON.stringify(values));
             navigate('/inschrijven/bevestiging');

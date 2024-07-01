@@ -34,20 +34,3 @@
         grid-template-columns: 1fr 1fr;
     }
 }
-
-.gap{
-    gap: 1rem;
-    display: flex;
-}
-
-.p-column-title{
-    white-space: nowrap;
-}
-
-.exportToExcel__container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    font-style: italic;
-}

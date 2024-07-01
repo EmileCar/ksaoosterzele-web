@@ -25,11 +25,13 @@ class Registration {
     secondTelephoneNumber: string;
     secondEmail: string;
     allowMedia: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 
     constructor(registrationData?: any) {
         this.id = registrationData.id || null;
-        this.group = registrationData.group || null;
-
+        this.group = registrationData.group ? new Group(registrationData.group) : null;
+        console.log(registrationData.group)
         this.firstName = registrationData.first_name || null;
         this.lastName = registrationData.last_name || null;
         this.birthdate = registrationData.birthdate || null;
@@ -55,10 +57,13 @@ class Registration {
         this.secondEmail = registrationData.second_email || null;
 
         this.allowMedia = registrationData.allow_media || null;
+        this.createdAt = new Date(registrationData.created_at) || null;
+        this.updatedAt = new Date(registrationData.updated_at) || null;
     }
 }
 
 class SendRegistration {
+    id: number | null;
     groupId: number;
     firstName: string;
     lastName: string;
@@ -84,6 +89,7 @@ class SendRegistration {
     allowMedia: boolean;
 
     constructor(registration?: any) {
+        this.id = registration?.id || null;
         this.groupId = registration?.group?.id ?? null;
         this.firstName = registration.firstName || null;
         this.lastName = registration.lastName || null;

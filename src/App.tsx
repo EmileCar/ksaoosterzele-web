@@ -14,7 +14,7 @@ import { AccountProvider } from './contexts/AccountContext';
 import DashboardAdmin from './pages/admin/dashboard/Dashboard';
 import EventsAdmin from './pages/admin/events/Events';
 import MediaAdmin from './pages/admin/media/Media';
-import RegistrationsAdmin from './pages/admin/registrations/Inschrijvingen';
+import RegistrationsAdmin from './pages/admin/registrations/Registrations';
 
 const App = () => {
 

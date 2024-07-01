@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import './Registrations.css';
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import useFetch from "../../../hooks/useFetch";
@@ -6,12 +7,14 @@ import { getRegistrations } from "../../../services/registrationService";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode } from "primereact/api";
-import { InputText } from "primereact/inputtext";
 import { MultiSelect } from "primereact/multiselect";
-import { Button } from "primereact/button";
-import { formatDatabaseDateTime } from "../../../utils/datetimeUtil";
+import { formatDateTime } from "../../../utils/datetimeUtil";
 import Registration from "../../../types/Registration";
 import { exportToExcel } from "../../../utils/exportToExcel";
+import Input from "../../../components/form/Input";
+import Form from "../../../components/form/Form";
+import Button from "../../../components/button/Button";
+import RegistrationPopup from "../../../components/inschrijven/popups/RegistrationPopup";
 
 const RegistrationsAdmin = () => {
     const { pending, data: registrations, error, refetch } = useFetch(getRegistrations);
@@ -24,11 +27,11 @@ const RegistrationsAdmin = () => {
     const [visibleColumns, setVisibleColumns] = useState<{ field: string; header: string; }[]>([]);
 
     const extraColumns = [
-        { field: 'geboortedatum', header: 'Geboortedatum' },
-        { field: 'straatEnHuisnummer', header: 'Straat + Nr' },
-        { field: 'gemeente', header: 'Gemeente' },
+        { field: 'birthdate', header: 'Geboortedatum' },
+        { field: 'address', header: 'Straat + Nr' },
+        { field: 'town', header: 'Gemeente' },
         { field: 'email', header: 'Email' },
-        { field: 'gsmNummer', header: 'Gsm' },
+        { field: 'phoneNumber', header: 'Gsm' },
     ];
 
     const onColumnToggle = (e: any) => {
@@ -46,27 +49,32 @@ const RegistrationsAdmin = () => {
 
     const renderHeader = () => {
         return (
-            <div className="flex justify-content-end gap">
+            <Form customClassName="registrationstable-header">
                 <span className="p-input-icon-left">
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Zoeken..." />
+                    <Input type="name" name="search" value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Zoeken..." />
                 </span>
-                <MultiSelect placeholder="Selecteer opties" value={visibleColumns} options={extraColumns} optionLabel="header" onChange={onColumnToggle} className="w-full sm:w-20rem" display="chip" />
+                <MultiSelect placeholder="Selecteer opties" value={visibleColumns} options={extraColumns} optionLabel="header" onChange={onColumnToggle} className="input" display="chip" />
                 <span className="exportToExcel__container">
-                    <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={() => exportToExcel(registrations!, "inschrijvingen")} data-pr-tooltip="XLS" />
+                    <Button text="" onClick={() => exportToExcel(registrations!, "inschrijvingen")} />
                     <span>Exporteer naar Excel</span>
                 </span>
-            </div>
+            </Form>
         );
     };
 
-    const createdAtBodyTemplate = (rowData: any) => {
-        const formattedDateTime = formatDatabaseDateTime(rowData.created_at);
+    const createdAtBodyTemplate = (rowData: Registration) => {
+        const formattedDateTime = formatDateTime(rowData.createdAt);
         return (
             <div className="flex align-items-center gap-2">
                 <span>{formattedDateTime}</span>
             </div>
         );
     };
+
+    const onClose = () => {
+        refetch();
+        setSelectedRow(null);
+    }
 
     return (
         <>
@@ -88,14 +96,15 @@ const RegistrationsAdmin = () => {
                     selectionMode="single"
                     onSelectionChange={(e) => setSelectedRow(e.value as Registration | null)}
                 >
-                    <Column field="voornaam" header="Voornaam" sortable></Column>
-                    <Column field="achternaam" header="Achternaam" sortable></Column>
-                    <Column field="tak" header="Tak" sortable></Column>
+                    <Column field="firstName" header="Voornaam" sortable></Column>
+                    <Column field="lastName" header="Achternaam" sortable></Column>
+                    <Column field="group.name" header="Tak" sortable></Column>
                     {visibleColumns.map((col) => (
                         <Column key={col.field} field={col.field} header={col.header} sortable />
                     ))}
                     <Column field="created_at" body={createdAtBodyTemplate} header="Ingeschreven op" sortable></Column>
                 </DataTable>
+                {selectedRow && <RegistrationPopup registration={selectedRow} onClose={onClose} />}
             </FetchedDataLayout>
         </>
     );

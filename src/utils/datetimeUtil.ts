@@ -3,7 +3,7 @@
 * @param {string} dateTimeString - De DateTime string afkomstig van de database.
 * @returns {string} De geformatteerde leesbare DateTime string.
 **/
-export const formatDatabaseDateTime = (dateTimeString: string): string => {
+export const formatDateTime = (datetime: Date): string => {
   const options: Intl.DateTimeFormatOptions = {
     timeZone: 'Europe/Brussels',
     year: 'numeric',
@@ -13,7 +13,7 @@ export const formatDatabaseDateTime = (dateTimeString: string): string => {
     minute: 'numeric',
   };
 
-  const date = new Date(dateTimeString);
+  const date = new Date(datetime);
   return new Intl.DateTimeFormat('nl-NL', options).format(date);
 }
 

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../models/Registration.php';
 
-class AccountResponse
+class RegistrationResponse
 {
     public $id;
     public $group;
@@ -27,11 +27,16 @@ class AccountResponse
     public $second_telephone_number;
     public $second_email;
     public $allow_media;
+    public $created_at;
+    public $updated_at;
 
     public function __construct(Registration $registration)
     {
         $this->id = $registration->id;
-        $this->group = $registration->group;
+        $this->group = [
+            'id' => $registration->group->id,
+            'name' => $registration->group->name
+        ];
         $this->first_name = $registration->first_name;
         $this->last_name = $registration->last_name;
         $this->birthdate = $registration->birthdate;
@@ -53,7 +58,9 @@ class AccountResponse
         $this->second_phone_number = $registration->second_phone_number;
         $this->second_telephone_number = $registration->second_telephone_number;
         $this->second_email = $registration->second_email;
-        $this->allow_media = $registration->allow_media;        
+        $this->allow_media = $registration->allow_media;
+        $this->created_at = $registration->created_at;
+        $this->updated_at = $registration->updated_at;
     }
 
     public function toArray()

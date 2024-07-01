@@ -1,0 +1,70 @@
+.p-datatable-header{
+    padding: 1rem;
+}
+
+.p-datatable-thead>tr>th{
+    padding: 1rem;
+}
+
+.p-inputtext{
+    border: var(--s-2) solid transparent;
+    outline: var(--s-99) solid var(--main-color);
+}
+
+.registrationstable-header{
+    flex-direction: row;
+}
+
+.registrationstable-header .input{
+    width: auto;
+}
+
+.p-multiselect-panel{
+    box-shadow: 0px 2px 15px rgb(187, 187, 187);
+}
+
+.p-multiselect-header{
+    padding: 0.5rem 1rem;
+}
+
+.p-multiselect-item{
+    padding: 0.5rem 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.p-checkbox-box{
+    border: 0.1rem solid var(--main-color);
+}
+
+.p-highlight{
+    color: white;
+}
+
+.p-datatable-table td{
+    padding: 1rem;
+}
+
+.p-paginator{
+    padding: 0.5rem;
+}
+
+.p-dropdown-label{
+    padding: 0.3rem;
+}
+
+.p-dropdown-item{
+    padding: 0.5rem 1rem;
+}
+
+.exportToExcel__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-style: italic;
+}
+
+.popup-text{
+    margin-bottom: 1rem;
+}
