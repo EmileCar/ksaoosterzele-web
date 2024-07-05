@@ -1,0 +1,35 @@
+.imageList{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem 0;
+    font-weight: normal;
+}
+
+.imageList .image{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    border-radius: 0.5rem;
+    font-style: italic;
+    text-align: start;
+}
+
+.imageList .image img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.imageList .image .delete{
+    color: var(--error-color);
+    font-style: italic;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.imageList .image.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}

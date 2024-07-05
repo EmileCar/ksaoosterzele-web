@@ -46,7 +46,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
           </g>
         </svg>
       </div>
-      {text && <p style={{ fontStyle: "italic" }}>{text}</p>}
+      {text && <div style={{ fontStyle: "italic" }}>{text}</div>}
     </div>
   );
 };

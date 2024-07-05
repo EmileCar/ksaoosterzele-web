@@ -1,3 +1,4 @@
+import '../../media/Media.css';
 import { useCallback, useState } from "react";
 import Button from "../../../components/button/Button";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";

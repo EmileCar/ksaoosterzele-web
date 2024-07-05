@@ -5,13 +5,13 @@ import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/date
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
-import { AutoComplete } from 'primereact/autocomplete';
 import { getImagePaths, sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
+import AutoComplete from "../../form/AutoComplete";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
@@ -65,7 +65,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                            <AutoComplete className="input-wrapper" inputClassName="input" value={values.imageFileName} placeholder="afbeeldingNaam.jpeg" suggestions={[]} completeMethod={search} onChange={(e) => changeValue("imageFileName", e.target.value)} name="imgpath" dropdown/>
+                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imagePaths" dropdown />
                         </Label>
                     </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
@@ -82,7 +82,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                         </Label>
                         <div className="form-group__half">
                             <Label text="Prijs" errorMessage={errorStates.entryPriceError}>
-                                <Input type="string" name="entryPrice" value={"€ " + (values.entryPrice ?? "...")} onChange={handleValueChange} />
+                                <Input type="string" name="entryPrice" value={values.entryPrice} onChange={handleValueChange} />
                             </Label>
                             <Label text="Featured?" customClassName="flex-column">
                                 <Checkbox name="featured" checked={values.featured} onChange={(e) => changeValue("featured", e.target.checked)} />

@@ -5,9 +5,6 @@ import { formatDate, formatDateTime, formatDateToInputDateTime, isDateTimeInPast
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
-import { AutoComplete } from 'primereact/autocomplete';
-import { getImagePaths, sendEvent } from "../../../services/eventService";
-import Checkbox from "../../form/Checkbox";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
 import Form from "../../form/Form";

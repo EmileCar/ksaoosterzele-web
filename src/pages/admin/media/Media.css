@@ -1,7 +1,3 @@
-.fileInput{
-    cursor: pointer;
-}
-
 .label.file{
     flex-direction: column;
     align-items: flex-start;
@@ -10,4 +6,8 @@
 
 .form-group.images{
     flex-direction: column;
+}
+
+.changeMedia-button{
+    background-color: green !important;
 }

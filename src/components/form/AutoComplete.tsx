@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 interface AutoCompleteProps {
-    value: string[];
+    value: string[] | string;
     placeholder?: string;
     suggestions: string[];
     completeMethod: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -53,30 +53,38 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     };
 
     const handleSuggestionClick = (suggestion: string) => {
-        const newValues = [...value, suggestion];
-        onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        if (Array.isArray(value)) {
+            const newValues = [...value, suggestion];
+            onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        } else {
+            onChange({ target: { value: suggestion, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        }
         setInputValue("");
         setShowSuggestions(false);
     };
 
     const handleRemoveValue = (index: number) => {
-        const newValues = value.filter((_, i) => i !== index);
-        onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        if (Array.isArray(value)) {
+            const newValues = value.filter((_, i) => i !== index);
+            onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        }
     };
 
     return (
         <div className="autocomplete-wrapper" ref={wrapperRef}>
-            <div className="autocomplete-values">
-                {value.map((val, index) => (
-                    <div key={index} className="autocomplete-value">
-                        {val}
-                        <span onClick={() => handleRemoveValue(index)} className="autocomplete-value-delete">&times;</span>
-                    </div>
-                ))}
-            </div>
+            {Array.isArray(value) && (
+                <div className="autocomplete-values">
+                    {value.map((val, index) => (
+                        <div key={index} className="autocomplete-value">
+                            {val}
+                            <span onClick={() => handleRemoveValue(index)} className="autocomplete-value-delete">&times;</span>
+                        </div>
+                    ))}
+                </div>
+            )}
             <input
                 type="text"
-                className={`inherit-font autocomplete-input`}
+                className="inherit-font autocomplete-input"
                 value={inputValue}
                 placeholder={placeholder}
                 onChange={handleInputChange}

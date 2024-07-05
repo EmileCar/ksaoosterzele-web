@@ -14,12 +14,14 @@ import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import useFetch from "../../../hooks/useFetch";
+import { useNavigate } from "react-router-dom";
 
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
     const [isPending, setIsPending] = useState<boolean>(false);
     const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
+    const navigate = useNavigate();
 
     const handleSubmitForm = async () => {
         setIsPending(true);
@@ -82,6 +84,9 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                         />
                     </Label>
                     <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
+                    {collage &&
+                        <Button text="Pas content aan" onClick={() => navigate(`/admin/media/${values.id}`)} customClassName="changeMedia-button" darken uppercase/>
+                    }
                 </Form>
             </FetchedDataLayout>
         </Popup>

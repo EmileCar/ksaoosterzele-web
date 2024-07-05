@@ -36,6 +36,9 @@
 	cursor: pointer;
 	color: #000;
 }
+.popup .error:not(.label){
+	margin-bottom: var(--s0);
+}
 
 @media screen and (min-width: 55rem) {
     .overlay {

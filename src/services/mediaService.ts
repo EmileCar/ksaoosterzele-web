@@ -82,42 +82,6 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
     }
 }
 
-// export async function getCollage(collageId) {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}?page=collage&id=${collageId}`, {
-//             method: 'GET',
-//             credentials: 'include',
-//         });
-
-//         if(!response.ok) {
-//             throw await ErrorResponseModel.createFromResponse(response);
-//         }
-
-//         const data = await response.json();
-//         return new CollageModel(data);
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-// export async function addCollage(collageData) {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}?page=collage`, {
-//             method: 'POST',
-//             body: JSON.stringify(collageData),
-//             credentials: 'include',
-//         });
-
-//         if(!response.ok) {
-//             throw await ErrorResponseModel.createFromResponse(response);
-//         }
-
-//         return response.json();
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
 // export async function updateCollage(collageData, imageFiles) {
 //     try {
 //         const response = await fetch(`${API_BASE_URL}?page=collage`, {
@@ -169,30 +133,30 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
 //     }
 // }
 
-// export async function getImagesOfCollage(collageId) {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}?page=collage_images&id=${collageId}`, {
-//             method: 'GET',
-//             credentials: 'include',
-//         });
+export async function getImagesOfCollage(collageId : number) {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=collage_images&id=${collageId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
 
-//         return response.json();
-//     } catch (error) {
-//         throw error;
-//     }
-// }
+        return response.json();
+    } catch (error) {
+        throw error;
+    }
+}
 
-// export async function deleteImageOfCollage(collageId, imageName) {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}?page=collage_image&id=${collageId}&image=${imageName}`, {
-//             method: 'DELETE',
-//             credentials: 'include',
-//         });
+export async function deleteImageOfCollage(collageId : number, imageName : string) {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=collage_image&id=${collageId}&image=${imageName}`, {
+            method: 'DELETE',
+            credentials: 'include',
+        });
 
-//         if(!response.ok) {
-//             throw await ErrorResponseModel.createFromResponse(response);
-//         }
-//     } catch (error) {
-//         throw error;
-//     }
-// }
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
