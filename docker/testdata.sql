@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `ksaoosterzele_testdatabase`
 --
+CREATE DATABASE IF NOT EXISTS `ksaoosterzele_testdatabase` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `ksaoosterzele_testdatabase`;
 
 -- --------------------------------------------------------
 
