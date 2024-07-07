@@ -11,3 +11,13 @@
 .changeMedia-button{
     background-color: green !important;
 }
+
+.upload-form{
+    align-items: center;
+}
+
+@media screen and (min-width: 55rem) {
+    .upload-form{
+        align-items: flex-start;
+    }
+}

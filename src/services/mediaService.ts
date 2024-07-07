@@ -82,6 +82,27 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
     }
 }
 
+export async function uploadImages(id: number, imageFiles: FileList) : Promise<void> {
+    try {
+        const formData = new FormData();
+        for (let i = 0; i < imageFiles.length; i++) {
+            formData.append('images[]', imageFiles[i]);
+        }
+
+        const response = await fetch(`${API_BASE_URL}?page=collage_images&id=${id}`, {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 // export async function updateCollage(collageData, imageFiles) {
 //     try {
 //         const response = await fetch(`${API_BASE_URL}?page=collage`, {
@@ -118,29 +139,16 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
 // }
 
 
-// export async function deleteCollage(collageId) {
-//     try {
-//         const response = await fetch(`${API_BASE_URL}?page=collage&id=${collageId}`, {
-//             method: 'DELETE',
-//             credentials: 'include',
-//         });
-
-//         if(!response.ok) {
-//             throw await ErrorResponseModel.createFromResponse(response);
-//         }
-//     } catch (error) {
-//         throw error;
-//     }
-// }
-
-export async function getImagesOfCollage(collageId : number) {
+export async function deleteCollage(collageId : number) : Promise<void> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=collage_images&id=${collageId}`, {
-            method: 'GET',
+        const response = await fetch(`${API_BASE_URL}?page=collage&id=${collageId}`, {
+            method: 'DELETE',
             credentials: 'include',
         });
 
-        return response.json();
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
     } catch (error) {
         throw error;
     }

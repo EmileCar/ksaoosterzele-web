@@ -8,6 +8,7 @@ class Collage {
     date: Date;
     active: boolean;
     types: CollageType[];
+    images: string[] | null;
 
     constructor(collageData?: any) {
         this.id = collageData.id || null;
@@ -16,7 +17,8 @@ class Collage {
         this.description = collageData.description || null;
         this.date = new Date(collageData.date) || new Date();
         this.active = collageData.active || false;
-        this.types = collageData.types.map((type: any) => new CollageType(type)) || [];
+        this.types = collageData.types && collageData.types.map((type: any) => new CollageType(type)) || [];
+        this.images = collageData.images ?? null;
     }
 }
 

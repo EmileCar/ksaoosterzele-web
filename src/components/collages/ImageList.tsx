@@ -1,39 +1,50 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./ImageList.css";
-import { deleteImageOfCollage, getImagesOfCollage } from "../../services/mediaService";
+import { deleteImageOfCollage } from "../../services/mediaService";
 import useFetch from "../../hooks/useFetch";
 import Collage from "../../types/Collage";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
+import Default from '../../assets/img/default.jpg';
 
-const ImageList = ({ collage, setErrorStates } : { collage: Collage, setErrorStates: any }) => {
-    const fetchCollageImages = useCallback(() => getImagesOfCollage(collage.id as unknown as number), [collage]);
-    const { pending, data: images, error, refetch } = useFetch(fetchCollageImages);
+const ImageList = ({ collage, images } : { collage: Collage, images: string[] }) => {
+    const [detail, setDetail] = useState<string | null>()
 
     const deleteImage = async (imageName: string) => {
-        await deleteImageOfCollage(collage.id!, imageName).catch((error) => {
-            setErrorStates({ global: error.message });
-        })
+        
     };
 
     return (
-        <FetchedDataLayout isPending={pending} error={error}>
-            {images && images.map((image: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | null | undefined, index: React.Key | null | undefined) => {
-                return (
-                    <div key={index} className={`image ${(pending === image) && "disabled"}`} style={{ position: "relative" }}>
-                        <img
-                            src={`../assets/media/collages/${collage.name}/thumbnails/${image}`}
-                            alt={image as string}
-                            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => { (e.target as HTMLImageElement).src = "default" }}
-                        />
-                        <div>
-                            <p>{image}</p>
-                            <p className="delete" onClick={() => deleteImage(image as string)}>Verwijder</p>
-                        </div>
-                    </div>
-                );
-            })}
-        </FetchedDataLayout>
-    );
-}
+        <ul className="image-list">
+            {images.map((image) => (
+                <img
+                    key={image}
+                    src={`../../assets/media/collages/${collage.name}/thumbnails/${image}`}
+                    alt={collage.displayName + " foto"}
+                    width={200}
+                    height={150}
+                    onError={(e) => {
+                        e.currentTarget.src = Default;
+                    }}
+                    className="image"
+                    onClick={() => setDetail(image)}
+                />
+            ))}
+            {detail && (
+                <div className="overlay overlay-media" onClick={() => setDetail(null)}>
+                    <span className="close-media" onClick={() => setDetail(null)}>
+                        &times;
+                    </span>
+                    <img
+                        src={`../../assets/media/collages/${collage.name}/${detail}`}
+                        alt={collage.displayName + " foto"}
+                        onError={(e) => {
+                            e.currentTarget.src = Default;
+                        }}
+                        className="detail__image"
+                    />
+                </div>
+            )}
+        </ul>
+)}
 
 export default ImageList;

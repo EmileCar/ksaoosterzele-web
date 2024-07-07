@@ -18,7 +18,6 @@ $mediaRoutes = [
     'collage_images' => array(
         'controller' => 'Media',
         'methods' => array(
-            'GET'=> 'getCollageImages',
             'POST' => 'addCollageImages',
         )
     ),

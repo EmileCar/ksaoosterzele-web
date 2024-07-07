@@ -34,21 +34,21 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
 		}
 
-		$collage = Collage::find($_GET['id']);
+		$collage = Collage::with("types")->find($_GET['id']);
 
 		if (empty($collage)) {
 			ErrorResponse::exitWithError(404, "Collage niet gevonden.");
 		}
 
-		$images = $this->directoryManager->getFilesFromDirectory($collage->name);
+		$images = $this->directoryManager->getFilesFromDirectory($collage->internal_name);
 		$images = array_filter($images, function($image) {
 			return $image !== "thumbnail.png";
 		});
 
-		exit(json_encode([
-			"collage" => $collage,
-			"images" => $images
-		]));
+		$collageArray = $collage->toArray();
+		$collageArray['images'] = array_values($images);
+
+		exit(json_encode($collageArray));
 	}
 
 	public function getCollageTypes() {
@@ -78,7 +78,7 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(400, "De directory van deze collagenaam bestaat al.");
 		}
 
-		$this->directoryManager->createDirectory($collage->name);
+		$this->directoryManager->createDirectory($collage->internal_name);
 
 		$collage->save();
 
@@ -117,11 +117,8 @@ class MediaController extends Controller {
 		exit();
 	}
 
-	public function deleteCollage()
-	{
-		if (empty($_SESSION["admin_ksaoosterzele"])) {
-			ErrorResponse::exitWithError(401);
-		}
+	public function deleteCollage() {
+		$account = Account::is_authenticated();
 
 		if (empty($_GET['id'])) {
 			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
@@ -133,12 +130,8 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(404, "Collage niet gevonden.");
 		}
 
-		if (!$this->directoryManager->doesDirectoryExist($collage->name)) {
-			ErrorResponse::exitWithError(404, "Directory van deze collage bestaat niet. Controleer zeker voor duplicaten.");
-		}
-		
 		try {
-			$this->directoryManager->removeDirectory($collage->name, $this->directoryManager->getFilesFromDirectory($collage->name));
+			$this->directoryManager->removeDirectory($collage->internal_name, $this->directoryManager->getFilesFromDirectory($collage->internal_name));
 		} catch (Throwable $e) {
 			ErrorResponse::exitWithError(500, "Er was een probleem bij het verwijderen van de collage.", ["error" => $e.getMessage()]);
 		}
@@ -150,9 +143,7 @@ class MediaController extends Controller {
 	}
 
 	public function addCollageImages() {
-		if (empty($_SESSION["admin_ksaoosterzele"])) {
-			ErrorResponse::exitWithError(401);
-		}
+		$account = Account::is_authenticated();
 
 		if (empty($_GET['id'])) {
 			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
@@ -164,17 +155,15 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(404, "Collage niet gevonden.");
 		}
 
-		$images = $this->_addImagesToCollage($collage->name, $_FILES["images"]);
+		$images = $this->_addImagesToCollage($collage->internal_name, $_FILES["images"]);
 
-		$this->imageManager->generateThumbnail($collage->name);
+		$this->imageManager->generateThumbnail($collage->internal_name);
 
 		exit(json_encode($images));
 	}
 
 	public function deleteCollageImage() {
-		if (empty($_SESSION["admin_ksaoosterzele"])) {
-			ErrorResponse::exitWithError(401);
-		}
+		$account = Account::is_authenticated();
 
 		if (empty($_GET['id']) || empty($_GET['image'])) {
 			ErrorResponse::exitWithError(400, "Gelieve een id en image mee te geven.");
@@ -186,7 +175,7 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(404, "Collage niet gevonden.");
 		}
 
-		$target = $this->directoryManager->getTargetDir() . DIRECTORY_SEPARATOR . $collage->name . DIRECTORY_SEPARATOR . $_GET['image'];
+		$target = $this->directoryManager->getTargetDir() . DIRECTORY_SEPARATOR . $collage->internal_name . DIRECTORY_SEPARATOR . $_GET['image'];
 
 		if (!file_exists($target)) {
 			ErrorResponse::exitWithError(404, "Afbeelding niet gevonden.");
@@ -194,29 +183,10 @@ class MediaController extends Controller {
 
 		unlink($target);
 
-		$this->imageManager->generateThumbnail($collage->name);
+		$this->imageManager->generateThumbnail($collage->internal_name);
 
 		http_response_code(200);
 		exit();
-	}
-
-	public function getCollageImages() {
-		if (empty($_GET['id'])) {
-			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
-		}
-
-		$collage = Collage::find($_GET['id']);
-
-		if (empty($collage)) {
-			ErrorResponse::exitWithError(404, 'Collage niet gevonden.');
-		}
-
-		$images = $this->directoryManager->getFilesFromDirectory($collage->name);
-		$images = array_filter($images, function ($image) {
-			return $image !== "thumbnail.png";
-		});
-
-		exit(json_encode($images));
 	}
 
 	/**
@@ -233,11 +203,12 @@ class MediaController extends Controller {
 			// tmpFile is de tijdelijke locatie van de afbeelding in cache
 			$tmpFile = $images['tmp_name'][$i];
 
+			// als de image (van naam) al bestaat, break
 			if (file_exists($this->directoryManager->getTargetDir() . DIRECTORY_SEPARATOR . $collageName . DIRECTORY_SEPARATOR . $images['name'][$i])) {
 				break;
 			}
 
-			/** 
+			/**
 			 * Check of de afbeelding groter is dan de maximum file size
 			 * 	Zo ja, comprimeer de afbeelding en sla die gecomprimeerde versie op
 			 * 	Zo nee, sla de afbeelding op in de collage directory zonder compressie rechtstreeks vanuit de cache
