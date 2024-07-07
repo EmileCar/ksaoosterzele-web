@@ -78,11 +78,9 @@ const RegistrationsAdmin = () => {
 
     return (
         <>
-            <div className="admin__top">
-                <SectionTitle title="Inschrijvingen beheren">
-                    <p>Hier kun je inschrijvingen zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
-                </SectionTitle>
-            </div>
+            <SectionTitle title="Inschrijvingen beheren">
+                <p>Hier kun je inschrijvingen zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
+            </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 <DataTable
                     value={registrations || []}

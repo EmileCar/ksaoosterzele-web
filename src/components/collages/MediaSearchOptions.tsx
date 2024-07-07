@@ -18,7 +18,7 @@ const MediaSearchOptions = () => {
 
     return (
         <div className="media__search-options">
-            <button className="button button-admin inherit-font" onClick={() => setShowSearchOptions(!showSearchOptions)}>
+            <button className="button inherit-font" onClick={() => setShowSearchOptions(!showSearchOptions)}>
                 {showSearchOptions ? (
                     <>
                         <span className="pi pi-angle-double-up"></span> Verberg zoekfilters

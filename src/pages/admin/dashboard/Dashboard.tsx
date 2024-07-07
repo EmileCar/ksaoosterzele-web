@@ -17,13 +17,10 @@ const DashboardAdmin = () => {
 
     return (
         <>
-            <div className="admin__top">
-                <SectionTitle title="Welkom op de admin-pagina" fullWidth>
-                    <p>Vanuit hier kan je de activiteiten, media, inschrijvingen en mattentaarten beheren.</p>
-                    <p>Je bent ingelogd als {account && account.username} met {account && account.role.name} als rol.</p>
-                </SectionTitle>
-                <Button text="Uitloggen" onClick={handleClickLogout} customClassName="button-admin" hover/>
-            </div>
+            <SectionTitle title="Welkom op de admin-pagina" fullWidth>
+                <p>Vanuit hier kan je de activiteiten, media, inschrijvingen en mattentaarten beheren.</p>
+                <p>Je bent ingelogd als {account && account.username} met {account && account.role.name} als rol.</p>
+            </SectionTitle>
             <div className="dashboard-grid">
                 <Link className="dashboard-card" to="/admin/evenementen">
                     <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />

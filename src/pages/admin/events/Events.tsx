@@ -20,30 +20,28 @@ const EventsAdmin = () => {
 
     return (
         <>
-            <div className="admin__top">
-                <SectionTitle title="Evenementen beheren">
-                    <p>Maak hier nieuwe activiteiten/evenmenten aan of pas bestaande activiteiten aan.</p>
-                </SectionTitle>
+            <SectionTitle title="Evenementen beheren">
+                <p>Maak hier nieuwe activiteiten/evenmenten aan of pas bestaande activiteiten aan.</p>
+            </SectionTitle>
+            <div className="admin__actions">
+                <Button text="+ Evenement toevoegen" onClick={() => setShowCreatePopup(true)} hover/>
+                <Button text="+ Evenement toevoegen" onClick={() => setShowCreatePopup(true)} hover/>
+
             </div>
-            <div className="events__container">
-                <div className="admin__actions">
-                    <Button text="+ Activiteit toevoegen" onClick={() => setShowCreatePopup(true)} hover/>
+            <FetchedDataLayout isPending={pending} error={error}>
+                {events && events.length === 0 && (
+                <p>
+                    Er zijn geen activiteiten gepland.
+                </p>
+                )}
+                <div className={`events-list events-list_admin`}>
+                {events &&
+                    events.map((event: Event) => (
+                    <EventListItemAdmin key={event.id} event={event} enableWrap reload={refetch} />
+                    ))}
                 </div>
-                <FetchedDataLayout isPending={pending} error={error}>
-                    {events && events.length === 0 && (
-                    <p>
-                        Er zijn geen activiteiten gepland.
-                    </p>
-                    )}
-                    <div className={`events-list events-list_admin`}>
-                    {events &&
-                        events.map((event: Event) => (
-                        <EventListItemAdmin key={event.id} event={event} enableWrap reload={refetch} />
-                        ))}
-                    </div>
-                </FetchedDataLayout>
-                {showCreatePopup && <EventPopup onClose={closeHandler} />}
-            </div>
+            </FetchedDataLayout>
+            {showCreatePopup && <EventPopup onClose={closeHandler} />}
         </>
     );
 }

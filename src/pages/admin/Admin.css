@@ -7,31 +7,22 @@
     text-align: center;
 }
 
-.button-admin{
-    align-self: center;
-}
-
 .container-admin{
 	text-align: center;
 	padding: var(--s0);
     color: var(--main-color);
-}
-
-.admin__top {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    margin-bottom: 1.5rem;
+    gap: var(--s1);
 }
 
 .admin__actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin: 1.5rem 0;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s0);
 }
 
 @media screen and (min-width: 55rem) {
@@ -44,11 +35,7 @@
         padding: 2rem;
         text-align: left;
     }
-    .button-admin{
-        align-self: flex-start;
-    }
-    .admin__top {
-        display: grid;
-        grid-template-columns: 1fr auto;
+    .admin__actions {
+        justify-content: flex-start;
     }
 }

@@ -46,11 +46,9 @@ const CollageMedia = () => {
 
     return (
         <>
-            <div className="admin__top">
-                <SectionTitle title={collage?.name || "Collage media"}>
-                    <p>Voeg fotos toe of pas de collage van inhoud aan.</p>
-                </SectionTitle>
-            </div>
+            <SectionTitle title={collage?.name || "Collage media"}>
+                <p>Voeg fotos toe of pas de collage van inhoud aan.</p>
+            </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 {collage &&
                     <>
