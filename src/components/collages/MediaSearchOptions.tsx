@@ -5,6 +5,7 @@ import { useCollageContext } from "../../contexts/CollageContext";
 import { Dropdown } from 'primereact/dropdown';
 import CollageType from "../../types/CollageType";
 import Form from "../form/Form";
+import Group from "../form/Group";
 
 const MediaSearchOptions = () => {
     const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy, showSearchOptions, setShowSearchOptions } = useCollageContext();
@@ -17,27 +18,27 @@ const MediaSearchOptions = () => {
 
     return (
         <div className="media__search-options">
-            <Form>
-            <form className={`form filter-media-form ${showSearchOptions ? "show" : ""}`}>
-                <Label text="Zoeken">
-                    <Input type="search" name={"search"} placeholder="Zoeken..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
-                </Label>
-                <Label text="Sorteer op">
-                    <select className="input" value={sortedBy} onChange={(e) => setSortedBy(e.target.value)}>
-                        {sortOptions.map((option) => (
-                            <option key={option.value} value={option.value}>{option.label}</option>
-                        ))}
-                    </select>
-                </Label>
-                <Label text="Groepeer op">
-                    <select className="input" value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
-                        <option value="none">Geen</option>
-                        {collageTypes && collageTypes.map((type: CollageType) => (
-                            <option key={type.id} value={type.name}>{type.name}</option>
-                        ))}
-                    </select>
-                </Label>
-            </form>
+            <Form customClassName={`filter-media-form ${showSearchOptions ? "show" : ""}`}>
+                <Group>
+                    <Label text="Zoeken">
+                        <Input type="search" name={"search"} placeholder="Zoeken..." value={searchValue} onChange={(e) => setSearchValue(e.target.value)} />
+                    </Label>
+                    <Label text="Sorteer op">
+                        <select className="input inherit-font" value={sortedBy} onChange={(e) => setSortedBy(e.target.value)}>
+                            {sortOptions.map((option) => (
+                                <option key={option.value} value={option.value}>{option.label}</option>
+                            ))}
+                        </select>
+                    </Label>
+                    <Label text="Groepeer op">
+                        <select className="input inherit-font" value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
+                            <option value="none">Geen</option>
+                            {collageTypes && collageTypes.map((type: CollageType) => (
+                                <option key={type.id} value={type.name}>{type.name}</option>
+                            ))}
+                        </select>
+                    </Label>
+                </Group>
             </Form>
         </div>
     );

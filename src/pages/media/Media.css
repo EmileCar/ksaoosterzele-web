@@ -7,7 +7,7 @@
 }
 
 .filter-media-form{
-	flex-direction: row;
+	flex-wrap: wrap;
 	height: 0rem;
 	overflow-y: hidden;
 	padding: 0 1px;
@@ -19,12 +19,13 @@
 	height: 4.8rem;
 }
 
-@media screen and (max-width: 580px){
-	.filter-media-form{
-		flex-direction: column;
-	}
+.media__search-options--admincontainer {
+    flex-basis: 100%;
+	margin-top: -1rem;
 }
 
-.filter-media-form .showSorted{
-	flex-direction: column;
+@media screen and (max-width: 740px) {
+	.filter-media-form.show{
+		height: 250px;
+	}
 }
