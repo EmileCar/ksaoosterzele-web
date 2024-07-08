@@ -8,12 +8,13 @@ import Form from "../form/Form";
 import Group from "../form/Group";
 
 const MediaSearchOptions = () => {
-    const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy, showSearchOptions, setShowSearchOptions } = useCollageContext();
+    const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy, showSearchOptions } = useCollageContext();
 
     const sortOptions = [
         { label: 'Recentste eerst', value: 'recent' },
         { label: 'Oudste eerst', value: 'oldest' },
-        { label: 'Naam', value: 'name' }
+        { label: 'Naam A-Z', value: 'name' },
+        { label: 'Naam Z-A', value: 'name_desc' }
     ];
 
     return (

@@ -18,7 +18,7 @@ const CollageGallery = () => {
                 </p>
                 ): (collages && (
                     <>
-                        <Button text=" Zoekopties" onClick={() => setShowSearchOptions(!showSearchOptions)} icon={showSearchOptions ? "pi pi-angle-double-up" : "pi pi-angle-double-down"} customClassName="button--search-options" />
+                        <Button text=" Zoekopties" hover onClick={() => setShowSearchOptions(!showSearchOptions)} icon={showSearchOptions ? "pi pi-angle-double-up" : "pi pi-angle-double-down"} customClassName="button--search-options" />
                         <MediaSearchOptions />
                         <div className="collage_gallery">
                             {

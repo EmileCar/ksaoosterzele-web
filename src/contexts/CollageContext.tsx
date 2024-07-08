@@ -61,6 +61,10 @@ export const CollageProvider = ({
 				filteredCollages = filteredCollages.sort((a, b) =>
 					a.name.localeCompare(b.name)
 				);
+			} else if (sortedBy === "name_desc") {
+				filteredCollages = filteredCollages.sort((a, b) =>
+					b.name.localeCompare(a.name)
+				);
 			}
 
 			if (groupBy === "date") {
