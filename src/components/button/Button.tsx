@@ -13,6 +13,7 @@ interface ButtonProps {
     round?: boolean;
     inverted?: boolean;
     submit?: boolean;
+    icon?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -27,6 +28,7 @@ const Button: React.FC<ButtonProps> = ({
     round = false,
     inverted = false,
     submit = false,
+    icon,
 }) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -36,17 +38,11 @@ const Button: React.FC<ButtonProps> = ({
     return (
         <button
             onClick={handleClick}
-            className={`button inherit-font
-                ${customClassName}
-                ${hover ? 'hover' : ''}
-                ${darken ? 'darken' : ''}
-                ${uppercase ? 'uppercase' : ''}
-                ${inverted ? 'inverted' : ''}
-                ${submit ? 'submit' : ''}
-                ${fullWidth ? 'full-width' : ''}`}
+            className={`button inherit-font ${customClassName} ${hover ? 'hover' : ''}${darken ? 'darken' : ''} ${uppercase ? 'uppercase' : ''} ${inverted ? 'inverted' : ''} ${submit ? 'submit' : ''} ${fullWidth ? 'full-width' : ''}`}
             disabled={disabled}
             style={{ borderRadius: round ? '50px' : '5px' }}
         >
+            {icon && <span className={`pi ${icon}`}></span>}
             {text}
         </button>
     );

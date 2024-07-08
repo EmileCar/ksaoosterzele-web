@@ -24,6 +24,7 @@ export const CollageProvider = ({
 	const [sortedBy, setSortedBy] = useState("recent");
 	const [groupBy, setGroupBy] = useState("none");
 	const [globalError, setGlobalError] = useState<string | null>(null);
+    const [showSearchOptions, setShowSearchOptions] = useState(false);
 
 	const fetchCollages = useCallback(() => getCollages(isAdmin), [isAdmin]);
 	const {
@@ -135,6 +136,8 @@ export const CollageProvider = ({
 				groupBy,
 				setGroupBy,
 				collageTypes,
+				showSearchOptions,
+				setShowSearchOptions,
 			}}
 		>
 			{children}

@@ -7,8 +7,7 @@ import CollageType from "../../types/CollageType";
 import Form from "../form/Form";
 
 const MediaSearchOptions = () => {
-    const [showSearchOptions, setShowSearchOptions] = useState(false);
-    const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy } = useCollageContext();
+    const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy, showSearchOptions, setShowSearchOptions } = useCollageContext();
 
     const sortOptions = [
         { label: 'Recentste eerst', value: 'recent' },
@@ -18,17 +17,6 @@ const MediaSearchOptions = () => {
 
     return (
         <div className="media__search-options">
-            <button className="button inherit-font" onClick={() => setShowSearchOptions(!showSearchOptions)}>
-                {showSearchOptions ? (
-                    <>
-                        <span className="pi pi-angle-double-up"></span> Verberg zoekfilters
-                    </>
-                ) : (
-                    <>
-                        <span className="pi pi-angle-double-down"></span> Toon zoekfilters
-                    </>
-                )}
-            </button>
             <Form>
             <form className={`form filter-media-form ${showSearchOptions ? "show" : ""}`}>
                 <Label text="Zoeken">

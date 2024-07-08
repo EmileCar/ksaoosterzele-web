@@ -25,6 +25,7 @@ const MediaAdmin = () => {
 				<p>Maak hier nieuwe collages aan of pas bestaande collages aan.</p>
 			</SectionTitle>
 			<div className="admin__actions">
+				<Button text="Toon zoekopties" onClick={() => {}} hover/>
 				<Button text="+ Collage toevoegen" onClick={() => setShowCreatePopup(true)} hover/>
 			</div>
 			<FetchedDataLayout isPending={pending} error={error}>

@@ -4,9 +4,10 @@ import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Collage from "../../../types/Collage";
 import MediaSearchOptions from "../MediaSearchOptions";
 import CollageGalleryItem from "./CollageGalleryItem";
+import Button from '../../button/Button';
 
 const CollageGallery = () => {
-    const { pending, error, collages, fetchedCollages } = useCollageContext();
+    const { pending, error, collages, fetchedCollages, showSearchOptions, setShowSearchOptions } = useCollageContext();
 
     return (
         <div className="collages__container">
@@ -17,6 +18,7 @@ const CollageGallery = () => {
                 </p>
                 ): (collages && (
                     <>
+                        <Button text=" Zoekopties" onClick={() => setShowSearchOptions(!showSearchOptions)} icon={showSearchOptions ? "pi pi-angle-double-up" : "pi pi-angle-double-down"} customClassName="button--search-options" />
                         <MediaSearchOptions />
                         <div className="collage_gallery">
                             {

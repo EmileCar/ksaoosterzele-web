@@ -31,13 +31,13 @@ const EventsAdmin = () => {
             <FetchedDataLayout isPending={pending} error={error}>
                 {events && events.length === 0 && (
                 <p>
-                    Er zijn geen activiteiten gepland.
+                    {showPastEvents ? 'Geen verleden evenementen gevonden.' : 'Geen komende evenementen gevonden.'}
                 </p>
                 )}
                 <div className={`events-list events-list_admin`}>
-                {events &&
-                    events.map((event: Event) => (
-                    <EventListItemAdmin key={event.id} event={event} enableWrap reload={refetch} />
+                    {events &&
+                        events.map((event: Event) => (
+                        <EventListItemAdmin key={event.id} event={event} enableWrap reload={refetch} />
                     ))}
                 </div>
             </FetchedDataLayout>
