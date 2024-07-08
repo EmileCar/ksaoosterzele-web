@@ -31,6 +31,7 @@ export const CollageProvider = ({
 		pending,
 		error,
 		data: fetchedCollages,
+		refetch,
 	} = useFetch<Collage[]>(fetchCollages);
 
 	const {
@@ -138,6 +139,7 @@ export const CollageProvider = ({
 				collageTypes,
 				showSearchOptions,
 				setShowSearchOptions,
+				refetch,
 			}}
 		>
 			{children}

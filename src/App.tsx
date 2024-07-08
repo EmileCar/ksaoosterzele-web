@@ -16,6 +16,7 @@ import EventsAdmin from './pages/admin/events/Events';
 import MediaAdmin from './pages/admin/media/Media';
 import RegistrationsAdmin from './pages/admin/registrations/Registrations';
 import CollageMedia from './pages/admin/media/CollageMedia';
+import { CollageProvider } from './contexts/CollageContext';
 
 const App = () => {
 
@@ -36,7 +37,7 @@ const App = () => {
         {/* Admin */}
         <Route path="/admin" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
         <Route path="/admin/evenementen" element={<AccountProvider><EventsAdmin /></AccountProvider>} />
-        <Route path="/admin/media" element={<AccountProvider><MediaAdmin/></AccountProvider>} />
+        <Route path="/admin/media" element={<AccountProvider><CollageProvider isAdmin><MediaAdmin/></CollageProvider></AccountProvider>} />
         <Route path="/admin/media/:id" element={<AccountProvider><CollageMedia /></AccountProvider>} />
         <Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
         <Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
