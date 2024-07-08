@@ -25,6 +25,14 @@
     gap: var(--s0);
 }
 
+.past-events {
+    background-color: green;
+}
+
+.upcoming-events {
+    background-color: rgb(255, 94, 31);
+}
+
 @media screen and (min-width: 55rem) {
     .adminLayoutWrapper {
         grid-template-columns: auto 1fr;

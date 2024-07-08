@@ -1,7 +1,7 @@
 import Event from '../../../types/Event';
 import './EventsList.css';
 import Default from '../../../assets/img/default.jpg';
-import { formatDate, formatTime } from '../../../utils/datetimeUtil';
+import { formatDate, formatTime, isDateTimeInPast } from '../../../utils/datetimeUtil';
 import {  useState } from 'react';
 import EventPopup from '../popups/EventPopup';
 import ConfirmEventDeletionPopup from '../popups/ConfirmEventDeletionPopup';
@@ -33,10 +33,10 @@ const EventListItemAdmin = ({ event, enableWrap = false, reload } : { event: Eve
 			<div className='event-list_item--body'>
 				<h3>{event.name}</h3>
 				<div className="event-details">
-					<p className='event-details_item'><span className='pi pi-calendar'></span>{formatDate(event.datetime)}</p>
-					<p className='event-details_item'><span className='pi pi-clock'></span>{formatTime(event.datetime)?? "???"}</p>
-					<p className='event-details_item'><span className='pi pi-map-marker'></span>{event.location ?? "???"}</p>
-					{event.entryPrice && <p className='event-details_item'><span className='pi pi-money-bill'></span>€{event.entryPrice}</p>}
+            		<p className={`event-details_item ${isDateTimeInPast(event.datetime) ? 'error' : ''}`}><span className='pi pi-calendar' />{formatDate(event.datetime)}</p>
+					<p className='event-details_item'><span className='pi pi-clock' />{formatTime(event.datetime)?? "???"}</p>
+					<p className='event-details_item'><span className='pi pi-map-marker' />{event.location ?? "???"}</p>
+					{event.entryPrice && <p className='event-details_item'><span className='pi pi-money-bill'/>€{event.entryPrice}</p>}
 				</div>
 			</div>
 			<div className='event-buttons'>

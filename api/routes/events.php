@@ -21,10 +21,10 @@ $eventRoutes = [
             'GET' => 'getImagePaths'
         )
     ),
-    'past_events' => array(
+    'all_events' => array(
         'controller' => 'Event',
         'methods' => array(
-            'GET' => 'getPastEvents'
+            'GET' => 'getAllEvents'
         )
     ),
 ];

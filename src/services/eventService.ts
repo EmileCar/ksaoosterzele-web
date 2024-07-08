@@ -5,7 +5,7 @@ import { formatCustomDateTime } from "../utils/datetimeUtil";
 
 export async function getEvents(limit?: number): Promise<Event[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=events&limit=${limit}`, {
+        const response = await fetch(`${API_BASE_URL}?page=events${limit ? `&limit=${limit}` : ''}`, {
             method: 'GET',
             credentials: 'include',
         });
@@ -94,9 +94,9 @@ export async function deleteEvent(id: number): Promise<void> {
     }
 }
 
-export async function getPastEvents() {
+export async function getAdminEvents(getPastEvents?: boolean): Promise<Event[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=past_events`, {
+        const response = await fetch(`${API_BASE_URL}?page=all_events${getPastEvents ? '&past=true' : ''}`, {
             method: 'GET',
             credentials: 'include',
         });

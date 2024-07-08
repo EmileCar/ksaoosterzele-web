@@ -2,7 +2,7 @@ import Event from '../../../types/Event';
 import './EventsList.css';
 import { Link } from 'react-router-dom';
 import Default from '../../../assets/img/default.jpg';
-import { formatDate, formatTime } from '../../../utils/datetimeUtil';
+import { formatDate, formatTime, isDateTimeInPast } from '../../../utils/datetimeUtil';
 
 const EventListItem = ({ event, enableWrap = false } : { event: Event, enableWrap?: boolean }) => {
 
@@ -22,10 +22,10 @@ const EventListItem = ({ event, enableWrap = false } : { event: Event, enableWra
         <div className='event-list_item--body'>
           	<h3>{event.name}</h3>
           	<div className="event-details">
-            	<p className='event-details_item'><span className='pi pi-calendar'></span>{formatDate(event.datetime)}</p>
-            	<p className='event-details_item'><span className='pi pi-clock'></span>{formatTime(event.datetime)?? "???"}</p>
-            	<p className='event-details_item'><span className='pi pi-map-marker'></span>{event.location ?? "???"}</p>
-            	{event.entryPrice && <p className='event-details_item'><span className='pi pi-money-bill'></span>€{event.entryPrice}</p>}
+            	<p className={`event-details_item ${isDateTimeInPast(event.datetime) ? 'error' : ''}`}><span className='pi pi-calendar' />{formatDate(event.datetime)}</p>
+            	<p className='event-details_item'><span className='pi pi-clock' />{formatTime(event.datetime)?? "???"}</p>
+            	<p className='event-details_item'><span className='pi pi-map-marker' />{event.location ?? "???"}</p>
+            	{event.entryPrice && <p className='event-details_item'><span className='pi pi-money-bill'/>€{event.entryPrice}</p>}
           	</div>
         </div>
     </Link>

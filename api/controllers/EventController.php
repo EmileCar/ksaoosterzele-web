@@ -9,12 +9,20 @@ use Carbon\Carbon;
 class EventController extends Controller {
 
 	public function getEvents() {
-		$events = Event::where("datetime", '>', Carbon::now())
-			->orderBy("datetime", "asc")
-			->get();
+		$query = Event::where("datetime", '>', Carbon::now())
+			->orderBy("featured", "desc")
+			->orderBy("datetime", "asc");
+
+		if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
+			$limit = intval($_GET['limit']);
+			$query->limit($limit);
+		}
+
+		$events = $query->get();
 
 		exit(json_encode($events));
 	}
+
 
 	public function addEvent() {
 		$account = Account::is_authenticated();
@@ -90,9 +98,7 @@ class EventController extends Controller {
 	}
 
 	public function deleteEvent() {
-		if (empty($_SESSION["admin_ksaoosterzele"])){
-			ErrorResponse::exitWithError(401);
-		}
+		$account = Account::is_authenticated();
 
 		if(empty($_GET["id"])){
 			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
@@ -108,15 +114,21 @@ class EventController extends Controller {
 		exit();
 	}
 
-	public function getPastEvents() {
-		if (empty($_SESSION["admin_ksaoosterzele"])){
-			ErrorResponse::exitWithError(401);
+	public function getAllEvents() {
+		$account = Account::is_authenticated();
+
+		$events = [];
+
+		if (isset($_GET['past']) && $_GET['past'] === "true") {
+			$events = Event::where("datetime", '<', Carbon::now())
+				->orderBy("datetime", "desc")
+				->get();
+		} else {
+			$events = Event::where("datetime", '>', Carbon::now())
+				->orderBy("datetime", "asc")
+				->get();
 		}
 
-		$events = Event::where("timestamp", '<', Carbon::now())
-			->orderBy("timestamp", "desc")
-			->get();
-		
 		exit(json_encode($events));
 	}
 }
