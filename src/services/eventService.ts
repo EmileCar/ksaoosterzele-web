@@ -105,7 +105,9 @@ export async function getAdminEvents(getPastEvents?: boolean): Promise<Event[]> 
             throw await ErrorResponse.createFromResponse(response);
         }
 
-        return response.json();
+        const data = await response.json();
+        const events = data.map((eventData: any) => new Event(eventData));
+        return events;
     } catch (error) {
         throw new Error('Er was een probleem bij het ophalen van de activiteiten.');
     }

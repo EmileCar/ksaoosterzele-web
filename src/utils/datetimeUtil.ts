@@ -56,8 +56,6 @@ export const isDatabaseDateTimeInPast = (dateTimeString: string): boolean => {
  * @returns {boolean} Of de DateTime in het verleden ligt.
  **/
 export const isDateTimeInPast = (date: Date): boolean => {
-  console.log(date)
-  console.log(date < new Date())
   return date < new Date();
 }
 
