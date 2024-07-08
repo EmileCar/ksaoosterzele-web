@@ -9,7 +9,7 @@
 }
 
 .changeMedia-button{
-    background-color: green !important;
+    background-color: var(--positive-color) !important;
 }
 
 .upload-form{

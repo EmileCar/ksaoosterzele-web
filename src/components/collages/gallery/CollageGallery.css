@@ -53,7 +53,7 @@
 }
 
 .collage-active{
-    color: green;
+    color: var(--positive-color);
     font-size: 14px;
     font-style: italic;
 }

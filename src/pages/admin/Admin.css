@@ -26,11 +26,11 @@
 }
 
 .past-events {
-    background-color: green;
+    background-color: var(--positive-color);
 }
 
 .upcoming-events {
-    background-color: rgb(255, 94, 31);
+	background-color: var(--error-color);
 }
 
 @media screen and (min-width: 55rem) {

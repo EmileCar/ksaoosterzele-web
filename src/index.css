@@ -43,9 +43,8 @@ html {
 	--light-color: #69a7e1;
 	--lighter-color: #d7edfa;
 	--darker-main-color: #0a62b4;
-	--dark-color: #4A373E;
-	--red-color: #a81313;
-	--error-color: red;
+	--error-color: #ce1010;
+	--positive-color: #0f8a0f;
 	--title-font: PassionOne, Rubik, Helvetica, sans-serif;
 	--main-font: 'Rubik', Arial, Helvetica, sans-serif;
 }
@@ -55,7 +54,7 @@ html {
 	font-family: var(--main-font);
 	font-weight: normal;
 	font-size: 1.2rem;
-	color: var(--dark-color);
+	color: #4A373E;
 	scroll-behavior: smooth;
   	min-height: 100vh;
 	display: grid;
