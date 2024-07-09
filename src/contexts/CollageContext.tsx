@@ -9,6 +9,7 @@ import { getCollageTypes, getCollages } from "../services/mediaService";
 import Collage from "../types/Collage";
 import useFetch from "../hooks/useFetch";
 import CollageType from "../types/CollageType";
+import Button from "../components/button/Button";
 
 const CollageContext = createContext<any>(null);
 
@@ -127,6 +128,19 @@ export const CollageProvider = ({
 		};
 	}, [searchValue, sortedBy, groupBy]);
 
+	const ToggleMediaSearchButton = () => {
+		return (
+			fetchedCollages && fetchedCollages.length > 0 && (
+				<Button
+					text=" Zoekopties"
+					onClick={() => setShowSearchOptions(!showSearchOptions)}
+					icon={showSearchOptions ? "pi pi-angle-double-up" : "pi pi-angle-double-down"}
+					hover
+				/>
+			)
+		);
+	}
+
 	return (
 		<CollageContext.Provider
 			value={{
@@ -144,6 +158,8 @@ export const CollageProvider = ({
 				showSearchOptions,
 				setShowSearchOptions,
 				refetch,
+				isAdmin,
+				ToggleMediaSearchButton,
 			}}
 		>
 			{children}

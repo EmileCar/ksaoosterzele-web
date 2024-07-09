@@ -28,7 +28,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/evenementen" element={<Events />} />
         <Route path='/evenement/:id' element={<EventDetail />} />
-        <Route path="/media" element={<Media />} />
+        <Route path="/media" element={<CollageProvider><Media /></CollageProvider>} />
         <Route path="/media/:id" element={<Media />} />
         <Route path="/inschrijven" element={<Register />} />
         <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />

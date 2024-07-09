@@ -2,12 +2,11 @@ import './CollageGallery.css';
 import { useCollageContext } from "../../../contexts/CollageContext";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Collage from "../../../types/Collage";
-import MediaSearchOptions from "../MediaSearchOptions";
 import CollageGalleryItem from "./CollageGalleryItem";
-import Button from '../../button/Button';
+import CollageGalleryItemAdmin from './CollageGalleryItemAdmin';
 
 const CollageGallery = () => {
-    const { pending, error, collages, fetchedCollages, showSearchOptions, setShowSearchOptions } = useCollageContext();
+    const { pending, error, collages, fetchedCollages, isAdmin, refetch } = useCollageContext();
 
     return (
         <div className="collages__container">
@@ -18,13 +17,15 @@ const CollageGallery = () => {
                 </p>
                 ): (collages && (
                     <>
-                        <Button text=" Zoekopties" hover onClick={() => setShowSearchOptions(!showSearchOptions)} icon={showSearchOptions ? "pi pi-angle-double-up" : "pi pi-angle-double-down"} customClassName="button--search-options" />
-                        <MediaSearchOptions />
                         <div className="collage_gallery">
                             {
                                 collages.length > 0 ? (
                                     collages.map((collage: Collage) => (
-                                        <CollageGalleryItem key={collage.id} collage={collage} />
+                                        isAdmin ? (
+                                            <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch}/>
+                                        ) : (
+                                            <CollageGalleryItem key={collage.id} collage={collage} />
+                                        )
                                     ))
                                 ) : (
                                     <p>Geen collages gevonden</p>
