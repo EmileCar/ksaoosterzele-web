@@ -21,6 +21,7 @@ export const CollageProvider = ({
 	children: React.ReactNode;
 }) => {
 	const [collages, setCollages] = useState<Collage[] | null>(null);
+	const [groupedCollages, setGroupedCollages] = useState<{ [key: string]: Collage[] }>({});
 	const [searchValue, setSearchValue] = useState("");
 	const [sortedBy, setSortedBy] = useState("recent");
 	const [groupBy, setGroupBy] = useState("none");
@@ -41,8 +42,8 @@ export const CollageProvider = ({
 		data: collageTypes,
 	} = useFetch<CollageType[]>(getCollageTypes);
 
-	const filterCollages = useCallback(
-		(collages: Collage[]): Collage[] => {
+	const filterAndGroupCollages = useCallback(
+        (collages: Collage[]): { [key: string]: Collage[] } => {
 			let filteredCollages: Collage[] = collages.filter((collage) =>
 				collage.name
 					.toLowerCase()
@@ -68,65 +69,56 @@ export const CollageProvider = ({
 				);
 			}
 
-			if (groupBy === "date") {
-				let groupedByDate: { [key: string]: Collage[] } = {};
+            let grouped: { [key: string]: Collage[] } = {};
 
-				filteredCollages.forEach((collage) => {
-					const dateKey = collage.date.toISOString().split("T")[0];
-					if (!groupedByDate[dateKey]) {
-						groupedByDate[dateKey] = [];
-					}
-					groupedByDate[dateKey].push(collage);
-				});
+            if (groupBy === "date") {
+                filteredCollages.forEach((collage) => {
+                    const dateKey = collage.date.toISOString().split("T")[0];
+                    if (!grouped[dateKey]) {
+                        grouped[dateKey] = [];
+                    }
+                    grouped[dateKey].push(collage);
+                });
+            } else if (groupBy === "type") {
+                filteredCollages.forEach((collage : Collage) => {
+                    collage.types.forEach((type : CollageType) => {
+                        if (!grouped[type.name]) {
+                            grouped[type.name] = [];
+                        }
+                        grouped[type.name].push(collage);
+                    });
+                });
+            } else {
+                grouped = { "": filteredCollages };
+            }
 
-				filteredCollages = Object.values(groupedByDate).flatMap(
-					(collages) => collages
-				);
-			} else if (groupBy === "type") {
-				let groupedByDate: { [key: string]: Collage[] } = {};
+            return grouped;
+        },
+        [searchValue, sortedBy, groupBy]
+    );
 
-				filteredCollages.forEach((collage) => {
-					// collage.types is an array of CollageType objects
-					collage.types.forEach((type) => {
-						if (!groupedByDate[type.name]) {
-							groupedByDate[type.name] = [];
-						}
-						groupedByDate[type.name].push(collage);
-					});
-				});
+    useEffect(() => {
+        if (error) {
+            setGlobalError(error);
+        }
+        if (fetchedCollages && fetchedCollages.length > 0) {
+            const grouped = filterAndGroupCollages(fetchedCollages);
+            setGroupedCollages(grouped);
+        }
+    }, [fetchedCollages, error, filterAndGroupCollages]);
 
-				filteredCollages = Object.values(groupedByDate).flatMap(
-					(collages) => collages
-				);
-			}
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            if (fetchedCollages && fetchedCollages.length > 0) {
+                const grouped = filterAndGroupCollages(fetchedCollages);
+                setGroupedCollages(grouped);
+            }
+        }, 300);
 
-			return filteredCollages;
-		},
-		[searchValue, sortedBy, groupBy]
-	);
-
-	useEffect(() => {
-		if (error) {
-			setGlobalError(error);
-		}
-		if (fetchedCollages && fetchedCollages.length > 0) {
-			const filteredCollages = filterCollages(fetchedCollages);
-			setCollages(filteredCollages);
-		}
-	}, [fetchedCollages, error, filterCollages]);
-
-	useEffect(() => {
-		const handler = setTimeout(() => {
-			if (fetchedCollages && fetchedCollages.length > 0) {
-				const filtered = filterCollages(fetchedCollages);
-				setCollages(filtered);
-			}
-		}, 300);
-
-		return () => {
-			clearTimeout(handler);
-		};
-	}, [searchValue, sortedBy, groupBy]);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchValue, sortedBy, groupBy]);
 
 	const ToggleMediaSearchButton = () => {
 		return (
@@ -146,6 +138,7 @@ export const CollageProvider = ({
 			value={{
 				fetchedCollages,
 				collages,
+				groupedCollages,
 				pending,
 				error,
 				setSearchValue,

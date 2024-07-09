@@ -1,20 +1,23 @@
-import React, { useState } from "react";
 import Label from "../form/Label";
 import Input from "../form/Input";
 import { useCollageContext } from "../../contexts/CollageContext";
-import { Dropdown } from 'primereact/dropdown';
-import CollageType from "../../types/CollageType";
 import Form from "../form/Form";
 import Group from "../form/Group";
 
 const MediaSearchOptions = () => {
-    const { searchValue, setSearchValue, sortedBy, setSortedBy, collageTypes, groupBy, setGroupBy, showSearchOptions } = useCollageContext();
+    const { searchValue, setSearchValue, sortedBy, setSortedBy, groupBy, setGroupBy, showSearchOptions } = useCollageContext();
 
     const sortOptions = [
         { label: 'Recentste eerst', value: 'recent' },
         { label: 'Oudste eerst', value: 'oldest' },
         { label: 'Naam A-Z', value: 'name' },
         { label: 'Naam Z-A', value: 'name_desc' }
+    ];
+
+    const groupOptions = [
+        { label: 'Geen', value: 'none' },
+        { label: 'Type', value: 'type' },
+        { label: 'Datum', value: 'date' },
     ];
 
     return (
@@ -33,9 +36,8 @@ const MediaSearchOptions = () => {
                     </Label>
                     <Label text="Groepeer op">
                         <select className="input inherit-font" value={groupBy} onChange={(e) => setGroupBy(e.target.value)}>
-                            <option value="none">Geen</option>
-                            {collageTypes && collageTypes.map((type: CollageType) => (
-                                <option key={type.id} value={type.name}>{type.name}</option>
+                            {groupOptions && groupOptions.map((option) => (
+                                <option key={option.value} value={option.value}>{option.label}</option>
                             ))}
                         </select>
                     </Label>

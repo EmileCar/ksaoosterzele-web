@@ -6,34 +6,37 @@ import CollageGalleryItem from "./CollageGalleryItem";
 import CollageGalleryItemAdmin from './CollageGalleryItemAdmin';
 
 const CollageGallery = () => {
-    const { pending, error, collages, fetchedCollages, isAdmin, refetch } = useCollageContext();
+    const { pending, error, groupedCollages, isAdmin, refetch } = useCollageContext();
+
+    const renderGroupedCollages = () => {
+        return Object.keys(groupedCollages).map(groupKey => (
+            <div key={groupKey} className="collage_group">
+                <h3>{groupKey}</h3>
+                <div className="collage_gallery horizontal-scroll">
+                    {
+                        groupedCollages[groupKey].map((collage: Collage) => (
+                            isAdmin ? (
+                                <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch} />
+                            ) : (
+                                <CollageGalleryItem key={collage.id} collage={collage} />
+                            )
+                        ))
+                    }
+                </div>
+            </div>
+        ));
+    }
 
     return (
         <div className="collages__container">
             <FetchedDataLayout isPending={pending} error={error}>
-                {fetchedCollages && fetchedCollages.length === 0 ? (
-                <p>
-                    Er zijn geen collages beschikbaar.
-                </p>
-                ): (collages && (
+                {groupedCollages && Object.keys(groupedCollages).length === 0 ? (
+                    <p>Er zijn geen collages beschikbaar.</p>
+                ) : (
                     <>
-                        <div className="collage_gallery">
-                            {
-                                collages.length > 0 ? (
-                                    collages.map((collage: Collage) => (
-                                        isAdmin ? (
-                                            <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch}/>
-                                        ) : (
-                                            <CollageGalleryItem key={collage.id} collage={collage} />
-                                        )
-                                    ))
-                                ) : (
-                                    <p>Geen collages gevonden</p>
-                                )
-                            }
-                        </div>
+                        {renderGroupedCollages()}
                     </>
-                ))}
+                )}
             </FetchedDataLayout>
         </div>
     );
