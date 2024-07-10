@@ -17,7 +17,8 @@ const CollageMedia = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [totalSize, setTotalSize] = useState(0);
     const [uploadingError, setUploadingError] = useState<string | null>(null);
-    const [uploadingPending, setUploadingPending] = useState<boolean>(false)
+    const [uploadingSuccess, setUploadingSuccess] = useState<boolean>(false);
+    const [uploadingPending, setUploadingPending] = useState<boolean>(false);
 
     const handleFileInputChange = (e: any) => {
         const files = e.target.files;
@@ -34,13 +35,16 @@ const CollageMedia = () => {
 
     const uploadImagesFunc = async () => {
         if(fileInputRef.current){
+            setUploadingError(null);
+            setUploadingPending(true);
             const selectedFiles = fileInputRef.current.files;
-
             await uploadImages(collage?.id!, selectedFiles!).then(() => {
-                console.log("log")
+                setUploadingSuccess(true);
+                setUploadingError(null);
             }).catch((error) => {
                 setUploadingError(error.message)
             })
+            setUploadingPending(false);
         }
     }
 
@@ -54,6 +58,7 @@ const CollageMedia = () => {
                 {collage &&
                     <>
                         <Form customClassName="upload-form">
+                            {uploadingSuccess && <p className="success">Uploaden gelukt!</p>}
                             {uploadingError && <p className="error">{uploadingError}</p>}
                             <Label text={`Voeg afbeeldingen toe`} errorMessage={""}>
                                 <input ref={fileInputRef} style={{cursor: "pointer"}} type="file" name="images" accept="image/*,video/mp4,video/x-m4v,video/*" multiple className="input inherit-font" onChange={handleFileInputChange} />
@@ -61,7 +66,7 @@ const CollageMedia = () => {
                             {totalSize > 0 && (
                                 <>
                                     <p>Te uploaden grootte: {(totalSize / (1024 * 1024)).toFixed(2)} MB</p>
-                                    <Button text="Uploaden" onClick={() => uploadImagesFunc()} darken/>
+                                    <Button text="Uploaden" onClick={() => uploadImagesFunc()} darken disabled={uploadingPending} />
                                 </>
                             )}
                         </Form>

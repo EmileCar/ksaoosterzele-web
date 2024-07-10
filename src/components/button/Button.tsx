@@ -2,7 +2,7 @@ import React from 'react';
 import './Button.css';
 
 interface ButtonProps {
-    text: string;
+    text?: string;
     onClick: () => void;
     fullWidth?: boolean;
     disabled?: boolean;

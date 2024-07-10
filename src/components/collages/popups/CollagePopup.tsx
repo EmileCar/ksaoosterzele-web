@@ -6,7 +6,7 @@ import Button from "../../button/Button";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
 import useForm from "../../../hooks/useForm";
-import { formatDateToInputDateTime } from "../../../utils/datetimeUtil";
+import { formatDateToInputDate } from "../../../utils/datetimeUtil";
 import Checkbox from "../../form/Checkbox";
 import { getCollageTypes, sendCollage } from "../../../services/mediaService";
 import CollageType from "../../../types/CollageType";
@@ -14,14 +14,12 @@ import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import useFetch from "../../../hooks/useFetch";
-import { useNavigate } from "react-router-dom";
 
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
     const [isPending, setIsPending] = useState<boolean>(false);
     const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
-    const navigate = useNavigate();
 
     const handleSubmitForm = async () => {
         setIsPending(true);
@@ -55,6 +53,10 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
+    useEffect(() => {
+        console.log(values)
+    } , [values])
+
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
@@ -64,7 +66,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                             <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Datum" errorMessage={errorStates.dateError}>
-                            <Input type={"date"} name="date" value={formatDateToInputDateTime(values.date as Date)} onChange={handleCalendarChange}/>
+                            <Input type={"date"} name="date" value={formatDateToInputDate(values.date as Date)} onChange={handleCalendarChange}/>
                         </Label>
                     </Group>
                     <Group>
@@ -80,13 +82,10 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                             className="input"
                             onChange={handleValueChange}
                             name="description"
-                            value={values.description}
+                            value={values.description ?? ""}
                         />
                     </Label>
                     <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
-                    {collage &&
-                        <Button text="Pas content aan" onClick={() => navigate(`/admin/media/${values.id}`)} customClassName="changeMedia-button" darken uppercase/>
-                    }
                 </Form>
             </FetchedDataLayout>
         </Popup>

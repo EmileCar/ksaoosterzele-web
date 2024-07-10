@@ -73,7 +73,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             className="input"
                             onChange={handleValueChange}
                             name="description"
-                            value={values.description}
+                            value={values.description ?? ""}
                         />
                     </Label>
                     <Group>

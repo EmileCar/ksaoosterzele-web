@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Collage from "../../../types/Collage";
 import CollageType from "../../../types/CollageType";
 import defaultThumbnail from '../../../assets/img/default.jpg';
@@ -10,6 +10,7 @@ import ConfirmCollageDeletionPopup from "../popups/ConfirmCollageDeletionPopup";
 const CollageGalleryItemAdmin = ({ collage, reload } : { collage: Collage , reload: () => void }) => {
     const [showChangePopup, setShowChangePopup] = useState<boolean>(false);
 	const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const handlePopupClose = () => {
 		setShowChangePopup(false);
@@ -27,12 +28,13 @@ const CollageGalleryItemAdmin = ({ collage, reload } : { collage: Collage , relo
                 }}
             />
             <div>
-                <h3>{collage.displayName}</h3>
+                <h4>{collage.displayName}</h4>
                 {collage.active ? <small className="collage-active">Actief</small> : <small className="collage-active collage-inactive">Niet zichtbaar</small>}
             </div>
             <div className='collage-buttons'>
-				<Button text="Aanpassen" onClick={() => setShowChangePopup(true)} darken fullWidth/>
-				<Button text="Verwijderen" onClick={() => setShowDeletePopup(true)} darken fullWidth customClassName='collage-buttons_button verwijderen'/>
+				<Button icon="pi-pencil" onClick={() => setShowChangePopup(true)} darken fullWidth/>
+				<Button icon="pi-trash" onClick={() => setShowDeletePopup(true)} darken fullWidth customClassName='collage-buttons_button verwijderen'/>
+                <Button icon="pi-images" onClick={() => navigate(`/admin/media/${collage.id}`)} darken fullWidth customClassName='collage-buttons_button content'/>
 			</div>
             {showChangePopup && <MediaItemPopup collage={collage} onClose={handlePopupClose} />}
             {showDeletePopup && <ConfirmCollageDeletionPopup collage={collage} onClose={handlePopupClose} />}
