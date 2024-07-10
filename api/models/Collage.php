@@ -37,9 +37,7 @@ class Collage extends Model
         if(!empty($data["date"])){
             $collage->date = $data["date"];
         }
-        if(!empty($data["active"])){
-            $collage->active = $data["active"];
-        }
+        $collage->active = $data["active"] ? 1 : 0;
 
         return $collage;
     }

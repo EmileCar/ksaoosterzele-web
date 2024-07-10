@@ -11,7 +11,6 @@ const ConfirmCollageDeletionPopup = ({ collage, onClose }: { collage: Collage, o
 
     const deleteEventFunc = async () => {
         setIsPending(true);
-        console.log("ola")
         await deleteCollage(collage.id!)
             .then(() => {
                 setIsPending(false);

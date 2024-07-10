@@ -113,9 +113,13 @@ class ImageManager {
     public function loadAndCropImage($imagePath, $width, $height)
     {
         $imageInfo = getimagesize($imagePath);
-        if ($imageInfo !== false) {
+        if ($imageInfo !== false && function_exists('exif_read_data')) {
             // Extract EXIF orientation information
-            $exif = @exif_read_data($imagePath);
+            try {
+                $exif = @exif_read_data($imagePath);
+            } catch (Exception $e) {
+                $exif = null;
+            }
             $orientation = $exif['Orientation'] ?? 1;
 
             $imageType = $imageInfo[2];

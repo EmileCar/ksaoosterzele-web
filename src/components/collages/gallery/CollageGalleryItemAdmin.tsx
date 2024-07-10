@@ -20,8 +20,7 @@ const CollageGalleryItemAdmin = ({ collage, reload } : { collage: Collage , relo
     return (
         <div className="collage-gallery_item collage-gallery_item-admin">
             <img
-                src={`assets/media/collages/${collage.name}/thumbnail.png`}
-                // src={`${isAdmin ? "../" : ""}assets/media/collages/${collage.name}/thumbnail.png`}
+                src={`../assets/media/collages/${collage.name}/thumbnail.png`}
                 alt={collage.name}
                 onError={(e) => {
                     (e.target as HTMLImageElement).src = defaultThumbnail;
