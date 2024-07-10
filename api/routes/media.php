@@ -33,4 +33,12 @@ $mediaRoutes = [
             'GET' => 'getCollageTypes',
         )
     ),
+    'collage_type' => array(
+        'controller' => 'Media',
+        'methods' => array(
+            'POST' => 'addCollageType',
+            'PUT' => 'updateCollageType',
+            'DELETE' => 'deleteCollageType'
+        )
+    ),
 ];

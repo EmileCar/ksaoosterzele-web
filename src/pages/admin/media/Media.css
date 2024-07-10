@@ -21,3 +21,34 @@
         align-items: flex-start;
     }
 }
+
+.collage-types{
+    display: flex;
+    flex-direction: column;
+    gap: var(--s0);
+}
+
+.collage-type{
+    padding: var(--s0);
+    border: 2px solid var(--main-color);
+    border-radius: var(--s-1);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--s0);
+}
+
+.collage-type .pi{
+    cursor: pointer;
+}
+
+.collage-type input{
+    outline: none;
+    border: none;
+    padding: 0;
+}
+
+.collage-type-buttons{
+    display: flex;
+    gap: var(--s0);
+}

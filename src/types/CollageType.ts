@@ -3,7 +3,6 @@ class CollageType {
     name: string;
 
     constructor(collageTypeData?: any) {
-        console.log(collageTypeData);
         this.id = collageTypeData.id || null;
         this.name = collageTypeData.name || null;
     }

@@ -51,11 +51,6 @@ class MediaController extends Controller {
 		exit(json_encode($collageArray));
 	}
 
-	public function getCollageTypes() {
-		$types = CollageType::all();
-		exit(json_encode($types));
-	}
-
 	public function addCollage() {
 		$account = Account::is_authenticated();
 
@@ -130,6 +125,7 @@ class MediaController extends Controller {
 
 		try {
 			$this->directoryManager->removeDirectory($collage->internal_name, $this->directoryManager->getFilesFromDirectory($collage->internal_name));
+			$collage->types()->detach();
 		} catch (Throwable $e) {
 			ErrorResponse::exitWithError(500, "Er was een probleem bij het verwijderen van de collage.", ["error" => $e.getMessage()]);
 		}
@@ -253,5 +249,80 @@ class MediaController extends Controller {
 			// Free up memory
 			imagedestroy($thumbnailImage);
 		}
+	}
+
+
+
+
+
+
+	public function getCollageTypes() {
+		$types = CollageType::all();
+		exit(json_encode($types));
+	}
+
+	public function addCollageType() {
+		$account = Account::is_authenticated();
+
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if (empty($data["name"])) {
+			ErrorResponse::exitWithError(400, "Gelieve een naam mee te geven.");
+		}
+
+		$type = new CollageType();
+		$type->name = $data["name"];
+		$type->save();
+
+		http_response_code(201);
+		exit();
+	}
+
+	public function deleteCollageType() {
+		$account = Account::is_authenticated();
+
+		if (empty($_GET['id'])) {
+			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
+		}
+
+		$type = CollageType::find($_GET['id']);
+
+		if (empty($type)) {
+			ErrorResponse::exitWithError(404, "Type niet gevonden.");
+		}
+
+		try {
+			$type->delete();
+		} catch (Exception $e) {
+			ErrorResponse::exitWithError(500, "Er was een probleem bij het verwijderen van het type. Controleer of er geen collages zijn die dit type gebruiken.");
+		}
+
+		http_response_code(200);
+		exit();
+	}
+
+	public function updateCollageType() {
+		$account = Account::is_authenticated();
+
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if (empty($data['id'])) {
+			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
+		}
+
+		$type = CollageType::find($data['id']);
+
+		if (empty($type)) {
+			ErrorResponse::exitWithError(404, "Type niet gevonden.");
+		}
+
+		if (!empty($data["name"])) {
+			$type->name = $data["name"];
+		}
+
+		$type->save();
+
+		http_response_code(200);
+		exit();
 	}
 }
