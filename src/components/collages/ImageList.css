@@ -1,35 +1,54 @@
-.imageList{
-    display: flex;
-    flex-direction: column;
+.image-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-rows: auto;
     gap: 1rem;
-    margin: 1rem 0;
-    font-weight: normal;
+    justify-items: center;
 }
 
-.imageList .image{
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    border-radius: 0.5rem;
-    font-style: italic;
-    text-align: start;
+@media screen and (min-width: 880px){
+    .image-list{
+        justify-items: start;
+    }
 }
 
-.imageList .image img{
-    width: 100px;
-    height: 100px;
+.image-list .image{
     object-fit: cover;
-    border-radius: 0.5rem;
+    width: 100%;
+    border-radius: 1rem;
+    transition: filter 0.3s;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.imageList .image .delete{
-    color: var(--error-color);
-    font-style: italic;
-    text-decoration: underline;
+.image-list .image:hover{
     cursor: pointer;
+    filter: brightness(0.8);
 }
 
-.imageList .image.disabled{
-    opacity: 0.5;
-    pointer-events: none;
+.link-back{
+    margin-bottom: 1rem;
+}
+
+.overlay-media{
+    padding: 3rem !important;
+    padding-top: 106px !important;
+    text-align: center !important;
+    display: unset !important;
+    overflow-y: auto !important;
+}
+
+.detail__image{
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-height: 100%;
+    max-width: 600px;
+}
+
+.close-media{
+    position: absolute;
+    top: calc(1rem + 78px);
+    right: 1.5rem;
+    font-size: 3rem;
+    color: white;
+    cursor: pointer;
 }
