@@ -16,11 +16,11 @@ class Collage extends Model
         $errors = [];
 
         if (empty($data["name"])) {
-            $errors["name"] = "Gelieve een naam mee te geven.";
+            $errors["nameError"] = "Gelieve een naam mee te geven.";
         }
 
         if (empty($data["date"])) {
-            $errors["date"] = "Gelieve een datum mee te geven.";
+            $errors["dateError"] = "Gelieve een datum mee te geven.";
         }
 
         return $errors;

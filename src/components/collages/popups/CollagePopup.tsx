@@ -55,6 +55,10 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
+    useEffect(() => {
+        console.log(errorStates)
+    } , [errorStates])
+
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
@@ -69,7 +73,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                     </Group>
                     <Group>
                         <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
-                            <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown />
+                            <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown multiple/>
                         </Label>
                         <Label text="Tonen?" customClassName="flex-column">
                             <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />

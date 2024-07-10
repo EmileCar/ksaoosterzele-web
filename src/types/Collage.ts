@@ -31,7 +31,6 @@ class SendCollage {
     types: string[];
 
     constructor(collageData?: any) {
-        console.log(collageData)
         this.id = collageData.id || null;
         this.name = collageData.displayName || null;
         this.description = collageData.description || null;

@@ -9,6 +9,8 @@ interface AutoCompleteProps {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     name: string;
     dropdown?: boolean;
+    multiple?: boolean;
+    fixedToSuggestions?: boolean;
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
@@ -19,7 +21,9 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     completeMethod,
     onChange,
     name,
-    dropdown = false
+    dropdown = false,
+    multiple = false,
+    fixedToSuggestions = false
 }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
@@ -52,20 +56,23 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
         const newValue = event.target.value;
         setInputValue(newValue);
         completeMethod(event);
+        !showSuggestions && setTimeout(() => setShowSuggestions(true), 100);
+        if(!multiple && !fixedToSuggestions) onChange({ target: { value: newValue, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
     };
 
     const handleSuggestionClick = (suggestion: string) => {
-        if (Array.isArray(value)) {
+        if (multiple && Array.isArray(value)) {
             const newValues = [...value, suggestion];
             onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+            setInputValue("");
         } else {
             onChange({ target: { value: suggestion, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+            setInputValue(suggestion);
         }
-        setInputValue("");
         setShowSuggestions(false);
     };
 
-    const handleRemoveValue = (index: number) => {
+    const removeSuggestionValue = (index: number) => {
         if (Array.isArray(value)) {
             const newValues = value.filter((_, i) => i !== index);
             onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
@@ -74,12 +81,12 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 
     return (
         <div className="autocomplete-wrapper" ref={wrapperRef}>
-            {Array.isArray(value) && (
+            {multiple && Array.isArray(value) && (
                 <div className="autocomplete-values">
                     {value.map((val, index) => (
                         <div key={index} className="autocomplete-value">
                             {val}
-                            <span onClick={() => handleRemoveValue(index)} className="autocomplete-value-delete">&times;</span>
+                            <span onClick={() => removeSuggestionValue(index)} className="autocomplete-value-delete">&times;</span>
                         </div>
                     ))}
                 </div>
@@ -91,7 +98,6 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                 placeholder={placeholder}
                 onChange={handleInputChange}
                 name={name}
-                onFocus={() => setShowSuggestions(true)}
             />
             {showSuggestions && (
                 <div className="autocomplete-suggestions">

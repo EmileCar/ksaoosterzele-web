@@ -16,11 +16,12 @@ const useForm = <T extends Record<string, any>>(initialValues: T) => {
         ...values,
         notEmpty: () => isNotEmpty(values),
     };
-    
+
     const [errorStates, setErrorStates] = useState<any>([]);
 
     const handleValueChange = (e: any) => {
         const { name, value } = e.target ? e.target : e;
+        console.log(name, value)
         setValues((prevState) => ({
             ...prevState,
             [name]: value,
