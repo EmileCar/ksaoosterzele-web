@@ -43,7 +43,7 @@ export const CollageProvider = ({
 	} = useFetch<CollageType[]>(getCollageTypes);
 
 	const filterAndGroupCollages = useCallback(
-        (collages: Collage[]): { [key: string]: Collage[] } => {
+		(collages: Collage[]): { [key: string]: Collage[] } => {
 			let filteredCollages: Collage[] = collages.filter((collage) =>
 				collage.name
 					.toLowerCase()
@@ -69,33 +69,41 @@ export const CollageProvider = ({
 				);
 			}
 
-            let grouped: { [key: string]: Collage[] } = {};
+			let grouped: { [key: string]: Collage[] } = {};
 
-            if (groupBy === "date") {
-                filteredCollages.forEach((collage) => {
-                    const dateKey = collage.date.toISOString().split("T")[0];
-                    if (!grouped[dateKey]) {
-                        grouped[dateKey] = [];
-                    }
-                    grouped[dateKey].push(collage);
-                });
-            } else if (groupBy === "type") {
-                filteredCollages.forEach((collage : Collage) => {
-                    collage.types.forEach((type : CollageType) => {
-                        if (!grouped[type.name]) {
-                            grouped[type.name] = [];
-                        }
-                        grouped[type.name].push(collage);
-                    });
-                });
-            } else {
-                grouped = { "": filteredCollages };
-            }
+			if (groupBy === "date") {
+				filteredCollages.forEach((collage) => {
+					const dateKey = collage.date.toISOString().split("T")[0];
+					if (!grouped[dateKey]) {
+						grouped[dateKey] = [];
+					}
+					grouped[dateKey].push(collage);
+				});
+			} else if (groupBy === "type") {
+				filteredCollages.forEach((collage: Collage) => {
+					if (collage.types.length === 0) {
+						if (!grouped["zonder type"]) {
+							grouped["zonder type"] = [];
+						}
+						grouped["zonder type"].push(collage);
+					} else {
+						collage.types.forEach((type: CollageType) => {
+							if (!grouped[type.name]) {
+								grouped[type.name] = [];
+							}
+							grouped[type.name].push(collage);
+						});
+					}
+				});
+			} else {
+				grouped = { "": filteredCollages };
+			}
 
-            return grouped;
-        },
-        [searchValue, sortedBy, groupBy]
-    );
+			return grouped;
+		},
+		[searchValue, sortedBy, groupBy]
+	);
+
 
     useEffect(() => {
         if (error) {
