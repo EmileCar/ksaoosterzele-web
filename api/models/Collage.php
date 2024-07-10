@@ -25,4 +25,22 @@ class Collage extends Model
 
         return $errors;
     }
+
+    public static function create($data, $collage) {
+        if(!empty($data["name"])){
+            $collage->internal_name = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $data["name"]));
+            $collage->display_name = $data["name"];
+        }
+        if(!empty($data["description"])){
+            $collage->description = $data["description"];
+        }
+        if(!empty($data["date"])){
+            $collage->date = $data["date"];
+        }
+        if(!empty($data["active"])){
+            $collage->active = $data["active"];
+        }
+
+        return $collage;
+    }
 }

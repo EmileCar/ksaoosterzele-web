@@ -68,11 +68,7 @@ class MediaController extends Controller {
 		}
 
 		$collage = new Collage();
-		$collage->internal_name = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $data["name"]));
-		$collage->display_name = $data["name"];
-		$collage->description = $data["description"];
-		$collage->date = $data["date"];
-		$collage->active = $data["active"];
+		$collage = Collage::create($data, $collage);
 
 		if ($this->directoryManager->doesDirectoryExist($collage->internal_name)) {
 			ErrorResponse::exitWithError(400, "De directory van deze collagenaam bestaat al.");

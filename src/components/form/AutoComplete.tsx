@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 interface AutoCompleteProps {
     value: string[] | string;
     placeholder?: string;
+    noSuggestionsMessage?: string;
     suggestions: string[];
     completeMethod: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,6 +14,7 @@ interface AutoCompleteProps {
 const AutoComplete: React.FC<AutoCompleteProps> = ({
     value,
     placeholder,
+    noSuggestionsMessage,
     suggestions,
     completeMethod,
     onChange,
@@ -95,7 +97,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                 <div className="autocomplete-suggestions">
                     {filteredSuggestions.length === 0 ? (
                         <div className="autocomplete-suggestion no-suggestions">
-                            Geen beschikbare types
+                            {noSuggestionsMessage ?? "Geen suggesties"}
                         </div>
                     ) : filteredSuggestions.map((suggestion, index) => (
                         <div

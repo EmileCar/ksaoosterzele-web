@@ -183,6 +183,7 @@ form .label .required {
     gap: var(--s-1);
     align-self: center;
     padding: 0 var(--s-1);
+    max-width: 50%;
 }
 
 .autocomplete-value{
