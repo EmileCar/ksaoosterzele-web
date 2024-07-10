@@ -78,6 +78,8 @@ class MediaController extends Controller {
 
 		$collage->save();
 
+		$collage = Collage::handleTypes($data, $collage);
+
 		http_response_code(201);
 		exit();
 	}
@@ -103,11 +105,11 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
 
-		$collage->display_name = $data["name"];
-		$collage->description = $data["description"];
-		$collage->date = $data["date"];
-		$collage->active = !empty($data["active"]);
+		$collage = Collage::create($data, $collage);
+
 		$collage->save();
+
+		$collage = Collage::handleTypes($data, $collage);
 
 		http_response_code(201);
 		exit();

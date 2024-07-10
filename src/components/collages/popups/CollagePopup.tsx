@@ -55,10 +55,6 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
-    useEffect(() => {
-        console.log(errorStates)
-    } , [errorStates])
-
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>

@@ -22,8 +22,8 @@ const MediaAdmin = () => {
 				<p>Maak hier nieuwe collages aan of pas bestaande collages aan.</p>
 			</SectionTitle>
 			<div className="admin__actions">
-				<ToggleMediaSearchButton />
 				<Button text="+ Collage toevoegen" onClick={() => setShowCreatePopup(true)} hover />
+				<ToggleMediaSearchButton />
 				<div className="media__search-options--admincontainer">
 					{fetchedCollages && fetchedCollages.length > 0 && <MediaSearchOptions />}
 				</div>

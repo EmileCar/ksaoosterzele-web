@@ -41,4 +41,18 @@ class Collage extends Model
 
         return $collage;
     }
+
+    public static function handleTypes($data, $collage) {
+        if(!empty($data["types"])){
+            $collage->types()->detach();
+            foreach($data["types"] as $type){
+                $collageType = CollageType::where('name', $type)->first();
+                if($collageType){
+                    $collage->types()->attach($collageType->id);
+                }
+            }
+        }
+
+        return $collage;
+    }
 }
