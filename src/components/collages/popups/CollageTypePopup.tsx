@@ -1,43 +1,48 @@
 import React, { useState } from 'react';
 import Popup from '../../popup/Popup';
 import FetchedDataLayout from '../../../layouts/FetchedDataLayout';
-import { deleteCollageType, getCollageTypes, sendCollage, sendCollageType } from '../../../services/mediaService';
+import { deleteCollageType, getCollageTypes, sendCollageType } from '../../../services/mediaService';
 import CollageType from '../../../types/CollageType';
 import useFetch from '../../../hooks/useFetch';
+import LoadingSpinner from '../../loading/LoadingSpinner';
 
 const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
     const { pending, data: collageTypes, error, refetch } = useFetch<CollageType[]>(getCollageTypes);
-    const [editMode, setEditMode] = useState<{ [key: number]: boolean }>({});
+    const [editMode, setEditMode] = useState<number | null>(null);
     const [editName, setEditName] = useState<string>('');
     const [newType, setNewType] = useState<string | null>(null);
     const [deleteError, setDeleteError] = useState<string>('');
+    const [isPending, setIsPending] = useState<{ [key: number]: boolean }>({});
 
     const handleEdit = (id: number) => {
         setEditName(collageTypes?.find((type) => type.id === id)?.name || '');
-        setEditMode({ ...editMode, [id]: true });
+        setEditMode(id);
     };
 
     const handleDelete = async (id: number) => {
+        setIsPending({ ...isPending, [id]: true });
         await deleteCollageType(id).then(() => refetch()).catch((error: any) => setDeleteError(error.message));
-
+        setIsPending({ ...isPending, [id]: false });
     };
 
     const handleSaveEdit = async (id: number) => {
+        setIsPending({ ...isPending, [id]: true });
         const newCollageType = new CollageType({ id, name: editName });
         await sendCollageType(newCollageType, "PUT").then(() => {
-            setEditMode({ ...editMode, [id]: false });
+            setEditMode(null);
             refetch();
         });
+        setIsPending({ ...isPending, [id]: false });
     };
 
-    const handleCancelEdit = (id: number) => {
-        setEditMode({ ...editMode, [id]: false });
+    const handleCancelEdit = () => {
+        setEditMode(null);
     };
 
-    const handleAddType = () => {
+    const handleAddType = async () => {
         if (newType) {
             const newCollageType = new CollageType({ name: newType });
-            sendCollageType(newCollageType, "POST").then(() => {
+            await sendCollageType(newCollageType, "POST").then(() => {
                 setNewType('');
                 refetch();
             });
@@ -51,7 +56,7 @@ const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
                 <div className="collage-types">
                     {collageTypes && collageTypes.map((type: CollageType) => (
                         <div key={type.id} className="collage-type">
-                            {editMode[type.id!] ? (
+                            {editMode === type.id ? (
                                 <input
                                     autoFocus
                                     type="text"
@@ -63,7 +68,9 @@ const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
                                 <p>{type.name}</p>
                             )}
                             <div className="collage-type-buttons">
-                                {editMode[type.id!] ? (
+                                {isPending[type.id!] ? (
+                                    <LoadingSpinner size={22} />
+                                ) : editMode === type.id ? (
                                     <>
                                         <span
                                             className="pi pi-check"
@@ -71,7 +78,7 @@ const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
                                         />
                                         <span
                                             className="pi pi-times"
-                                            onClick={() => handleCancelEdit(type.id!)}
+                                            onClick={handleCancelEdit}
                                         />
                                     </>
                                 ) : (

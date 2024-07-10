@@ -29,3 +29,22 @@
 		height: 250px;
 	}
 }
+
+.collage_group{
+	margin-bottom: var(--s1);
+}
+
+.collage_group h3{
+	font-family: var(--title-font);
+	font-size: 1.8rem;
+	text-decoration: underline;
+	text-transform: capitalize;
+	margin-bottom: var(--s-1);
+}
+
+/* max 2 vertical levels and inifinte horizontal, as it should be horizontally scrollable*/
+.collage_gallery{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
