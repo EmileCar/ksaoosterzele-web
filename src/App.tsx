@@ -17,6 +17,7 @@ import MediaAdmin from './pages/admin/media/Media';
 import RegistrationsAdmin from './pages/admin/registrations/Registrations';
 import CollageMedia from './pages/admin/media/CollageMedia';
 import { CollageProvider } from './contexts/CollageContext';
+import CollageDetail from './pages/media/CollageDetail';
 
 const App = () => {
 
@@ -29,7 +30,7 @@ const App = () => {
         <Route path="/evenementen" element={<Events />} />
         <Route path='/evenement/:id' element={<EventDetail />} />
         <Route path="/media" element={<CollageProvider><Media /></CollageProvider>} />
-        <Route path="/media/:id" element={<Media />} />
+        <Route path="/collage/:id" element={<CollageDetail  />} />
         <Route path="/inschrijven" element={<Register />} />
         <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />
         <Route path="/contact" element={<Contact />} />

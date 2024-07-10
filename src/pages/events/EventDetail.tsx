@@ -7,13 +7,13 @@ import SectionTitle from "../../components/sectionTitle/SectionTitle";
 
 const EventDetail = () => {
     const { id } = useParams();
-    const fetchEvent = useCallback(() => getEvent(id), [id]);
+    const fetchEvent = useCallback(() => getEvent(id as unknown as number), [id]);
     const { pending, data: event, error } = useFetch(fetchEvent);
 
     return (
         <PageLayout>
             {pending && <p>Loading...</p>}
-            {error && <p>{error.message}</p>}
+            {error && <p>{error}</p>}
             <div className="top__nav--buttons">
                 <Link to="/evenementen" className="cursive">{`<< Terug naar activiteiten`}</Link>
             </div>
@@ -21,26 +21,26 @@ const EventDetail = () => {
           {event && (
             <>
               <div className="event__image">
-                <img src={event.getImageSource()} alt={event.name} />
+                <img src={event.imageFileName} alt={event.name} />
               </div>
               <div className="right-side">
                 <div className="event__info">
                   <SectionTitle title={event.name} />
                   <div className="event__details">
-                    {event.date ? (
-                      <p className="event__detail date">{event.date}</p>
+                    {event.datetime ? (
+                      <p className="event__detail date">{event.datetime.toString()}</p>
                     ) : (
                       <p className="event__detail date">???</p>
                     )}
-                    {event.time && <p className="event__detail time">{event.time}</p>}
+                    {/* {event.time && <p className="event__detail time">{event.time}</p>} */}
                     {event.location ? (
                       <p className="event__detail location">{event.location}</p>
                     ) : (
                       <p className="event__detail location">???</p>
                     )}
-                    {new Date(event.timestamp).getDate() + 1 > new Date() && (
+                    {/* {new Date(event.timestamp).getDate() + 1 > new Date() && (
                       <p className="event__detail urgent">Deze activiteit is in het verleden</p>
-                    )}
+                    )} */}
                     {event.description && (
                       <p className="event__detail description">{event.description}</p>
                     )}
