@@ -48,6 +48,7 @@ const CollageMedia = () => {
         <>
             <SectionTitle title={collage?.name || "Collage media"}>
                 <p>Voeg fotos toe of pas de collage van inhoud aan.</p>
+                <p>Klik op een foto om een detail te zien en om die te kunnen verwijderen.</p>
             </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 {collage &&
@@ -64,7 +65,7 @@ const CollageMedia = () => {
                                 </>
                             )}
                         </Form>
-                        <ImageList collage={collage} images={collage.images!} />
+                        <ImageList collage={collage} images={collage.images!} isAdmin/>
                     </>
                 }
             </FetchedDataLayout>

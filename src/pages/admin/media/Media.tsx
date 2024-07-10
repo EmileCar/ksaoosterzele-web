@@ -8,7 +8,7 @@ import MediaSearchOptions from '../../../components/collages/MediaSearchOptions'
 import CollageGallery from '../../../components/collages/gallery/CollageGallery';
 
 const MediaAdmin = () => {
-	const { fetchedCollages, refetch, showSearchOptions, setShowSearchOptions, ToggleMediaSearchButton } = useCollageContext();
+	const { fetchedCollages, refetch, ToggleMediaSearchButton } = useCollageContext();
 	const [showCreatePopup, setShowCreatePopup] = useState(false);
 
 	const closeHandler = () => {

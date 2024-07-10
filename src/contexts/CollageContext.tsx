@@ -104,7 +104,9 @@ export const CollageProvider = ({
         if (fetchedCollages && fetchedCollages.length > 0) {
             const grouped = filterAndGroupCollages(fetchedCollages);
             setGroupedCollages(grouped);
-        }
+        } else {
+			setGroupedCollages({});
+		}
     }, [fetchedCollages, error, filterAndGroupCollages]);
 
     useEffect(() => {
