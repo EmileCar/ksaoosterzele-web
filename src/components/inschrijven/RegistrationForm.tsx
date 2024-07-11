@@ -2,19 +2,18 @@ import {useState, useEffect, useRef} from "react";
 import Label from "../form/Label";
 import Input from "../form/Input";
 import { useRegistrationContext } from "../../contexts/RegistrationContext";
-import Registration from "../../types/Registration";
-import { sendInschrijving } from "../../services/registrationService";
 import ConfirmPopup from "./popups/ConfirmPopup";
 import LoadingSpinner from "../loading/LoadingSpinner";
 import Button from "../button/Button";
 import Form from "../form/Form";
 import Group from "../form/Group";
+import { usePopupContext } from "../../contexts/PopupContext";
 
 const RegistrationForm = () => {
-    const { values, errorStates, handleValueChange, isPending } = useRegistrationContext();
+    const { values, errorStates, handleValueChange, isPending, submitValues, changeValue } = useRegistrationContext();
+    const { registerPopup, closePopup } = usePopupContext();
     const [tweedeVerblijfplaatsActive, setTweedeVerblijfplaatsActive] = useState<boolean | null>(null);
     const [showContinueButton, setShowContinueButton] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const scrollRefToTop = useRef<HTMLDivElement>(null);
 
@@ -28,11 +27,6 @@ const RegistrationForm = () => {
         }
     } , [tweedeVerblijfplaatsActive]);
 
-    const handleClickContinueButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault();
-        setShowPopup(true);
-    };
-
     useEffect(() => {
         if(isPending){
             setTimeout(() => {
@@ -43,6 +37,16 @@ const RegistrationForm = () => {
             }, 1200);
         }
     } , [isPending]);
+
+    const submitValuesHandler = (allowMedia: boolean | null) => {
+        changeValue("allowMedia", allowMedia);
+        submitValues();
+        closePopup();
+    }
+
+    const openConfirmPopup = () => {
+        registerPopup(<ConfirmPopup submit={submitValuesHandler} />);
+    };
 
     return (
         values.notEmpty() &&
@@ -161,11 +165,10 @@ const RegistrationForm = () => {
                         {showContinueButton && (
                             <div className="break" ref={scrollRef}>
                                 <p>Als alle gegevens in orde zijn, kun je verdergaan naar het bevestigingscherm met verdere info</p>
-                                <Button text="Ga verder" onClick={() => setShowPopup(true)} round darken uppercase submit/>
+                                <Button text="Ga verder" onClick={openConfirmPopup} round darken uppercase submit/>
                             </div>
                         )}
                     </Form>
-                    {showPopup && <ConfirmPopup onClose={() => setShowPopup(false)} />}
                 </>}
             </div>
         </>
