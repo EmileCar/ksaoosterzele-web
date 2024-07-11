@@ -1,8 +1,8 @@
 import Label from "../form/Label";
 import Input from "../form/Input";
-import { useCollageContext } from "../../contexts/CollageContext";
 import Form from "../form/Form";
 import Group from "../form/Group";
+import { useCollageContext } from "../../contexts/CollageContext";
 
 const MediaSearchOptions = () => {
     const { searchValue, setSearchValue, sortedBy, setSortedBy, groupBy, setGroupBy, showSearchOptions } = useCollageContext();

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Popup from "../../popup/Popup";
 import Collage, { SendCollage } from "../../../types/Collage";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
@@ -52,10 +52,6 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         const allTypeNames = collageTypes.map((type : CollageType) => type.name);
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
-
-    useEffect(() => {
-        console.log(values)
-    } , [values])
 
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>

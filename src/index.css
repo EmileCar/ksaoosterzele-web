@@ -56,9 +56,16 @@ html {
 	font-size: 1.2rem;
 	color: #4A373E;
 	scroll-behavior: smooth;
-  	min-height: 100vh;
+}
+
+.page-root {
+	min-height: 100vh;
 	display: grid;
 	grid-template-rows: 1fr;
+}
+
+.no-scroll {
+    overflow: hidden;
 }
 
 .blueBG {

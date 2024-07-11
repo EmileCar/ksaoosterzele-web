@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Collage from "../../../types/Collage";
-import CollageType from "../../../types/CollageType";
 import defaultThumbnail from '../../../assets/img/default.jpg';
 
 const CollageGalleryItem = ({ collage } : { collage: Collage }) => {
@@ -8,7 +7,6 @@ const CollageGalleryItem = ({ collage } : { collage: Collage }) => {
         <Link to={`/collage/${collage.id}`} className="collage-gallery_item">
             <img
                 src={`assets/media/collages/${collage.name}/thumbnail.png`}
-                // src={`${isAdmin ? "../" : ""}assets/media/collages/${collage.name}/thumbnail.png`}
                 alt={collage.name}
                 onError={(e) => {
                     (e.target as HTMLImageElement).src = defaultThumbnail;

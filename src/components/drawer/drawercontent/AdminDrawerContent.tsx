@@ -1,4 +1,3 @@
-import React from "react";
 import { useAccountContext } from "../../../contexts/AccountContext";
 import { Link } from "react-router-dom";
 

@@ -1,40 +1,50 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface PopupContextProps {
-    isActive: boolean;
-    openPopup: () => void;
+    registerPopup: (popup: React.ReactNode) => void;
     closePopup: () => void;
 }
 
 export const PopupContext = createContext<PopupContextProps>({
-    isActive: false,
-    openPopup: () => {},
+    registerPopup: () => {},
     closePopup: () => {},
 });
 
 export const PopupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isActive, setIsActive] = useState(false);
+    const [popup, setPopup] = useState<React.ReactNode>(null);
+    const location = useLocation();
 
-    const openPopup = () => {
-        setIsActive(true);
+    const registerPopup = (popup: React.ReactNode) => {
+        setPopup(popup);
     };
 
     const closePopup = () => {
-        setIsActive(false);
+        setPopup(null);
     };
 
-    return (
-        <PopupContext.Provider value={{ isActive, openPopup, closePopup }}>
-            {isActive ? (
-                <>
-                    <div style={{ height:"100vh", overflow: "hidden", position: "relative" }}>
-                        {children}
-                    </div>
-                </>
+    useEffect(() => {
+        if (popup) {
+            document.body.classList.add('no-scroll');
+        } else {
+            document.body.classList.remove('no-scroll');
+        }
+    }, [popup]);
 
-            ) : (
-                <React.Fragment>{children}</React.Fragment>
-            )}
+    useEffect(() => {
+        closePopup();
+    }, [location]);
+
+    return (
+        <PopupContext.Provider value={{ registerPopup, closePopup }}>
+            <div className='page-root'>
+                {children}
+            </div>
+            {popup && popup}
         </PopupContext.Provider>
     );
+};
+
+export const usePopupContext = () => {
+    return useContext(PopupContext);
 };

@@ -5,10 +5,10 @@ import Input from "../form/Input";
 import { useRegistrationContext } from "../../contexts/RegistrationContext";
 import useFetch from "../../hooks/useFetch";
 import { getGroups } from "../../services/groupService";
-import Registration from "../../types/Registration";
 import ChooseTakPopup from "./popups/ChooseTakPopup";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
 import Form from "../form/Form";
+import { usePopupContext } from "../../contexts/PopupContext";
 
 /**
  * De teaser is een component om de gebruiker een simpel startform te geven voor hun inschrijving.
@@ -17,11 +17,10 @@ import Form from "../form/Form";
 const Teaser = () => {
 	const [name, setName] = useState<string>("");
 	const [selectedYear, setSelectedYear] = useState<string>("");
-
 	const [tak, setTak] = useState<Group | null>(null);
-	const [isPopupActive, setIsPopupActive] = useState(false);
 	const { pending, data: groups, error } = useFetch<Group[]>(getGroups);
 	const { values, changeValue, errorStates } = useRegistrationContext();
+	const { registerPopup } = usePopupContext();
 
 	const yearToGroupMap: { [key: string]: Group | string | null } = {
 		"1l": groups && groups[0],
@@ -73,6 +72,10 @@ const Teaser = () => {
 		}
 	};
 
+	const openChooseTakPopup = () => {
+		registerPopup(<ChooseTakPopup setTak={(tak) => updateTak(tak)} />);
+	}
+
 	return (
 		<div className="teaser__wrapper">
 			<Form customClassName="teaserForm">
@@ -119,7 +122,7 @@ const Teaser = () => {
 				{selectedYear &&
 					<div className="takTeaser__wrapper">
 						{(selectedYear === 'other' && !tak) ?
-							<p className="cursive" onClick={() => setIsPopupActive(true)}>Klik hier om de leeftijdsgroep te kiezen</p>
+							<p className="cursive" onClick={openChooseTakPopup}>Klik hier om de leeftijdsgroep te kiezen</p>
 						:
 							<FetchedDataLayout isPending={pending} error={error}>
 								<img src={`assets/takken/${tak && tak.imageFileName}`} alt={`${tak && tak.name} KSA Oosterzele tak`} className="tak-img" />
@@ -127,12 +130,11 @@ const Teaser = () => {
 									Uw kind hoort bij de tak
 									<p className="assignedTak">{tak && tak.name}</p>
 								</div>
-								<p className="wrongTak cursive" onClick={() => setIsPopupActive(true)}>Niet juist? Klik hier</p>
+								<p className="wrongTak cursive" onClick={openChooseTakPopup}>Niet juist? Klik hier</p>
 							</FetchedDataLayout>
 						}
 					</div>
 				}
-				{isPopupActive && <ChooseTakPopup onClose={setIsPopupActive} setTak={(tak) => updateTak(tak)} />}
 			</div>
 		</div>
 	);

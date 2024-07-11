@@ -2,20 +2,21 @@ import Event from '../../../types/Event';
 import './EventsList.css';
 import Default from '../../../assets/img/default.jpg';
 import { formatDate, formatTime, isDateTimeInPast } from '../../../utils/datetimeUtil';
-import {  useState } from 'react';
 import EventPopup from '../popups/EventPopup';
 import ConfirmEventDeletionPopup from '../popups/ConfirmEventDeletionPopup';
 import Button from '../../button/Button';
+import { usePopupContext } from '../../../contexts/PopupContext';
 
 const EventListItemAdmin = ({ event, enableWrap = false, reload } : { event: Event, enableWrap?: boolean, isAdmin?: boolean, reload: () => void }) => {
-	const [showChangePopup, setShowChangePopup] = useState<boolean>(false);
-	const [showDeletePopup, setShowDeletePopup] = useState<boolean>(false);
+	const { registerPopup } = usePopupContext();
 
-	const handlePopupClose = () => {
-		setShowChangePopup(false);
-		setShowDeletePopup(false);
-		reload();
-	};
+	const openEditPopup = () => {
+		registerPopup(<EventPopup event={event} onClose={reload} />);
+	}
+
+	const openDeletePopup = () => {
+		registerPopup(<ConfirmEventDeletionPopup event={event} onClose={reload} />);
+	}
 
 	return (
 		<div className={`event-list_item admin ${enableWrap && "wrap-item"}`}>
@@ -40,11 +41,9 @@ const EventListItemAdmin = ({ event, enableWrap = false, reload } : { event: Eve
 				</div>
 			</div>
 			<div className='event-buttons'>
-				<Button text="Aanpassen" onClick={() => setShowChangePopup(true)} darken fullWidth/>
-				<Button text="Verwijderen" onClick={() => setShowDeletePopup(true)} darken fullWidth customClassName='event-buttons_button verwijderen'/>
+				<Button text="Aanpassen" onClick={openEditPopup} darken fullWidth/>
+				<Button text="Verwijderen" onClick={openDeletePopup} darken fullWidth customClassName='event-buttons_button verwijderen'/>
 			</div>
-			{showChangePopup && <EventPopup event={event} onClose={handlePopupClose} />}
-			{showDeletePopup && <ConfirmEventDeletionPopup event={event} onClose={handlePopupClose} />}
 		</div>
 	)
 };

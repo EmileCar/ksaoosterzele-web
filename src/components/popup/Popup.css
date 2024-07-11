@@ -12,6 +12,7 @@
 	display: grid;
 	place-items: center;
 	text-align: center;
+	animation: entryOverlay 200ms ease-in-out;
 }
 .popup {
 	padding: var(--s1);
@@ -21,6 +22,7 @@
 	position: relative;
     color: var(--main-color);
 	margin: 4.5rem 0;
+	animation: entryPopup 300ms ease-in-out;
 }
 .popup .close {
 	position: absolute;
@@ -68,5 +70,25 @@
 @media screen and (max-width: 450px) {
 	.confirm-buttons{
 		flex-wrap: wrap;
+	}
+}
+
+@keyframes entryPopup {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes entryOverlay {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
 	}
 }

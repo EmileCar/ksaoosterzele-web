@@ -15,6 +15,7 @@ import Input from "../../../components/form/Input";
 import Form from "../../../components/form/Form";
 import Button from "../../../components/button/Button";
 import RegistrationPopup from "../../../components/inschrijven/popups/RegistrationPopup";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const RegistrationsAdmin = () => {
     const { pending, data: registrations, error, refetch } = useFetch(getRegistrations);
@@ -23,8 +24,8 @@ const RegistrationsAdmin = () => {
         tak: { value: null, matchMode: FilterMatchMode.EQUALS },
     });
     const [globalFilterValue, setGlobalFilterValue] = useState('');
-    const [selectedRow, setSelectedRow] = useState<Registration | null>(null);
     const [visibleColumns, setVisibleColumns] = useState<{ field: string; header: string; }[]>([]);
+    const { registerPopup } = usePopupContext();
 
     const extraColumns = [
         { field: 'birthdate', header: 'Geboortedatum' },
@@ -71,10 +72,9 @@ const RegistrationsAdmin = () => {
         );
     };
 
-    const onClose = () => {
-        refetch();
-        setSelectedRow(null);
-    }
+    const openRegistrationPopup = (registration: Registration) => {
+        registerPopup(<RegistrationPopup registration={registration} onClose={refetch} />);
+    };
 
     return (
         <>
@@ -92,7 +92,7 @@ const RegistrationsAdmin = () => {
                     filters={filters}
                     emptyMessage="Er zijn nog geen inschrijvingen"
                     selectionMode="single"
-                    onSelectionChange={(e) => setSelectedRow(e.value as Registration | null)}
+                    onSelectionChange={(e) => openRegistrationPopup(e.value)}
                 >
                     <Column field="firstName" header="Voornaam" sortable></Column>
                     <Column field="lastName" header="Achternaam" sortable></Column>
@@ -102,7 +102,6 @@ const RegistrationsAdmin = () => {
                     ))}
                     <Column field="created_at" body={createdAtBodyTemplate} header="Ingeschreven op" sortable></Column>
                 </DataTable>
-                {selectedRow && <RegistrationPopup registration={selectedRow} onClose={onClose} />}
             </FetchedDataLayout>
         </>
     );

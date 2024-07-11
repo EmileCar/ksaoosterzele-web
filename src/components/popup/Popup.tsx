@@ -2,6 +2,7 @@ import React from "react";
 import "./Popup.css";
 import SectionTitle from "../sectionTitle/SectionTitle";
 import LoadingText from "../loading/LoadingText";
+import { usePopupContext } from "../../contexts/PopupContext";
 
 interface PopupProps {
     children: React.ReactNode;
@@ -12,8 +13,11 @@ interface PopupProps {
 }
 
 const Popup: React.FC<PopupProps> = ({ children, title, onClose, isPending, globalError }) => {
+    const { closePopup } = usePopupContext();
+
     const closeHandler = () => {
         if (onClose) onClose();
+        closePopup();
     };
 
     return (
