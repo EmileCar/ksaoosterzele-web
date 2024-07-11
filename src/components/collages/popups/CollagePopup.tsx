@@ -14,12 +14,14 @@ import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import useFetch from "../../../hooks/useFetch";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
     const [isPending, setIsPending] = useState<boolean>(false);
     const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
+    const { closePopup } = usePopupContext();
 
     const handleSubmitForm = async () => {
         setIsPending(true);
@@ -27,6 +29,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         await sendCollage(values, collage ? "PUT" : "POST").then(() => {
             setIsPending(false);
             onClose();
+            closePopup();
         }).catch((errors: any) => {
             setTimeout(() => {
                 let errorfields = errors.errorFields ?? {};
@@ -54,7 +57,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
     }
 
     return (
-		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"} onClose={onClose}>
+		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
                 <Form>
                     <Group>

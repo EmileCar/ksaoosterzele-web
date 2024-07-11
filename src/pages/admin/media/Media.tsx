@@ -17,7 +17,7 @@ const MediaAdmin = () => {
 	}
 
 	const openCollageTypesPopup = () => {
-		registerPopup(<CollageTypesPopup onClose={refetch} />);
+		registerPopup(<CollageTypesPopup/>);
 	}
 
 	return (

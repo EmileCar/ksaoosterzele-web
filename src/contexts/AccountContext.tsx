@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import LoadingSpinner from '../components/loading/LoadingSpinner';
 import Account from '../types/Account';
 import { getAccount } from '../services/accountService';
 import AdminLayout from '../layouts/AdminLayout';

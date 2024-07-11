@@ -21,7 +21,6 @@ const useForm = <T extends Record<string, any>>(initialValues: T) => {
 
     const handleValueChange = (e: any) => {
         const { name, value } = e.target ? e.target : e;
-        console.log(name, value)
         setValues((prevState) => ({
             ...prevState,
             [name]: value,

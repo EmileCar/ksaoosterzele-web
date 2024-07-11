@@ -12,12 +12,14 @@ import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import AutoComplete from "../../form/AutoComplete";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
     const [isPending, setIsPending] = useState<boolean>(false);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
     const [imagePathError, setImagePathError] = useState<string>("");
+	const { closePopup } = usePopupContext();
 
     const handleSubmitForm = async () => {
         setIsPending(true);
@@ -25,6 +27,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         await sendEvent(values, event ? "PUT" : "POST").then(() => {
             setIsPending(false);
             onClose();
+            closePopup();
         }).catch((errors: any) => {
             setTimeout(() => {
                 let errorfields = errors.errorFields ?? {};
@@ -48,7 +51,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
     }
 
     return (
-        <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"} onClose={onClose}>
+        <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"}>
             <FetchedDataLayout isPending={isPending} error={errorStates.general}>
                 {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
                 <Form>

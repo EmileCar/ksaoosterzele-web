@@ -6,7 +6,7 @@ import CollageType from '../../../types/CollageType';
 import useFetch from '../../../hooks/useFetch';
 import LoadingSpinner from '../../loading/LoadingSpinner';
 
-const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
+const CollageTypesPopup = () => {
     const { pending, data: collageTypes, error, refetch } = useFetch<CollageType[]>(getCollageTypes);
     const [editMode, setEditMode] = useState<number | null>(null);
     const [editName, setEditName] = useState<string>('');
@@ -50,7 +50,7 @@ const CollageTypesPopup = ({ onClose }: { onClose: () => void }) => {
     };
 
     return (
-        <Popup title="Collage Types beheren" onClose={onClose}>
+        <Popup title="Collage Types beheren">
             {deleteError && <p className="error">{deleteError}</p>}
             <FetchedDataLayout isPending={pending} error={error}>
                 <div className="collage-types">
