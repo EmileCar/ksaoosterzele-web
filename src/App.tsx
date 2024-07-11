@@ -18,35 +18,38 @@ import RegistrationsAdmin from './pages/admin/registrations/Registrations';
 import CollageMedia from './pages/admin/media/CollageMedia';
 import { CollageProvider } from './contexts/CollageContext';
 import CollageDetail from './pages/media/CollageDetail';
+import { PopupProvider } from './contexts/PopupContext';
 
 const App = () => {
 
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Vaste routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/evenementen" element={<Events />} />
-        <Route path='/evenement/:id' element={<EventDetail />} />
-        <Route path="/media" element={<CollageProvider><Media /></CollageProvider>} />
-        <Route path="/collage/:id" element={<CollageDetail  />} />
-        <Route path="/inschrijven" element={<Register />} />
-        <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />
-        <Route path="/contact" element={<Contact />} />
+    <PopupProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Vaste routes */}
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/evenementen" element={<Events />} />
+            <Route path='/evenement/:id' element={<EventDetail />} />
+            <Route path="/media" element={<CollageProvider><Media /></CollageProvider>} />
+            <Route path="/collage/:id" element={<CollageDetail  />} />
+            <Route path="/inschrijven" element={<Register />} />
+            <Route path="/inschrijven/bevestiging" element={<RegisterConfirmation />} />
+            <Route path="/contact" element={<Contact />} />
 
-        {/* Admin */}
-        <Route path="/admin" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
-        <Route path="/admin/evenementen" element={<AccountProvider><EventsAdmin /></AccountProvider>} />
-        <Route path="/admin/media" element={<AccountProvider><CollageProvider isAdmin><MediaAdmin/></CollageProvider></AccountProvider>} />
-        <Route path="/admin/media/:id" element={<AccountProvider><CollageMedia /></AccountProvider>} />
-        <Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
-        <Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
+            {/* Admin */}
+            <Route path="/admin" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
+            <Route path="/admin/evenementen" element={<AccountProvider><EventsAdmin /></AccountProvider>} />
+            <Route path="/admin/media" element={<AccountProvider><CollageProvider isAdmin><MediaAdmin/></CollageProvider></AccountProvider>} />
+            <Route path="/admin/media/:id" element={<AccountProvider><CollageMedia /></AccountProvider>} />
+            <Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
+            <Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
 
-        {/* Fallback */}
-        <Route path="/*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+            {/* Fallback */}
+            <Route path="/*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+    </PopupProvider>
   );
 }
 
