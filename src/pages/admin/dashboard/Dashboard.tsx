@@ -1,11 +1,8 @@
-import React from "react";
 import "./Dashboard.css";
 import { Link } from "react-router-dom";
-import AdminLayout from "../../../layouts/AdminLayout";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import { useAccountContext } from "../../../contexts/AccountContext";
 import { logout } from "../../../services/accountService";
-import Button from "../../../components/button/Button";
 
 const DashboardAdmin = () => {
     const { account } = useAccountContext();
