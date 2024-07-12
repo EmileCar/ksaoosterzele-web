@@ -16,9 +16,12 @@
 }
 @media screen and (min-width: 55rem) {
 	.form__wrapper {
-		grid-template-areas: 
+		grid-template-areas:
 		"labels img"
 		"submit .";
+	}
+	.form__container{
+		justify-content: space-between;
 	}
 }
 .contact-wrapper {
