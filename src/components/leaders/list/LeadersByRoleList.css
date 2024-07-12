@@ -1,0 +1,40 @@
+.leader__roles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s0);
+}
+
+.leader__role{
+    display: grid;
+    gap: var(--s0);
+}
+
+.leader__role h3 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+
+.leader__role .leader {
+  padding: var(--s0);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  display: grid;
+  grid-template-areas: 
+    "image name"
+    "image role"
+}
+
+.leader__role .leader img {
+  grid-area: image;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.leader__role .leader h4 {
+  grid-area: name;
+  font-family: var(--title-font);
+  font-size: 1.6rem;
+}

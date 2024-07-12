@@ -20,7 +20,8 @@ class MediaController extends Controller {
 	}
 
 	public function getCollages() {
-		if (!empty($_SESSION["account_ksaoosterzele"]) && isset($_GET['all']) && $_GET["all"] === "1") {
+		if (isset($_GET['all']) && $_GET["all"] === "1") {
+			$account = Account::is_authenticated();
 			$collages = Collage::with("types")->get();
 		} else {
 			$collages = Collage::where("active", 1)->with("types")->get();

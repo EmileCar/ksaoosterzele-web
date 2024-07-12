@@ -1,6 +1,9 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once __DIR__ . "/Account.php";
+require_once __DIR__ . "/LeaderRole.php";
+require_once __DIR__ . "/Group.php";
 
 class Leader extends Model
 {

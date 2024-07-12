@@ -3,9 +3,9 @@ import ErrorResponse from "../types/ErrorResponse";
 import Group from "../types/Group";
 import { LeadersByRoleResult } from "../types/Leader";
 
-export async function getLeadersByRole(): Promise<LeadersByRoleResult> {
+export async function getLeadersByRole(all: boolean = false) : Promise<LeadersByRoleResult> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=leaders_by_role`, {
+        const response = await fetch(`${API_BASE_URL}?page=leaders_by_role${all ? "&all=1" : ""}`, {
             method: 'GET',
             credentials: 'include',
         });

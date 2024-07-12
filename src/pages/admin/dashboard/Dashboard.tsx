@@ -39,7 +39,7 @@ const DashboardAdmin = () => {
                     <i className="pi pi-google" style={{ color: "white", fontSize: 50 }} />
                     <h3>KSA Drive</h3>
                 </Link>
-                <Link className="dashboard-card" to="admin/leaders">
+                <Link className="dashboard-card" to="/admin/leiding">
                     <i className="pi pi-crown" style={{ color: "white", fontSize: 50 }} />
                     <h3>Leiding</h3>
                 </Link>
