@@ -33,6 +33,11 @@ const Header = ({ adminMode }: { adminMode?: boolean }) => {
 							</Link>
 						</li>
 						<li className="menu__item">
+							<Link className="item__link" to="/leiding">
+								Onze leiding
+							</Link>
+						</li>
+						<li className="menu__item">
 							<Link className="item__link" to="/evenementen">
 								Evenementen
 							</Link>

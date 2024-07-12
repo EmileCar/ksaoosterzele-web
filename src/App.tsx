@@ -19,6 +19,7 @@ import CollageMedia from './pages/admin/media/CollageMedia';
 import { CollageProvider } from './contexts/CollageContext';
 import CollageDetail from './pages/media/CollageDetail';
 import { PopupProvider } from './contexts/PopupContext';
+import Leaders from './pages/leiding/Leaders';
 
 const App = () => {
 
@@ -29,6 +30,7 @@ const App = () => {
 					{/* Vaste routes */}
 					<Route path="/" element={<Home />} />
 					<Route path="/home" element={<Home />} />
+					<Route path="/leiding" element={<Leaders />} />
 					<Route path="/evenementen" element={<Events />} />
 					<Route path='/evenement/:id' element={<EventDetail />} />
 					<Route path="/media" element={<CollageProvider><Media /></CollageProvider>} />
