@@ -3,12 +3,15 @@ import Takken from "../../takken/Takken";
 import Popup from "../../popup/Popup";
 import Group from "../../../types/Group";
 import Button from "../../button/Button";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const ChooseTakPopup: React.FC<{ setTak: (tak: Group) => void }> = ({ setTak }) => {
     const [selectedTak, setSelectedTak] = useState<Group | null>(null);
+    const { closePopup } = usePopupContext();
 
     const submitHandler = () => {
         setTak(selectedTak!);
+        closePopup();
     };
 
     return (

@@ -16,9 +16,6 @@ const Popup: React.FC<PopupProps> = ({ children, title, onClose, isPending, glob
     const { closePopup } = usePopupContext();
 
     const closeHandler = () => {
-        console.log("Closing popup");
-        //if (onClose) onClose();
-        console.log("Closing popup");
         closePopup();
     };
 
