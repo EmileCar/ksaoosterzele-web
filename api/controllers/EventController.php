@@ -79,14 +79,16 @@ class EventController extends Controller {
 		exit(json_encode($event));
 	}
 
-	public function getImagePaths (){
+	public function getImagePaths() {
 		$directory = '../assets/events';
 		$filenames = [];
+		$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
 
 		if (is_dir($directory)) {
 			if ($handle = opendir($directory)) {
 				while (($file = readdir($handle)) !== false) {
-					if ($file !== '.' && $file !== '..' && pathinfo($file, PATHINFO_EXTENSION) === 'jpg') {
+					$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+					if ($file !== '.' && $file !== '..' && in_array($extension, $allowedExtensions)) {
 						$filenames[] = $file;
 					}
 				}
@@ -96,6 +98,7 @@ class EventController extends Controller {
 
 		exit(json_encode($filenames));
 	}
+
 
 	public function deleteEvent() {
 		$account = Account::is_authenticated();

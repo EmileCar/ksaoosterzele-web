@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
 import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
@@ -13,9 +13,11 @@ import Form from "../../form/Form";
 import Group from "../../form/Group";
 import AutoComplete from "../../form/AutoComplete";
 import { usePopupContext } from "../../../contexts/PopupContext";
+import useFetch from "../../../hooks/useFetch";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
+    const { pending, data: fetchedImagePaths, error } = useFetch<string[]>(getImagePaths);
     const [isPending, setIsPending] = useState<boolean>(false);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
     const [imagePathError, setImagePathError] = useState<string>("");
@@ -44,10 +46,15 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         changeValue("datetime", datetime);
     }
 
-    const search = async (event: any) => {
-        await getImagePaths().then((data) => {
-            setImagePaths(event.query ? data.filter((path) => path.toLowerCase().includes(event.query.toLowerCase())) : data);
-        });
+    useEffect(() => {
+        if(fetchedImagePaths) {
+            setImagePaths(fetchedImagePaths);
+        }
+    }, [fetchedImagePaths]);
+
+    const search = async (e: any) => {
+        if(!fetchedImagePaths) return;
+        setImagePaths(e.query ? fetchedImagePaths.filter((path) => path.toLowerCase().includes(e.query.toLowerCase())) : fetchedImagePaths);
     }
 
     return (
@@ -68,7 +75,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imagePaths" dropdown />
+                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imagePaths" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
                         </Label>
                     </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
