@@ -2,6 +2,7 @@
 import EventsList from "../../components/events/list/EventsList";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
+import "./Events.css";
 
 const Events = () => {
 	return (
@@ -11,7 +12,7 @@ const Events = () => {
 					Hier kun je onze alle activiteiten en evenementen zien die wij
 					organiseren, klik op een activiteit om meer informatie te krijgen!
 				</p>
-				<div className="events__text">
+				<div>
 					<p>Het ledenboekje van dit semester vind je hier:</p>
 					<a
 						href="assets/ledenboekjes/ksaboekje-sep-dec-2023.pdf"

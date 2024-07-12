@@ -18,7 +18,7 @@ class Event {
         this.imageFileName = eventData.image_file_name || null;
         this.url = eventData.url || null;
         this.featured = eventData.featured || false;
-        this.entryPrice = eventData.entry_price || null;
+        this.entryPrice = eventData.entryprice || null;
     }
 }
 

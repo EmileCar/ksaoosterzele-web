@@ -35,14 +35,14 @@ class Event extends Model
 		if (!empty($data["featured"])) {
 			$event->featured = $data["featured"];
 		}
-		if (!empty($data["imgpath"])) {
-			$event->image_file_name = $data["imgpath"];
+		if (!empty($data["imageFileName"])) {
+			$event->image_file_name = $data["imageFileName"];
 		}
 		if (!empty($data["url"])) {
 			$event->url = $data["url"];
 		}
 		if (!empty($data["entryPrice"])) {
-			$event->entry_price = $data["entryPrice"];
+			$event->entryprice = $data["entryPrice"];
 		}
 		return $event;
 	}

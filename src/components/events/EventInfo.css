@@ -1,0 +1,10 @@
+.event-info {
+	display: flex;
+	flex-direction: column;
+	gap: var(--s-1)
+}
+
+.event-info_item {
+	display: flex;
+	gap: var(--s-1);
+}

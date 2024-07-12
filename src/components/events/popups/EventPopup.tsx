@@ -26,6 +26,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
     const handleSubmitForm = async () => {
         setIsPending(true);
         setErrors(null);
+        console.log(values)
         await sendEvent(values, event ? "PUT" : "POST").then(() => {
             setIsPending(false);
             onClose();
@@ -75,7 +76,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imagePaths" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
+                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
                         </Label>
                     </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">

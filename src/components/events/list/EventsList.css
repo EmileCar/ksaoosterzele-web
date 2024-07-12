@@ -36,17 +36,6 @@
 	margin-bottom: var(--s0);
 }
 
-.event-list_item--body .event-details {
-	display: flex;
-	flex-direction: column;
-	gap: var(--s-1)
-}
-
-.event-list_item--body .event-details_item {
-	display: flex;
-	gap: var(--s-1);
-}
-
 .event-buttons{
 	display: flex;
 	gap: var(--s0);
