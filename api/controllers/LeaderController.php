@@ -6,7 +6,7 @@ require_once __DIR__ . '/../models/LeaderRole.php';
 
 class LeaderController extends Controller {
 
-    public function getLeaders()
+    public function getLeadersByRole()
     {
         $roles = LeaderRole::with('leaders')->get();
 
@@ -15,6 +15,7 @@ class LeaderController extends Controller {
         foreach ($roles as $role) {
             $leadersByRole[$role->name] = $role->leaders;
         }
+
         echo json_encode($leadersByRole);
     }
 }

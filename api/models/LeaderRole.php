@@ -6,8 +6,7 @@ class LeaderRole extends Model
 {
     public $timestamps = false;
 
-    // a leader can have many roles
     public function leaders() {
-        return $this->hasMany(Leader::class, 'role_id');
+        return $this->belongsToMany(Leader::class, 'leader_leader_roles', 'role_id', 'leader_id');
     }
 }

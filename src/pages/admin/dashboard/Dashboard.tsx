@@ -35,12 +35,12 @@ const DashboardAdmin = () => {
                     <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />
                     <h3>Mattentaarten</h3>
                 </Link>
-                <Link className="dashboard-card" to="https://drive.google.com/drive/home">
+                <Link className="dashboard-card" to="https://drive.google.com/drive/home" target="_blank">
                     <i className="pi pi-google" style={{ color: "white", fontSize: 50 }} />
                     <h3>KSA Drive</h3>
                 </Link>
                 <Link className="dashboard-card" to="admin/leaders">
-                    <i className="pi pi-google" style={{ color: "white", fontSize: 50 }} />
+                    <i className="pi pi-crown" style={{ color: "white", fontSize: 50 }} />
                     <h3>Leiding</h3>
                 </Link>
                 <div className="dashboard-card" onClick={handleClickLogout}>
