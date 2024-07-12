@@ -31,7 +31,7 @@ const Input: React.FC<InputProps> = ({
         <input
             type={type}
             name={name}
-            value={value}
+            value={value ?? ""}
             onChange={onChange}
             onBlur={onBlur}
             placeholder={placeholder}

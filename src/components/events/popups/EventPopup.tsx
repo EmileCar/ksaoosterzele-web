@@ -26,7 +26,6 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
     const handleSubmitForm = async () => {
         setIsPending(true);
         setErrors(null);
-        console.log(values)
         await sendEvent(values, event ? "PUT" : "POST").then(() => {
             setIsPending(false);
             onClose();

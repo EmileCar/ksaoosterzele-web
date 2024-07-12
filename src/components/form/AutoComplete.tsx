@@ -31,6 +31,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        if (!multiple && value) setInputValue(value as string);
+    } , [value]);
+
+    useEffect(() => {
+        if (!suggestions) return;
         if (inputValue === "") {
             setFilteredSuggestions(suggestions);
         } else {
