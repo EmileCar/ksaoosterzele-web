@@ -53,14 +53,14 @@ class LeaderController extends Controller {
         $leadersByRole = [];
 
         foreach ($roles as $role) {
-            $leadersByRole[$role->name] = $role->leaders->map(function ($leader) use ($currentWorkingYear) {
+            $leadersByRole[$role->name] = $role->leaders->map(function ($leader) use ($role, $currentWorkingYear) {
                 $group = $currentWorkingYear ? $leader->groups->first() : null;
 
-                $leaderResponse = new LeaderByRoleResponse($leader, $group);
+                $leaderResponse = new LeaderByRoleResponse($leader, $role->id, $group);
                 return $leaderResponse->toArray();
             })->toArray();
         }
-    
+
         exit(json_encode($leadersByRole));
     }
 

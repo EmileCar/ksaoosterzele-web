@@ -2,9 +2,9 @@ import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
 import Group from "../types/Group";
 
-export async function getGroups(): Promise<Group[]> {
+export async function getGroups(select?: boolean): Promise<Group[]> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=groups`, {
+        const response = await fetch(`${API_BASE_URL}?page=groups${select? '&select=true' : ''}`, {
             method: 'GET',
             credentials: 'include',
         });

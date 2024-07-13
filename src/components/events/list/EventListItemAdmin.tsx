@@ -1,7 +1,6 @@
 import Event from '../../../types/Event';
 import './EventsList.css';
 import Default from '../../../assets/img/default.jpg';
-import { formatDate, formatTime, isDateTimeInPast } from '../../../utils/datetimeUtil';
 import EventPopup from '../popups/EventPopup';
 import ConfirmEventDeletionPopup from '../popups/ConfirmEventDeletionPopup';
 import Button from '../../button/Button';

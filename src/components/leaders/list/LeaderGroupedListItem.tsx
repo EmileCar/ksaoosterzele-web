@@ -14,7 +14,7 @@ const LeadersGroupedListItem = ({ leader }: { leader: Leader }) => {
             />
             <div className="leader-info">
                 <h4 className="leader-name">{leader.firstName} {leader.lastName}</h4>
-                {leader.group && <p className="leader-group">{leader.group}</p>}
+                {leader.group && <p className="leader-group">{leader.group.name}</p>}
             </div>
         </div>
     );

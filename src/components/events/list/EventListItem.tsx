@@ -2,7 +2,6 @@ import Event from '../../../types/Event';
 import './EventsList.css';
 import { Link } from 'react-router-dom';
 import Default from '../../../assets/img/default.jpg';
-import { formatDate, formatTime, isDateTimeInPast } from '../../../utils/datetimeUtil';
 import EventInfo from '../EventInfo';
 
 const EventListItem = ({ event, enableWrap = false } : { event: Event, enableWrap?: boolean }) => {

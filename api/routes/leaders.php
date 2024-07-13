@@ -13,7 +13,7 @@ $leaderRoutes = [
         )
     ),
     'leader_roles' => array(
-        'controller' => 'LeaderRole',
+        'controller' => 'Leader',
         'methods' => array(
             'GET' => 'getLeaderRoles',
         )

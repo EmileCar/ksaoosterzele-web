@@ -10,8 +10,9 @@ class LeaderByRoleResponse
     public $email;
     public $image_file_name;
     public $group;
+    public $role_id;
 
-    public function __construct($leader, $group = null)
+    public function __construct($leader, $role_id, $group = null)
     {
         $this->id = $leader->id;
         $this->first_name = $leader->first_name;
@@ -20,9 +21,10 @@ class LeaderByRoleResponse
         $this->phone_number = $leader->phone_number;
         $this->email = $leader->email;
         $this->image_file_name = $leader->image_file_name;
+        $this->role_id = $role_id;
         $this->group = $group ? [
+            'id' => $group->id,
             'name' => $group->name,
-            'year' => $group->pivot->working_year_id
         ] : null;
     }
 

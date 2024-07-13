@@ -75,3 +75,23 @@ export async function getLeaderRoles() : Promise<LeaderRole[]> {
         throw error;
     }
 }
+
+
+export async function changeLeaderRoleOfLeader() : Promise<void> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        const roles =  data.map((role: any) => new LeaderRole(role));
+        return roles;
+    } catch (error) {
+        throw error;
+    }
+}

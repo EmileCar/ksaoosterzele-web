@@ -7,8 +7,12 @@ require_once __DIR__ . '/../responses/ErrorResponse.php';
 class GroupController extends Controller {
 
 	public function getGroups() {
-        $groups = Group::get();
+		if (isset($_GET['select'])) {
+			$groups = Group::select('id', 'name')->get();
+		} else {
+			$groups = Group::get();
+		}
 
-        exit(json_encode($groups));
+		exit(json_encode($groups));
 	}
 }

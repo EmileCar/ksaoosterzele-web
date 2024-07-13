@@ -1,5 +1,5 @@
 class LeadersGroupedResult {
-    [role: string]: any[];
+    [role: string]: Leader[];
 
     constructor(data: { [role: string]: any[] }) {
         for (const role in data) {
@@ -19,8 +19,8 @@ class Leader {
     email: string | null;
     imageFileName: string | null;
     description: string | null;
-    role: LeaderRole | null;
-    group: string | null;
+    role_id: number;
+    group: LeaderGroup | null;
 
     constructor(leaderData?: any) {
         this.id = leaderData.id || null;
@@ -31,8 +31,8 @@ class Leader {
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.image_file_name || null;
         this.description = leaderData.description || null;
-        this.role = leaderData.role ? new LeaderRole(leaderData.role) : null;
-        this.group = leaderData.group.name || null;
+        this.role_id = leaderData.role_id || null;
+        this.group = leaderData.group ? new LeaderGroup(leaderData.group) : null;
     }
 }
 
@@ -67,6 +67,18 @@ class LeaderRole {
     constructor(leaderRoleData?: any) {
         this.id = leaderRoleData.id || null;
         this.name = leaderRoleData.name || null;
+    }
+}
+
+class LeaderGroup {
+    id: number | null;
+    name: string;
+    year: number;
+
+    constructor(leaderRoleData?: any) {
+        this.id = leaderRoleData.id || null;
+        this.name = leaderRoleData.name || null;
+        this.year = leaderRoleData.year || null;
     }
 }
 
