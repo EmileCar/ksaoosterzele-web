@@ -1,6 +1,7 @@
 import React from "react";
 import "./form.css";
 import { useFormContext } from "../../contexts/FormContext";
+import { classNames } from "../../utils/classNameUtil";
 
 interface InputProps {
     type: string;
@@ -36,7 +37,7 @@ const Input: React.FC<InputProps> = ({
             onBlur={onBlur}
             placeholder={placeholder}
             disabled={disabled}
-            className={`input inherit-font ${customClassName}`}
+            className={classNames("input inherit-font", customClassName)}
             autoFocus={focus}
         />
     );

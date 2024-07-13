@@ -1,5 +1,6 @@
 import React from 'react';
 import FormContext from '../../contexts/FormContext';
+import { classNames } from '../../utils/classNameUtil';
 
 interface FormProps {
     onSubmit?: () => void;
@@ -11,7 +12,14 @@ interface FormProps {
 const Form: React.FC<FormProps> = ({ onSubmit, customClassName = "", disabled, children }) => {
     return (
         <FormContext.Provider value={true}>
-            <form className={`form ${customClassName} ${disabled ? "disabled" : ""}`} onSubmit={(e) => { e.preventDefault(); onSubmit && onSubmit(); }}>
+            <form
+                className={classNames(
+                    'form',
+                    customClassName,
+                    disabled && 'disabled'
+                )}
+                onSubmit={(e) => { e.preventDefault(); onSubmit && onSubmit(); }}
+            >
                 {children}
             </form>
         </FormContext.Provider>

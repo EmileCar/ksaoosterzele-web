@@ -60,7 +60,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                     <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
                         <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown multiple/>
                     </Label>
-                    <Label text="Tonen?" customClassName="flex-column">
+                    <Label text="Tonen?">
                         <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />
                     </Label>
                 </Group>

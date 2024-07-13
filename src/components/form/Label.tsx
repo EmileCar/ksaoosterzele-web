@@ -1,6 +1,7 @@
 import React from "react";
 import "./form.css";
 import { useFormContext } from "../../contexts/FormContext";
+import { classNames } from "../../utils/classNameUtil";
 
 interface LabelProps {
     text: string;
@@ -20,7 +21,7 @@ const Label: React.FC<LabelProps> = ({
     useFormContext();
 
     return (
-        <label className={`label ${customClassName} ${errorMessage ? "error" : ''}`}>
+        <label className={classNames('label', customClassName, errorMessage && "error")}>
             {text} {required && <span className="required">*</span>}
             {children}
             {errorMessage && <small className="error-message">{errorMessage}</small>}

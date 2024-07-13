@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
 import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
@@ -7,7 +7,6 @@ import Label from "../../form/Label";
 import Input from "../../form/Input";
 import { getImagePaths, sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
-import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
@@ -57,12 +56,13 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                     </Label>
                 </Group>
                 <Group>
+                <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
+                        <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
+                    </Label>
                     <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
                         <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                     </Label>
-                    <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                        <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
-                    </Label>
+
                 </Group>
                 <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
                     <textarea

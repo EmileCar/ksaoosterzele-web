@@ -1,5 +1,6 @@
 import React from 'react';
 import { useFormContext } from '../../contexts/FormContext';
+import { classNames } from '../../utils/classNameUtil';
 
 interface GroupProps {
     customClassName?: string;
@@ -10,7 +11,7 @@ const Group: React.FC<GroupProps> = ({ customClassName = "", children }) => {
     useFormContext();
 
     return (
-        <div className={`form-group ${customClassName}`}>
+        <div className={classNames('form-group', customClassName)}>
             {children}
         </div>
     );

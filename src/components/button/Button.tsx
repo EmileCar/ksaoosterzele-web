@@ -1,6 +1,7 @@
 import React from 'react';
 import './Button.css';
 import LoadingSpinner from '../loading/LoadingSpinner';
+import { classNames } from '../../utils/classNameUtil';
 
 interface ButtonProps {
     text?: string;
@@ -36,10 +37,6 @@ const Button: React.FC<ButtonProps> = ({
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         onClick();
-    };
-
-    const classNames = (...classes: (string | undefined | boolean)[]) => {
-        return classes.filter(Boolean).join(' ');
     };
 
     return (
