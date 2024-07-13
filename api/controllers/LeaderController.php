@@ -21,7 +21,6 @@ class LeaderController extends Controller {
             });
         }])->get();
 
-        // Step 3: Group leaders by their groups
         $leadersByGroup = [];
 
         foreach ($groups as $group) {
@@ -38,8 +37,34 @@ class LeaderController extends Controller {
             });
         }
 
-        // Step 4: Return the data in JSON format
         exit(json_encode($leadersByGroup));
     }
 
+    public function getLeadersByRole()
+    {
+        $groups = Group::with(['leaders' => function ($query) use ($workingYear) {
+            $query->whereHas('leaderPlaces', function ($q) use ($workingYear) {
+                $q->where('working_year_id', $workingYear->id);
+            });
+        }])->get();
+
+        $leadersByRole = [];
+
+        foreach ($groups as $group) {
+            $leadersByRole[$group->name] = $group->leaders->map(function ($leader) {
+                return [
+                    'id' => $leader->id,
+                    'first_name' => $leader->first_name,
+                    'last_name' => $leader->last_name,
+                    'birthdate' => $leader->birthdate,
+                    'phone_number' => $leader->phone_number,
+                    'email' => $leader->email,
+                    'image_file_name' => $leader->image_file_name,
+                    'role' => $leader->leaderPlaces->first()->role,
+                ];
+            });
+        }
+
+        exit(json_encode($leadersByRole));
+    }
 }

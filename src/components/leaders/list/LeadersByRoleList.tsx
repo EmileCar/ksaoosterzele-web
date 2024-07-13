@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { getLeadersByRole } from "../../../services/leaderService";
 import useFetch from "../../../hooks/useFetch";
 import Leader, { LeadersByRoleResult } from "../../../types/Leader";
@@ -6,9 +5,8 @@ import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import './LeadersByRoleList.css';
 import DefaultLeider from '../../../assets/img/default-leider.jpeg';
 
-const LeadersByRoleList = ({ all }: { all?: boolean }): JSX.Element => {
-    const fetchLeaders = useCallback(() => getLeadersByRole(all), [all]);
-    const { pending, data, error } = useFetch<LeadersByRoleResult>(fetchLeaders);
+const LeadersByRoleList = (): JSX.Element => {
+    const { pending, data, error } = useFetch<LeadersByRoleResult>(getLeadersByRole);
 
     return (
         <FetchedDataLayout isPending={pending} error={error}>

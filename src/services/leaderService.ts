@@ -1,11 +1,10 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import Group from "../types/Group";
 import { LeadersByRoleResult } from "../types/Leader";
 
-export async function getLeadersByRole(all: boolean = false) : Promise<LeadersByRoleResult> {
+export async function getLeadersByRole() : Promise<LeadersByRoleResult> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=working_year_leaders${all ? "&all=1" : ""}`, {
+        const response = await fetch(`${API_BASE_URL}?page=working_year_leaders`, {
             method: 'GET',
             credentials: 'include',
         });
