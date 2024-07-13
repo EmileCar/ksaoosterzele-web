@@ -17,7 +17,7 @@ $allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, 
 // Als de route niet bestaat, geef een 404
 if (empty($allowedRoutes[$_GET['page']])) {
     http_response_code(404);
-    exit("Deze pagina bestaat niet");
+    ErrorResponse::exitWithError(404, 'Deze pagina bestaat niet');
 }
 
 // Als de methode niet toegevoegd is aan de route, geef een 405

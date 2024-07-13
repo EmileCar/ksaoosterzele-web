@@ -7,8 +7,7 @@ require_once __DIR__ . '/../responses/ErrorResponse.php';
 
 class LeaderController extends Controller {
 
-    public function getLeadersOfWorkingYear()
-    {
+    public function getLeadersOfWorkingYear() {
         $workingYear = WorkingYear::orderBy('start_year', 'desc')->first();
 
         if (!$workingYear) {
@@ -29,9 +28,6 @@ class LeaderController extends Controller {
                     'id' => $leader->id,
                     'first_name' => $leader->first_name,
                     'last_name' => $leader->last_name,
-                    'birthdate' => $leader->birthdate,
-                    'phone_number' => $leader->phone_number,
-                    'email' => $leader->email,
                     'image_file_name' => $leader->image_file_name,
                 ];
             });
@@ -40,18 +36,13 @@ class LeaderController extends Controller {
         exit(json_encode($leadersByGroup));
     }
 
-    public function getLeadersByRole()
-    {
-        $groups = Group::with(['leaders' => function ($query) use ($workingYear) {
-            $query->whereHas('leaderPlaces', function ($q) use ($workingYear) {
-                $q->where('working_year_id', $workingYear->id);
-            });
-        }])->get();
+    public function getLeadersByRole() {
+        $roles = LeaderRole::with('leaders')->get();
 
         $leadersByRole = [];
 
-        foreach ($groups as $group) {
-            $leadersByRole[$group->name] = $group->leaders->map(function ($leader) {
+        foreach ($roles as $role) {
+            $leadersByRole[$role->name] = $role->leaders->map(function ($leader) {
                 return [
                     'id' => $leader->id,
                     'first_name' => $leader->first_name,
@@ -60,9 +51,8 @@ class LeaderController extends Controller {
                     'phone_number' => $leader->phone_number,
                     'email' => $leader->email,
                     'image_file_name' => $leader->image_file_name,
-                    'role' => $leader->leaderPlaces->first()->role,
                 ];
-            });
+            })->toArray();
         }
 
         exit(json_encode($leadersByRole));

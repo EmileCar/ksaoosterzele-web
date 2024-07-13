@@ -1,12 +1,12 @@
 import { getLeadersByRole } from "../../../services/leaderService";
 import useFetch from "../../../hooks/useFetch";
-import Leader, { LeadersByRoleResult } from "../../../types/Leader";
+import Leader, { LeadersGroupedResult } from "../../../types/Leader";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import './LeadersByRoleList.css';
 import DefaultLeider from '../../../assets/img/default-leider.jpeg';
 
-const LeadersByRoleList = (): JSX.Element => {
-    const { pending, data, error } = useFetch<LeadersByRoleResult>(getLeadersByRole);
+const LeadersGroupedList = ({fetchFunction} : {fetchFunction: () => Promise<LeadersGroupedResult>}) => {
+    const { pending, data, error } = useFetch<LeadersGroupedResult>(fetchFunction!);
 
     return (
         <FetchedDataLayout isPending={pending} error={error}>
@@ -36,4 +36,4 @@ const LeadersByRoleList = (): JSX.Element => {
     );
 };
 
-export default LeadersByRoleList;
+export default LeadersGroupedList;

@@ -1,4 +1,4 @@
-class LeadersByRoleResult {
+class LeadersGroupedResult {
     [role: string]: Leader[];
 
     constructor(data: { [role: string]: any[] }) {
@@ -31,4 +31,4 @@ class Leader {
 }
 
 export default Leader;
-export { LeadersByRoleResult };
+export { LeadersGroupedResult };
