@@ -8,13 +8,15 @@ import { formatDateToInputDate } from "../../../utils/datetimeUtil";
 import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
-import Leader, { SendLeader } from "../../../types/Leader";
+import Leader, { LeaderRole, SendLeader } from "../../../types/Leader";
 import { useState } from "react";
-import { sendLeader } from "../../../services/leaderService";
+import { getLeaderRoles, sendLeader } from "../../../services/leaderService";
 import { usePopupContext } from "../../../contexts/PopupContext";
+import useFetch from "../../../hooks/useFetch";
 
 const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined, onClose: () => void }) => {
     const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendLeader>(new SendLeader(leader || {}));
+    const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
     const [isPending, setIsPending] = useState<boolean>(false);
 	const { closePopup } = usePopupContext();
 
@@ -70,6 +72,13 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                             name="description"
                             value={values.description ?? ""}
                         />
+                    </Label>
+                    <Label text="Huidige rol" errorMessage={errorStates.roleError}>
+                        <select name="role" value={values.role_id} onChange={handleValueChange}>
+                            {roles?.map(role => (
+                                <option key={role.id} value={role.id?.toString()}>{role.name}</option>
+                            ))}
+                        </select>
                     </Label>
                     <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
                 </Form>

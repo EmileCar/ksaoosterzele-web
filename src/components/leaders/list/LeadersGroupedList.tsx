@@ -5,21 +5,27 @@ import './LeadersGroupedList.css';
 import LeadersGroupedListItemAdmin from "./LeaderGroupedListItemAdmin";
 import LeadersGroupedListItem from "./LeaderGroupedListItem";
 
-const LeadersGroupedList = ({fetchFunction, isAdmin} : {fetchFunction: () => Promise<LeadersGroupedResult>, isAdmin?: boolean}) => {
-    const { pending, data, error } = useFetch<LeadersGroupedResult>(fetchFunction!);
+interface LeadersGroupedListProps {
+    fetchFunction: () => Promise<LeadersGroupedResult>;
+    isAdmin?: boolean;
+    emptyMessage?: string;
+}
+
+const LeadersGroupedList: React.FC<LeadersGroupedListProps> = ({ fetchFunction, isAdmin = false, emptyMessage }) => {
+    const { pending, data, error } = useFetch<LeadersGroupedResult>(fetchFunction);
 
     return (
         <FetchedDataLayout isPending={pending} error={error}>
-            <div className="leader__roles">
+            <div className={`leaders-grouped`}>
                 {data && Object.keys(data).map(role => (
-                    <div key={role} className="leader__role">
+                    <div key={role} className={`leaders-group ${isAdmin && "admin"}`}>
                         <h3>{role}</h3>
                         <div className="leaders">
                             {data[role].length === 0 ? (
-                                <p>Geen leiding</p>
+                                <p>{emptyMessage || "Geen leiders gevonden"}</p>
                             ) : (
                                 data[role].map((leader: Leader) => (
-                                    {isAdmin} ? (
+                                    isAdmin ? (
                                         <LeadersGroupedListItemAdmin key={leader.id} leader={leader} />
                                     ) : (
                                         <LeadersGroupedListItem key={leader.id} leader={leader} />

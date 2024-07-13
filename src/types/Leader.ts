@@ -1,5 +1,5 @@
 class LeadersGroupedResult {
-    [role: string]: Leader[];
+    [role: string]: any[];
 
     constructor(data: { [role: string]: any[] }) {
         for (const role in data) {
@@ -15,11 +15,12 @@ class Leader {
     firstName: string;
     lastName: string;
     birthdate: Date | null;
-    phoneNumber: string;
-    email: string;
-    imageFileName: string;
-    description: string;
-    role: LeaderRole;
+    phoneNumber: string | null;
+    email: string | null;
+    imageFileName: string | null;
+    description: string | null;
+    role: LeaderRole | null;
+    group: string | null;
 
     constructor(leaderData?: any) {
         this.id = leaderData.id || null;
@@ -30,7 +31,8 @@ class Leader {
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.image_file_name || null;
         this.description = leaderData.description || null;
-        this.role = new LeaderRole(leaderData.role) || null;
+        this.role = leaderData.role ? new LeaderRole(leaderData.role) : null;
+        this.group = leaderData.group.name || null;
     }
 }
 
@@ -43,6 +45,7 @@ class SendLeader {
     email: string;
     imageFileName: string;
     description: string;
+    role_id: number;
 
     constructor(leaderData?: any) {
         this.id = leaderData.id || null;
@@ -53,6 +56,7 @@ class SendLeader {
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.imageFileName || null;
         this.description = leaderData.description || null;
+        this.role_id = leaderData.role_id || null;
     }
 }
 
@@ -67,4 +71,4 @@ class LeaderRole {
 }
 
 export default Leader;
-export { LeadersGroupedResult, SendLeader };
+export { LeadersGroupedResult, SendLeader, LeaderRole };

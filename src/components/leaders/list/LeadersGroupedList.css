@@ -1,56 +1,75 @@
-.leader__roles {
+.leaders-grouped {
   display: flex;
   flex-direction: column;
   gap: var(--s1);
 }
 
-.leader__role{
+.leaders-group{
   display: grid;
   gap: var(--s0);
 }
 
-.leaders{
+.leaders-group .leaders{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--s0);
-
 }
 
-.leader__role h3 {
+.leaders-group h3 {
   font-family: var(--title-font);
   font-size: 1.8rem;
   text-decoration: underline;
   text-transform: capitalize;
 }
 
-.leader__role .leader {
+.leaders-group .leader {
   padding: var(--s0);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   display: grid;
-  grid-template-areas:
-    "image name"
-    "image role"
+  gap: var(--s1);
+  grid-template-columns: auto 1fr;
 }
 
-.leader__role .leader img {
-  grid-area: image;
+.leaders-group .leader img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
 }
 
-.leader__role .leader h4 {
-  grid-area: name;
-  font-family: var(--title-font);
-  font-size: 1.6rem;
+.leader-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.leader__role .leader.admin {
+.leaders-group .leader h4 {
+  font-family: var(--title-font);
+  font-size: 1.8rem;
+}
+
+.leaders-group.admin .leaders{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s0);
+}
+
+.leaders-group .leader.admin {
   cursor: pointer;
   transition: transform 0.3s;
 }
 
-.leader__role .leader.admin:hover {
+.leaders-group .leader.admin:hover {
   transform: scale(1.03);
+}
+
+@media screen and (max-width: 55rem) {
+  .leaders-group .leaders {
+    grid-template-columns: 1fr;
+  }
+
+  .leaders-group.admin .leaders {
+    grid-template-columns: 1fr;
+  }
 }

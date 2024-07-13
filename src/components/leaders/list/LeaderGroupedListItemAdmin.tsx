@@ -20,7 +20,7 @@ const LeadersGroupedListItemAdmin = ({ leader }: { leader: Leader }) => {
                     (e.target as HTMLImageElement).src = DefaultLeider;
                 }}
             />
-            <div className="card-body">
+            <div className="leader-info">
                 <h4 className="leader-name">{leader.firstName} {leader.lastName}</h4>
             </div>
         </div>
