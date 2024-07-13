@@ -26,7 +26,7 @@ USE `ksaoosterzele_testdatabase`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Tabelstructuur voor tabel `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -40,28 +40,28 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `accounts`
+-- Gegevens worden geëxporteerd voor tabel `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `username`, `email`, `password`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 'prive', 'test', 'prive', 1, '2024-06-15 19:45:25', '2024-06-15 19:45:25');
+(2, 'prive', 'prive', 'prive', 1, '2024-07-13 06:39:57', '2024-07-13 06:39:57');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_leaders`
+-- Tabelstructuur voor tabel `account_leaders`
 --
 
 CREATE TABLE `account_leaders` (
   `id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `leader_id` int(11) NOT NULL
+  `leader_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `account_roles`
+-- Tabelstructuur voor tabel `account_roles`
 --
 
 CREATE TABLE `account_roles` (
@@ -70,7 +70,7 @@ CREATE TABLE `account_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `account_roles`
+-- Gegevens worden geëxporteerd voor tabel `account_roles`
 --
 
 INSERT INTO `account_roles` (`id`, `name`) VALUES
@@ -79,7 +79,7 @@ INSERT INTO `account_roles` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `collages`
+-- Tabelstructuur voor tabel `collages`
 --
 
 CREATE TABLE `collages` (
@@ -92,16 +92,16 @@ CREATE TABLE `collages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `collages`
+-- Gegevens worden geëxporteerd voor tabel `collages`
 --
 
 INSERT INTO `collages` (`id`, `internal_name`, `display_name`, `description`, `date`, `active`) VALUES
-(5, 'gilles', 'gilles', NULL, '2024-07-05', 0);
+(9, 'emile_feest_', 'Emile feest!', NULL, '2024-07-12', 0);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `collage_collage_types`
+-- Tabelstructuur voor tabel `collage_collage_types`
 --
 
 CREATE TABLE `collage_collage_types` (
@@ -110,10 +110,17 @@ CREATE TABLE `collage_collage_types` (
   `collage_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `collage_collage_types`
+--
+
+INSERT INTO `collage_collage_types` (`id`, `collage_id`, `collage_type_id`) VALUES
+(4, 9, 3);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `collage_types`
+-- Tabelstructuur voor tabel `collage_types`
 --
 
 CREATE TABLE `collage_types` (
@@ -122,17 +129,18 @@ CREATE TABLE `collage_types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `collage_types`
+-- Gegevens worden geëxporteerd voor tabel `collage_types`
 --
 
 INSERT INTO `collage_types` (`id`, `name`) VALUES
 (1, 'kamp'),
-(2, 'vergaderingen');
+(2, 'vergaderingen'),
+(3, 'evenementen');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Tabelstructuur voor tabel `events`
 --
 
 CREATE TABLE `events` (
@@ -148,19 +156,19 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `events`
+-- Gegevens worden geëxporteerd voor tabel `events`
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `location`, `datetime`, `image_file_name`, `url`, `featured`, `entryprice`) VALUES
 (1, 'erghsqh', 'srdh', 'rsdh', '2024-06-28 18:59:33', 'drhs', 'drhs', 1, 'drh'),
-(2, 'n', NULL, NULL, '2024-07-06 18:00:00', NULL, NULL, 0, NULL),
 (3, 'test', NULL, NULL, '2024-07-06 18:00:00', NULL, NULL, 0, NULL),
-(4, 'test', NULL, 'test', '2024-07-06 18:00:00', NULL, NULL, 0, NULL);
+(4, 'test', NULL, 'test', '2024-07-06 18:00:00', 'Wiskunde.png', NULL, 0, NULL),
+(12, 'Emile feest', 'Er is een nieuw feest van Emile, dit feest zal doorgaan de 15 februari om eslbgiesb osehoig esgb eosi bgqoisemb gioseg oimsegqmo igbseiom ', 'Den Amb8', '2024-07-18 18:00:00', 'Wiskunde.png', 'emilecaron.be', 1, '8');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `groups`
+-- Tabelstructuur voor tabel `groups`
 --
 
 CREATE TABLE `groups` (
@@ -174,7 +182,7 @@ CREATE TABLE `groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `groups`
+-- Gegevens worden geëxporteerd voor tabel `groups`
 --
 
 INSERT INTO `groups` (`id`, `name`, `start_age`, `end_age`, `description`, `age_range`, `image_file_name`) VALUES
@@ -186,32 +194,72 @@ INSERT INTO `groups` (`id`, `name`, `start_age`, `end_age`, `description`, `age_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `leaders`
+-- Tabelstructuur voor tabel `leaders`
 --
 
 CREATE TABLE `leaders` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `birthdate` date NOT NULL
+  `birthdate` date DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `image_file_name` varchar(255) DEFAULT NULL,
+  `role_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `leaders`
+--
+
+INSERT INTO `leaders` (`id`, `first_name`, `last_name`, `birthdate`, `phone_number`, `email`, `image_file_name`, `role_id`) VALUES
+(1, 'Emile', 'Caron', '2024-07-09', NULL, NULL, '', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `leader_places`
+-- Tabelstructuur voor tabel `leader_places`
 --
 
 CREATE TABLE `leader_places` (
   `id` int(11) NOT NULL,
   `leader_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL
+  `group_id` int(11) NOT NULL,
+  `working_year_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `leader_places`
+--
+
+INSERT INTO `leader_places` (`id`, `leader_id`, `group_id`, `working_year_id`) VALUES
+(1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `registrations`
+-- Tabelstructuur voor tabel `leader_roles`
+--
+
+CREATE TABLE `leader_roles` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `leader_roles`
+--
+
+INSERT INTO `leader_roles` (`id`, `name`) VALUES
+(1, 'leiding'),
+(2, 'bondsleiding'),
+(3, 'oudleiding'),
+(4, 'passief leiding');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `registrations`
 --
 
 CREATE TABLE `registrations` (
@@ -244,45 +292,63 @@ CREATE TABLE `registrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `registrations`
+-- Gegevens worden geëxporteerd voor tabel `registrations`
 --
 
 INSERT INTO `registrations` (`id`, `group_id`, `first_name`, `last_name`, `birthdate`, `gender`, `birthplace`, `parent_first_name`, `parent_last_name`, `address`, `postal_code`, `town`, `phone_number`, `telephone_number`, `email`, `second_parent_first_name`, `second_parent_last_name`, `second_address`, `second_postal_code`, `second_town`, `second_phone_number`, `second_telephone_number`, `second_email`, `allow_media`, `updated_at`, `created_at`) VALUES
-(1, 2, 'Emile', 'Caron', '2010-06-01', 'M', 'oosterzele', 'Ann', 'De Winter', 'testadres 16', '9860', 'Oosterzele', '0412345678', NULL, 'caron.emile@telenet.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-01 19:35:41', '2024-07-01 15:34:30');
+(1, 2, 'Emile', 'Caron', '2010-06-01', 'M', 'oosterzele', 'sgseh', 'srhrdh', 'testadres 16', '9864', 'Oosterzele', '0412345678', NULL, 'caron.emile@telenet.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-01 19:35:41', '2024-07-01 15:34:30');
+
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Tabelstructuur voor tabel `working_years`
+--
+
+CREATE TABLE `working_years` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `start_year` smallint(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `working_years`
+--
+
+INSERT INTO `working_years` (`id`, `name`, `start_year`) VALUES
+(1, 'Werkjaar 2023-2024', 2023);
+
+--
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `accounts`
+-- Indexen voor tabel `accounts`
 --
 ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `role_id` (`role_id`);
 
 --
--- Indexes for table `account_leaders`
+-- Indexen voor tabel `account_leaders`
 --
 ALTER TABLE `account_leaders`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `account_id` (`account_id`),
-  ADD KEY `leader_id` (`leader_id`);
+  ADD KEY `leader_id` (`leader_id`),
+  ADD KEY `account_id` (`account_id`);
 
 --
--- Indexes for table `account_roles`
+-- Indexen voor tabel `account_roles`
 --
 ALTER TABLE `account_roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `collages`
+-- Indexen voor tabel `collages`
 --
 ALTER TABLE `collages`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `collage_collage_types`
+-- Indexen voor tabel `collage_collage_types`
 --
 ALTER TABLE `collage_collage_types`
   ADD PRIMARY KEY (`id`),
@@ -290,147 +356,174 @@ ALTER TABLE `collage_collage_types`
   ADD KEY `collage_type_id` (`collage_type_id`);
 
 --
--- Indexes for table `collage_types`
+-- Indexen voor tabel `collage_types`
 --
 ALTER TABLE `collage_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `events`
+-- Indexen voor tabel `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `groups`
+-- Indexen voor tabel `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `leaders`
+-- Indexen voor tabel `leaders`
 --
 ALTER TABLE `leaders`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
--- Indexes for table `leader_places`
+-- Indexen voor tabel `leader_places`
 --
 ALTER TABLE `leader_places`
   ADD PRIMARY KEY (`id`),
   ADD KEY `leader_id` (`leader_id`),
-  ADD KEY `group_id` (`group_id`);
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `working_year_id` (`working_year_id`);
 
 --
--- Indexes for table `registrations`
+-- Indexen voor tabel `leader_roles`
+--
+ALTER TABLE `leader_roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexen voor tabel `registrations`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
   ADD KEY `group_id` (`group_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indexen voor tabel `working_years`
+--
+ALTER TABLE `working_years`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `accounts`
+-- AUTO_INCREMENT voor een tabel `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `account_leaders`
---
-ALTER TABLE `account_leaders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `account_roles`
+-- AUTO_INCREMENT voor een tabel `account_roles`
 --
 ALTER TABLE `account_roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `collages`
+-- AUTO_INCREMENT voor een tabel `collages`
 --
 ALTER TABLE `collages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `collage_collage_types`
+-- AUTO_INCREMENT voor een tabel `collage_collage_types`
 --
 ALTER TABLE `collage_collage_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `collage_types`
---
-ALTER TABLE `collage_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `events`
---
-ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `groups`
+-- AUTO_INCREMENT voor een tabel `collage_types`
+--
+ALTER TABLE `collage_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT voor een tabel `events`
+--
+ALTER TABLE `events`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT voor een tabel `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `leaders`
+-- AUTO_INCREMENT voor een tabel `leaders`
 --
 ALTER TABLE `leaders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `leader_places`
+-- AUTO_INCREMENT voor een tabel `leader_places`
 --
 ALTER TABLE `leader_places`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `registrations`
+-- AUTO_INCREMENT voor een tabel `leader_roles`
+--
+ALTER TABLE `leader_roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT voor een tabel `registrations`
 --
 ALTER TABLE `registrations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT voor een tabel `working_years`
+--
+ALTER TABLE `working_years`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `accounts`
+-- Beperkingen voor tabel `accounts`
 --
 ALTER TABLE `accounts`
   ADD CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `account_roles` (`id`);
 
 --
--- Constraints for table `account_leaders`
+-- Beperkingen voor tabel `account_leaders`
 --
 ALTER TABLE `account_leaders`
-  ADD CONSTRAINT `account_leaders_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`),
-  ADD CONSTRAINT `account_leaders_ibfk_2` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`);
+  ADD CONSTRAINT `account_leaders_ibfk_1` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`),
+  ADD CONSTRAINT `account_leaders_ibfk_2` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`);
 
 --
--- Constraints for table `collage_collage_types`
+-- Beperkingen voor tabel `collage_collage_types`
 --
 ALTER TABLE `collage_collage_types`
   ADD CONSTRAINT `collage_collage_types_ibfk_1` FOREIGN KEY (`collage_id`) REFERENCES `collages` (`id`),
   ADD CONSTRAINT `collage_collage_types_ibfk_2` FOREIGN KEY (`collage_type_id`) REFERENCES `collage_types` (`id`);
 
 --
--- Constraints for table `leader_places`
+-- Beperkingen voor tabel `leaders`
+--
+ALTER TABLE `leaders`
+  ADD CONSTRAINT `leaders_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `leader_roles` (`id`);
+
+--
+-- Beperkingen voor tabel `leader_places`
 --
 ALTER TABLE `leader_places`
   ADD CONSTRAINT `leader_places_ibfk_1` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`),
-  ADD CONSTRAINT `leader_places_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
+  ADD CONSTRAINT `leader_places_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  ADD CONSTRAINT `leader_places_ibfk_3` FOREIGN KEY (`working_year_id`) REFERENCES `working_years` (`id`);
 
 --
--- Constraints for table `registrations`
+-- Beperkingen voor tabel `registrations`
 --
 ALTER TABLE `registrations`
   ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);

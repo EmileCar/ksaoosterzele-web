@@ -5,7 +5,7 @@ import { LeadersByRoleResult } from "../types/Leader";
 
 export async function getLeadersByRole(all: boolean = false) : Promise<LeadersByRoleResult> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=leaders_by_role${all ? "&all=1" : ""}`, {
+        const response = await fetch(`${API_BASE_URL}?page=working_year_leaders${all ? "&all=1" : ""}`, {
             method: 'GET',
             credentials: 'include',
         });

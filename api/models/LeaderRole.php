@@ -1,12 +1,13 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once __DIR__ . "/Leader.php";
 
 class LeaderRole extends Model
 {
     public $timestamps = false;
 
     public function leaders() {
-        return $this->belongsToMany(Leader::class, 'leader_leader_roles', 'role_id', 'leader_id');
+        return $this->hasMany(Leader::class, 'role_id');
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once __DIR__ . "/AccountRole.php";
+require_once __DIR__ . "/Leader.php";
 
 class Account extends Model
 {

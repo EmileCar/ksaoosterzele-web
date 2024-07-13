@@ -1,7 +1,7 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
-require_once 'Group.php';
+require_once __DIR__ . "/Group.php";
 
 class Registration extends Model
 {

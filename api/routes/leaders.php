@@ -1,9 +1,9 @@
 <?php
 $leaderRoutes = [
-    'leaders_by_role' => array(
+    'working_year_leaders' => array(
         'controller' => 'Leader',
         'methods' => array(
-            'GET' => 'getLeadersByRole',
+            'GET' => 'getLeadersOfWorkingYear',
         )
     ),
 ];

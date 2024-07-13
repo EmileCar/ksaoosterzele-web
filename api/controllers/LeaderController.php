@@ -1,46 +1,45 @@
 <?php
 
 require_once __DIR__ . '/Controller.php';
-require_once __DIR__ . '/../models/Leader.php';
-require_once __DIR__ . '/../models/LeaderRole.php';
+require_once __DIR__ . '/../models/WorkingYear.php';
+require_once __DIR__ . '/../models/Group.php';
+require_once __DIR__ . '/../responses/ErrorResponse.php';
 
 class LeaderController extends Controller {
 
-    public function getLeadersByRole()
+    public function getLeadersOfWorkingYear()
     {
-        $rolesQuery = LeaderRole::with(['leaders' => function ($query) {
-            $query->with(['groups' => function ($q) {
-                $q->select('groups.id', 'groups.name', 'lp.leader_id', 'lp.year')
-                  ->join('leader_places as lp', 'groups.id', '=', 'lp.group_id');
-            }]);
-        }]);
+        $workingYear = WorkingYear::orderBy('start_year', 'desc')->first();
 
-        if (!isset($_GET['all']) || $_GET['all'] !== "1") {
-            $rolesQuery->whereIn('name', ['bondsleiders', 'leiding']);
+        if (!$workingYear) {
+            ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
         }
 
-        $roles = $rolesQuery->get();
+        $groups = Group::with(['leaders' => function ($query) use ($workingYear) {
+            $query->whereHas('leaderPlaces', function ($q) use ($workingYear) {
+                $q->where('working_year_id', $workingYear->id);
+            });
+        }])->get();
 
-        $leadersByRole = [];
+        // Step 3: Group leaders by their groups
+        $leadersByGroup = [];
 
-        foreach ($roles as $role) {
-            $leadersByRole[$role->name] = $role->leaders->map(function ($leader) {
-                $leader->groups = $leader->groups->map(function ($group) {
-                    return [
-                        'name' => $group->name,
-                        'year' => $group->pivot->year
-                    ];
-                });
+        foreach ($groups as $group) {
+            $leadersByGroup[$group->name] = $group->leaders->map(function ($leader) {
                 return [
                     'id' => $leader->id,
                     'first_name' => $leader->first_name,
                     'last_name' => $leader->last_name,
+                    'birthdate' => $leader->birthdate,
+                    'phone_number' => $leader->phone_number,
+                    'email' => $leader->email,
                     'image_file_name' => $leader->image_file_name,
-                    'groups' => $leader->groups,
                 ];
             });
         }
 
-        exit(json_encode($leadersByRole));
+        // Step 4: Return the data in JSON format
+        exit(json_encode($leadersByGroup));
     }
+
 }
