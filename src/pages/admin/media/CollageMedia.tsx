@@ -50,7 +50,7 @@ const CollageMedia = () => {
 
     return (
         <>
-            <SectionTitle title={collage?.name || "Collage media"}>
+            <SectionTitle title={collage?.displayName || "Collage media"}>
                 <p>Voeg fotos toe of pas de collage van inhoud aan.</p>
                 <p>Klik op een foto om een detail te zien en om die te kunnen verwijderen.</p>
             </SectionTitle>

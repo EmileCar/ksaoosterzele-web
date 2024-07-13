@@ -101,7 +101,10 @@ class MediaController extends Controller {
 			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
 		}
 
+		$internal_name = $collage->internal_name;
+
 		$collage = Collage::create($data, $collage);
+		$collage->internal_name = $internal_name;
 
 		$collage->save();
 

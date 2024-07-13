@@ -46,7 +46,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
     }
 
     return (
-		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"}>
+		<Popup title={collage ? `${collage.displayName} aanpassen` : "Nieuwe collage"}>
             <Form disabled={submitPending}>
                 <Group>
                     <Label text="Naam" errorMessage={errorStates.nameError}>
