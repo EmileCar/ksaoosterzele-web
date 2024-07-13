@@ -1,5 +1,5 @@
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
-import LeadersGroupedList from "../../../components/leaders/list/LeadersByRoleList";
+import LeadersGroupedList from "../../../components/leaders/list/LeadersGroupedList";
 import { getLeadersByRole } from "../../../services/leaderService";
 
 const LeadersAdmin = () => {

@@ -1,12 +1,19 @@
 .leader__roles {
   display: flex;
   flex-direction: column;
-  gap: var(--s0);
+  gap: var(--s1);
 }
 
 .leader__role{
-    display: grid;
-    gap: var(--s0);
+  display: grid;
+  gap: var(--s0);
+}
+
+.leaders{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--s0);
+
 }
 
 .leader__role h3 {
@@ -21,7 +28,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "image name"
     "image role"
 }

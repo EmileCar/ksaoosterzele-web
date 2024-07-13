@@ -1,4 +1,4 @@
-import LeadersGroupedList from "../../components/leaders/list/LeadersByRoleList";
+import LeadersGroupedList from "../../components/leaders/list/LeadersGroupedList";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 import { getLeadersOfWorkingYear } from "../../services/leaderService";
