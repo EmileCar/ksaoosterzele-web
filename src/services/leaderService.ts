@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import { LeadersGroupedResult } from "../types/Leader";
+import { LeadersGroupedResult, SendLeader } from "../types/Leader";
 
 export async function getLeadersOfWorkingYear() : Promise<LeadersGroupedResult> {
     try {
@@ -36,6 +36,22 @@ export async function getLeadersByRole() : Promise<LeadersGroupedResult> {
         const data = await response.json();
         const result = new LeadersGroupedResult(data);
         return result;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function sendLeader(request: SendLeader, method: string) : Promise<void> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader`, {
+            method: method ?? 'POST',
+            credentials: 'include',
+            body: JSON.stringify(request),
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
     } catch (error) {
         throw error;
     }

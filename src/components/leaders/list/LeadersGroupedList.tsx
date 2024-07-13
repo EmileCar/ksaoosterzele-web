@@ -2,9 +2,10 @@ import useFetch from "../../../hooks/useFetch";
 import Leader, { LeadersGroupedResult } from "../../../types/Leader";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import './LeadersGroupedList.css';
-import DefaultLeider from '../../../assets/img/default-leider.jpeg';
+import LeadersGroupedListItemAdmin from "./LeaderGroupedListItemAdmin";
+import LeadersGroupedListItem from "./LeaderGroupedListItem";
 
-const LeadersGroupedList = ({fetchFunction} : {fetchFunction: () => Promise<LeadersGroupedResult>}) => {
+const LeadersGroupedList = ({fetchFunction, isAdmin} : {fetchFunction: () => Promise<LeadersGroupedResult>, isAdmin?: boolean}) => {
     const { pending, data, error } = useFetch<LeadersGroupedResult>(fetchFunction!);
 
     return (
@@ -18,19 +19,11 @@ const LeadersGroupedList = ({fetchFunction} : {fetchFunction: () => Promise<Lead
                                 <p>Geen leiding</p>
                             ) : (
                                 data[role].map((leader: Leader) => (
-                                    <div className="leader" key={leader.id}>
-                                        <img
-                                            src={`assets/leiders/${leader.imageFileName}`}
-                                            className="leader-img"
-                                            alt={leader.firstName}
-                                            onError={(e) => {
-                                                (e.target as HTMLImageElement).src = DefaultLeider;
-                                            }}
-                                        />
-                                        <div className="card-body">
-                                            <h4 className="leader-name">{leader.firstName} {leader.lastName}</h4>
-                                        </div>
-                                    </div>
+                                    {isAdmin} ? (
+                                        <LeadersGroupedListItemAdmin key={leader.id} leader={leader} />
+                                    ) : (
+                                        <LeadersGroupedListItem key={leader.id} leader={leader} />
+                                    )
                                 ))
                             )}
                         </div>

@@ -16,9 +16,9 @@ class AccountRole {
     id: number | null;
     name: string;
 
-    constructor(collageTypeData?: any) {
-        this.id = collageTypeData.id || null;
-        this.name = collageTypeData.name || null;
+    constructor(accountRoleData?: any) {
+        this.id = accountRoleData.id || null;
+        this.name = accountRoleData.name || null;
     }
 }
 

@@ -45,3 +45,12 @@
   font-family: var(--title-font);
   font-size: 1.6rem;
 }
+
+.leader__role .leader.admin {
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.leader__role .leader.admin:hover {
+  transform: scale(1.03);
+}

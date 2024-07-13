@@ -8,7 +8,7 @@ const LeadersAdmin = () => {
             <SectionTitle title="Leiding beheren">
                 <p>Op deze pagina kan je de iedereen van de leiding en hun rollen beheren.</p>
             </SectionTitle>
-            <LeadersGroupedList fetchFunction={getLeadersByRole}/>
+            <LeadersGroupedList fetchFunction={getLeadersByRole} isAdmin/>
         </>
     );
 }
