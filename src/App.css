@@ -77,11 +77,12 @@ strong {
 }
 
 .error{
-	color: var(--error-color)
+	color: var(--error-color);
 }
 
-.error.global{
-	margin-bottom: 1rem;
+.error.delete{
+	margin-left: var(--s-1);
+	cursor: pointer;
 }
 
 .flex__container {

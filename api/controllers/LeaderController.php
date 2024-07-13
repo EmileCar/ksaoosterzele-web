@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/Controller.php';
+require_once __DIR__ . '/../models/Leader.php';
 require_once __DIR__ . '/../models/WorkingYear.php';
 require_once __DIR__ . '/../models/Group.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
@@ -67,5 +68,22 @@ class LeaderController extends Controller {
     public function getLeaderRoles() {
         $roles = LeaderRole::get();
         exit(json_encode($roles));
+    }
+
+    public function changeRoleOfLeader() {
+        $leaderId = $_GET['leader_id'];
+        $roleId = $_GET['role_id'];
+
+        $leader = Leader::find($leaderId);
+        $role = LeaderRole::find($roleId);
+
+        if (!$leader || !$role) {
+            ErrorResponse::exitWithError(404, 'Leider of rol niet gevonden.');
+        }
+
+        $leader->role()->associate($role);
+        $leader->save();
+
+        exit();
     }
 }

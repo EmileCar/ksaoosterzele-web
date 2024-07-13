@@ -77,20 +77,16 @@ export async function getLeaderRoles() : Promise<LeaderRole[]> {
 }
 
 
-export async function changeLeaderRoleOfLeader() : Promise<void> {
+export async function changeRoleOfLeader(leaderId: number, roleId: number) : Promise<void> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=leader`, {
-            method: 'GET',
+        const response = await fetch(`${API_BASE_URL}?page=leader&leader_id=${leaderId}&role_id=${roleId}`, {
+            method: 'PATCH',
             credentials: 'include',
         });
 
         if(!response.ok) {
             throw await ErrorResponse.createFromResponse(response);
         }
-
-        const data = await response.json();
-        const roles =  data.map((role: any) => new LeaderRole(role));
-        return roles;
     } catch (error) {
         throw error;
     }

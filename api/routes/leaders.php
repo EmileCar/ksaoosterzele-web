@@ -18,4 +18,14 @@ $leaderRoutes = [
             'GET' => 'getLeaderRoles',
         )
     ),
+    'leader' => array(
+        'controller' => 'Leader',
+        'methods' => array(
+            'GET' => 'getLeader',
+            'POST' => 'createLeader',
+            'PUT' => 'updateLeader',
+            'DELETE' => 'deleteLeader',
+            'PATCH' => 'changeRoleOfLeader',
+        )
+    ),
 ];

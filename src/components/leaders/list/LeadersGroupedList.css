@@ -66,6 +66,7 @@
 
 .leaders-group .leader.admin .change-role{
   align-self: center;
+  width: 100%;
 }
 
 @media screen and (max-width: 55rem) {

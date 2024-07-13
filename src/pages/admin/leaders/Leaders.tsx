@@ -3,24 +3,32 @@ import LeadersGroupedList from "../../../components/leaders/list/LeadersGroupedL
 import { getLeaderRoles, getLeadersByRole } from "../../../services/leaderService";
 import Leader, { LeaderRole } from "../../../types/Leader";
 import LeadersGroupedListItemAdmin from "../../../components/leaders/list/LeaderGroupedListItemAdmin";
-import { useCallback } from "react";
-import { getGroups } from "../../../services/groupService";
+import { useEffect, useRef } from "react";
 import useFetch from "../../../hooks/useFetch";
-import Group from "../../../types/Group";
+import { useGlobalErrorContext } from "../../../contexts/GlobalErrorContext";
 
 const LeadersAdmin = () => {
-    const fetchRoles = useCallback(() => getLeaderRoles(), []);
-    const { pending, data: roles, error } = useFetch<LeaderRole[]>(fetchRoles);
+    const { pending, data: roles, error: fetchLeaderRolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
+    const { GlobalError, setError } = useGlobalErrorContext();
+    const hasErrorSet = useRef(false);
+
+    useEffect(() => {
+        if (fetchLeaderRolesError && !hasErrorSet.current) {
+            setError("Er was een probleem bij het ophalen van de leidingfuncties.");
+            hasErrorSet.current = true;
+        }
+    }, [fetchLeaderRolesError, setError]);
 
     return (
         <>
             <SectionTitle title="Leiding beheren">
                 <p>Op deze pagina kan je de iedereen van de leiding en hun rollen beheren.</p>
             </SectionTitle>
+            <GlobalError />
             <LeadersGroupedList
                 fetchFunction={getLeadersByRole}
                 isAdmin
-                LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItemAdmin leader={leader} roles={roles!}/>}
+                LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItemAdmin leader={leader} roles={roles!} leaderRolesPending={pending} refetch={() => {}} />}
             />
         </>
     );

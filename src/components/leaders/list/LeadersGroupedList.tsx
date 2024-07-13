@@ -8,11 +8,11 @@ interface LeadersGroupedListProps {
     fetchFunction: () => Promise<LeadersGroupedResult>;
     isAdmin?: boolean;
     emptyMessage?: string;
-    LeaderComponent: React.FC<{ leader: Leader }>;
+    LeaderComponent: React.FC<{ leader: Leader, refetch: () => void }>;
 }
 
 const LeadersGroupedList: React.FC<LeadersGroupedListProps> = ({ fetchFunction, isAdmin = false, emptyMessage, LeaderComponent }) => {
-    const { pending, data, error } = useFetch<LeadersGroupedResult>(fetchFunction);
+    const { pending, data, error, refetch } = useFetch<LeadersGroupedResult>(fetchFunction);
 
     return (
         <FetchedDataLayout isPending={pending} error={error}>
@@ -25,7 +25,7 @@ const LeadersGroupedList: React.FC<LeadersGroupedListProps> = ({ fetchFunction, 
                                 <p>{emptyMessage || "Geen leiders voor deze groep"}</p>
                             ) : (
                                 data[role].map((leader: Leader) => (
-                                    <LeaderComponent leader={leader} key={leader.id} />
+                                    <LeaderComponent leader={leader} key={leader.id} refetch={refetch}/>
                                 ))
                             )}
                         </div>

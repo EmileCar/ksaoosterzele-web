@@ -1,10 +1,22 @@
+import { useState } from 'react';
 import DefaultLeider from '../../../assets/img/default-leider.jpeg';
 import { usePopupContext } from '../../../contexts/PopupContext';
 import Leader, { LeaderRole } from '../../../types/Leader';
 import LeaderPopup from '../popups/LeaderPopup';
+import { changeRoleOfLeader } from '../../../services/leaderService';
+import { useGlobalErrorContext } from '../../../contexts/GlobalErrorContext';
 
-const LeadersGroupedListItemAdmin = ({ leader, roles }: { leader: Leader, roles: LeaderRole[] }) => {
+interface LeadersGroupedListItemAdminProps {
+    leader: Leader;
+    roles: LeaderRole[];
+    leaderRolesPending: boolean;
+    refetch: () => void;
+}
+
+const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = ({ leader, roles, leaderRolesPending, refetch }) => {
     const { registerPopup } = usePopupContext();
+    const { setError } = useGlobalErrorContext();
+    const [ isPending, setIsPending ] = useState<boolean>(false);
 
     const openEditLeaderPopup = () => {
         registerPopup(<LeaderPopup leader={leader} onClose={() => {}} />);
@@ -16,8 +28,15 @@ const LeadersGroupedListItemAdmin = ({ leader, roles }: { leader: Leader, roles:
         }
     }
 
-    const changeGroup = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        
+    const changeGroup = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setIsPending(true);
+        await changeRoleOfLeader(leader.id!, e.target.value as unknown as number).then(() => {
+            refetch();
+            setIsPending(false);
+        }).catch(() => {
+            setError(`Er is iets misgegaan bij het veranderen van de rol van leider ${leader.firstName}.`);
+            setIsPending(false);
+        });
     }
 
     return (
@@ -36,10 +55,16 @@ const LeadersGroupedListItemAdmin = ({ leader, roles }: { leader: Leader, roles:
             </div>
             <div className='change-role form'>
                 <select className='inherit-font input' name='role' value={leader.role_id ?? ""} onChange={changeGroup}>
-                    <option value=''>Geen groep</option>
-                    {roles && roles.map(role => (
-                        <option key={role.id} value={role.id?.toString()}>{role.name}</option>
-                    ))}
+                    {(leaderRolesPending || isPending) ? (
+                        <option value='' disabled>Laden...</option>
+                    ) : (
+                        <>
+                            <option value=''>Geen groep</option>
+                            {roles && roles.map(role => (
+                                <option key={role.id} value={role.id!.toString()}>{role.name}</option>
+                            ))}
+                        </>
+                    )}
                 </select>
             </div>
         </div>
