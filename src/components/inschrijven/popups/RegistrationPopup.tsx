@@ -13,36 +13,24 @@ import Registration, { SendRegistration } from "../../../types/Registration";
 import { sendInschrijving } from "../../../services/registrationService";
 
 const RegistrationPopup = ({ registration, onClose } : { registration?: Registration | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendRegistration>(new SendRegistration(registration || {}));
-    const [isPending, setIsPending] = useState<boolean>(false);
+    const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendRegistration>(new SendRegistration(registration || {}), sendInschrijving);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
     const [imagePathError, setImagePathError] = useState<string>("");
-
-    const handleSubmitForm = async () => {
-        setIsPending(true);
-        setErrors(null);
-        await sendInschrijving(values, registration ? "PUT" : "POST").then(() => {
-            setIsPending(false);
-            onClose();
-        }).catch((errors: any) => {
-            setTimeout(() => {
-                let errorfields = errors.errorFields ?? {};
-                errorfields.imgpathError = imagePathError;
-                errorfields.general = errors.message;
-                setErrors(errorfields);
-                setIsPending(false);
-            }, 800)
-        });
-    }
 
     const handleCalendarChange = (e: any) => {
         const datetime = new Date(e.target.value);
         changeValue("datetime", datetime);
     }
 
+    const handleSubmit = async () => {
+        await handleSubmitForm(registration ? 'PUT' : 'POST', () => {
+            onClose();
+        });
+    }
+
     return (
         <Popup title={registration ? `Inschrijving aanpassen` : "Nieuwe inschrijving"} onClose={onClose}>
-            <FetchedDataLayout isPending={isPending} error={errorStates.general}>
+            <FetchedDataLayout isPending={submitPending} error={errorStates.general}>
                 {registration && (
                     <div className="popup-text">
                         <p><strong>{registration.firstName + " " +  registration.lastName}</strong> voor de <strong>{registration.group?.name}</strong></p>
@@ -152,7 +140,7 @@ const RegistrationPopup = ({ registration, onClose } : { registration?: Registra
                             <option value="4">Jonghernieuwers</option>
                         </select>
                     </Label>
-                    <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
+                    <Button text="Opslaan" onClick={handleSubmit} darken uppercase/>
                 </Form>
             </FetchedDataLayout>
         </Popup>

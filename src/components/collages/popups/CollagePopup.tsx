@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Popup from "../../popup/Popup";
 import Collage, { SendCollage } from "../../../types/Collage";
-import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
@@ -17,27 +16,10 @@ import useFetch from "../../../hooks/useFetch";
 import { usePopupContext } from "../../../contexts/PopupContext";
 
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendCollage>(new SendCollage(collage || {}));
+    const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendCollage>(new SendCollage(collage || {}), sendCollage);
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
-    const [isPending, setIsPending] = useState<boolean>(false);
     const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
     const { closePopup } = usePopupContext();
-
-    const handleSubmitForm = async () => {
-        setIsPending(true);
-        setErrors(null);
-        await sendCollage(values, collage ? "PUT" : "POST").then(() => {
-            setIsPending(false);
-            onClose();
-            closePopup();
-        }).catch((errors: any) => {
-            setTimeout(() => {
-                let errorfields = errors.errorFields ?? {};
-                setErrors(errorfields);
-                setIsPending(false);
-            }, 800)
-        });
-    }
 
     useEffect(() => {
         if (collageTypes) {
@@ -56,37 +38,42 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
     }
 
+    const handleSubmit = async () => {
+        await handleSubmitForm(collage ? 'PUT' : 'POST', () => {
+            onClose();
+            closePopup();
+        });
+    }
+
     return (
 		<Popup title={collage ? `${collage.name} aanpassen` : "Nieuwe collage"}>
-            <FetchedDataLayout isPending={isPending} error={errorStates.general}>
-                <Form>
-                    <Group>
-                        <Label text="Naam" errorMessage={errorStates.nameError}>
-                            <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
-                        </Label>
-                        <Label text="Datum" errorMessage={errorStates.dateError}>
-                            <Input type={"date"} name="date" value={formatDateToInputDate(values.date as Date)} onChange={handleCalendarChange}/>
-                        </Label>
-                    </Group>
-                    <Group>
-                        <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
-                            <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown multiple/>
-                        </Label>
-                        <Label text="Tonen?" customClassName="flex-column">
-                            <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />
-                        </Label>
-                    </Group>
-                    <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
-                        <textarea
-                            className="input"
-                            onChange={handleValueChange}
-                            name="description"
-                            value={values.description ?? ""}
-                        />
+            <Form disabled={submitPending}>
+                <Group>
+                    <Label text="Naam" errorMessage={errorStates.nameError}>
+                        <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
                     </Label>
-                    <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
-                </Form>
-            </FetchedDataLayout>
+                    <Label text="Datum" errorMessage={errorStates.dateError}>
+                        <Input type={"date"} name="date" value={formatDateToInputDate(values.date as Date)} onChange={handleCalendarChange}/>
+                    </Label>
+                </Group>
+                <Group>
+                    <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
+                        <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown multiple/>
+                    </Label>
+                    <Label text="Tonen?" customClassName="flex-column">
+                        <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />
+                    </Label>
+                </Group>
+                <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
+                    <textarea
+                        className="input"
+                        onChange={handleValueChange}
+                        name="description"
+                        value={values.description ?? ""}
+                    />
+                </Label>
+                <Button pending={submitPending} text="Opslaan" onClick={handleSubmit} darken uppercase/>
+            </Form>
         </Popup>
 	)
 };

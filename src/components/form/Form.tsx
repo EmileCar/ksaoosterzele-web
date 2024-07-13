@@ -5,12 +5,13 @@ interface FormProps {
     onSubmit?: () => void;
     customClassName?: string;
     children: any;
+    disabled?: boolean;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit, customClassName = "", children }) => {
+const Form: React.FC<FormProps> = ({ onSubmit, customClassName = "", disabled, children }) => {
     return (
         <FormContext.Provider value={true}>
-            <form className={`form ${customClassName}`} onSubmit={onSubmit}>
+            <form className={`form ${customClassName} ${disabled ? "disabled" : ""}`} onSubmit={(e) => { e.preventDefault(); onSubmit && onSubmit(); }}>
                 {children}
             </form>
         </FormContext.Provider>

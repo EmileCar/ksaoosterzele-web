@@ -1,5 +1,6 @@
 import React from 'react';
 import './Button.css';
+import LoadingSpinner from '../loading/LoadingSpinner';
 
 interface ButtonProps {
     text?: string;
@@ -14,6 +15,7 @@ interface ButtonProps {
     inverted?: boolean;
     submit?: boolean;
     icon?: string;
+    pending?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -29,21 +31,39 @@ const Button: React.FC<ButtonProps> = ({
     inverted = false,
     submit = false,
     icon,
+    pending = false,
 }) => {
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         onClick();
     };
 
+    const classNames = (...classes: (string | undefined | boolean)[]) => {
+        return classes.filter(Boolean).join(' ');
+    };
+
     return (
         <button
             onClick={handleClick}
-            className={`button inherit-font ${customClassName} ${hover ? 'hover' : ''}${darken ? 'darken' : ''} ${uppercase ? 'uppercase' : ''} ${inverted ? 'inverted' : ''} ${submit ? 'submit' : ''} ${fullWidth ? 'full-width' : ''}`}
+            className={classNames(
+                'button inherit-font',
+                customClassName,
+                hover && 'hover',
+                darken && 'darken',
+                uppercase && 'uppercase',
+                inverted && 'inverted',
+                submit && 'submit',
+                fullWidth && 'full-width'
+            )}
             disabled={disabled}
-            style={{ borderRadius: round ? '50px' : '5px' }}
+            style={{ borderRadius: round ? '50px' : undefined }}
         >
-            {icon && <span className={`pi ${icon}`}></span>}
-            {text}
+            {pending ? <LoadingSpinner color='white' size={22}/> : (
+                <>
+                    {icon && <span className={`pi ${icon}`}></span>}
+                    {text}
+                </>
+            )}
         </button>
     );
 };

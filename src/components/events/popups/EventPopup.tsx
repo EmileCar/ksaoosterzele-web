@@ -16,30 +16,10 @@ import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendEvent>(new SendEvent(event || {}));
+    const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendEvent>(new SendEvent(event || {}), sendEvent);
     const { pending, data: fetchedImagePaths, error } = useFetch<string[]>(getImagePaths);
-    const [isPending, setIsPending] = useState<boolean>(false);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
-    const [imagePathError, setImagePathError] = useState<string>("");
 	const { closePopup } = usePopupContext();
-
-    const handleSubmitForm = async () => {
-        setIsPending(true);
-        setErrors(null);
-        await sendEvent(values, event ? "PUT" : "POST").then(() => {
-            setIsPending(false);
-            onClose();
-            closePopup();
-        }).catch((errors: any) => {
-            setTimeout(() => {
-                let errorfields = errors.errorFields ?? {};
-                errorfields.imgpathError = imagePathError;
-                errorfields.general = errors.message;
-                setErrors(errorfields);
-                setIsPending(false);
-            }, 800)
-        });
-    }
 
     const handleCalendarChange = (e: any) => {
         const datetime = new Date(e.target.value);
@@ -57,9 +37,16 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         setImagePaths(e.query ? fetchedImagePaths.filter((path) => path.toLowerCase().includes(e.query.toLowerCase())) : fetchedImagePaths);
     }
 
+    const handleSubmit = async () => {
+        await handleSubmitForm(event ? 'PUT' : 'POST', () => {
+            onClose();
+            closePopup();
+        });
+    }
+
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"}>
-            <FetchedDataLayout isPending={isPending} error={errorStates.general}>
+            <FetchedDataLayout isPending={submitPending} error={errorStates.general}>
                 {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
                 <Form>
                     <Group>
@@ -99,7 +86,7 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                             </Label>
                         </div>
                     </Group>
-                    <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
+                    <Button text="Opslaan" onClick={() => handleSubmit} darken uppercase/>
                 </Form>
             </FetchedDataLayout>
         </Popup>

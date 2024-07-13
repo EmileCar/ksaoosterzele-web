@@ -9,37 +9,25 @@ import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import Leader, { LeaderRole, SendLeader } from "../../../types/Leader";
-import { useState } from "react";
 import { getLeaderRoles, sendLeader } from "../../../services/leaderService";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 
 const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, setErrors, handleValueChange, changeValue } = useForm<SendLeader>(new SendLeader(leader || {}));
+    const { values, errorStates, setErrors, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
-    const [isPending, setIsPending] = useState<boolean>(false);
 	const { closePopup } = usePopupContext();
 
-    const handleSubmitForm = async () => {
-        setIsPending(true);
-        setErrors(null);
-        await sendLeader(values, leader ? "PUT" : "POST").then(() => {
-            setIsPending(false);
+    const handleSubmit = async () => {
+        await handleSubmitForm(leader ? 'PUT' : 'POST', () => {
             onClose();
             closePopup();
-        }).catch((errors: any) => {
-            setTimeout(() => {
-                let errorfields = errors.errorFields ?? {};
-                errorfields.general = errors.message;
-                setErrors(errorfields);
-                setIsPending(false);
-            }, 800)
         });
     }
 
     return (
 		<Popup title={leader ? `${leader.firstName} aanpassen` : "Nieuwe leader"}>
-            <FetchedDataLayout isPending={isPending} error={errorStates.general}>
+            <FetchedDataLayout isPending={submitPending} error={errorStates.general}>
                 <Form>
                     <Group>
                         <Label text="Voornaam" errorMessage={errorStates.firstNameError}>
@@ -80,7 +68,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                             ))}
                         </select>
                     </Label>
-                    <Button text="Opslaan" onClick={handleSubmitForm} darken uppercase/>
+                    <Button text="Opslaan" onClick={handleSubmit} darken uppercase/>
                 </Form>
             </FetchedDataLayout>
         </Popup>
