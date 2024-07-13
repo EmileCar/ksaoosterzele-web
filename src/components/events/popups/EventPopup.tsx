@@ -46,49 +46,47 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"}>
-            <FetchedDataLayout isPending={submitPending} error={errorStates.general}>
-                {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Deze activiteit is in het verleden</p>)}
-                <Form>
-                    <Group>
-                        <Label text="Naam" errorMessage={errorStates.nameError}>
-                            <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
-                        </Label>
-                        <Label text="Locatie" errorMessage={errorStates.locationError}>
-                            <Input type={"text"} name="location" value={values.location} onChange={handleValueChange}/>
-                        </Label>
-                    </Group>
-                    <Group>
-                        <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
-                            <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
-                        </Label>
-                        <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
-                        </Label>
-                    </Group>
-                    <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
-                        <textarea
-                            className="input"
-                            onChange={handleValueChange}
-                            name="description"
-                            value={values.description ?? ""}
-                        />
+            {isDateTimeInPast(values.datetime as Date) && (<p className="error" style={{ marginBottom: "1rem" }}>Dit evenement is in het verleden</p>)}
+            <Form disabled={submitPending}>
+                <Group>
+                    <Label text="Naam" errorMessage={errorStates.nameError}>
+                        <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
                     </Label>
-                    <Group>
-                        <Label text="URL" errorMessage={errorStates.urlError}>
-                            <Input type="text" name="url" value={values.url} onChange={handleValueChange} />
+                    <Label text="Locatie" errorMessage={errorStates.locationError}>
+                        <Input type={"text"} name="location" value={values.location} onChange={handleValueChange}/>
+                    </Label>
+                </Group>
+                <Group>
+                    <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
+                        <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
+                    </Label>
+                    <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
+                        <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
+                    </Label>
+                </Group>
+                <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
+                    <textarea
+                        className="input"
+                        onChange={handleValueChange}
+                        name="description"
+                        value={values.description ?? ""}
+                    />
+                </Label>
+                <Group>
+                    <Label text="URL" errorMessage={errorStates.urlError}>
+                        <Input type="text" name="url" value={values.url} onChange={handleValueChange} />
+                    </Label>
+                    <div className="form-group__half">
+                        <Label text="Prijs" errorMessage={errorStates.entryPriceError}>
+                            <Input type="string" name="entryPrice" value={values.entryPrice} onChange={handleValueChange} />
                         </Label>
-                        <div className="form-group__half">
-                            <Label text="Prijs" errorMessage={errorStates.entryPriceError}>
-                                <Input type="string" name="entryPrice" value={values.entryPrice} onChange={handleValueChange} />
-                            </Label>
-                            <Label text="Featured?" customClassName="flex-column">
-                                <Checkbox name="featured" checked={values.featured} onChange={(e) => changeValue("featured", e.target.checked)} />
-                            </Label>
-                        </div>
-                    </Group>
-                    <Button text="Opslaan" onClick={() => handleSubmit} darken uppercase/>
-                </Form>
-            </FetchedDataLayout>
+                        <Label text="Featured?" customClassName="flex-column">
+                            <Checkbox name="featured" checked={values.featured} onChange={(e) => changeValue("featured", e.target.checked)} />
+                        </Label>
+                    </div>
+                </Group>
+                <Button text="Opslaan" onClick={handleSubmit} darken uppercase pending={submitPending}/>
+            </Form>
         </Popup>
     )
 };

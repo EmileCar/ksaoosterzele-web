@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
-import { formatDate, formatDateTime, formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
+import { formatDateTime } from "../../../utils/datetimeUtil";
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
