@@ -83,6 +83,7 @@ export const formatDate = (date: Date): string => {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
+    year: 'numeric',
   };
 
   return new Intl.DateTimeFormat('nl-NL', options).format(new Date(date));

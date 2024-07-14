@@ -21,7 +21,7 @@ interface SectionTitleProps {
  */
 const SectionTitle = ({ title, children, fullWidth, invert }: SectionTitleProps): JSX.Element => {
     return (
-        <div className="section-title__container" style={{ maxWidth: fullWidth ? "100%" : "45rem" }}>
+        <div className={`section-title__container ${fullWidth ? "full-width" : ""}`}>
             <div className="section-title">
                 <h2>{title}</h2>
                 <div className={`section__title--border ${invert ? "white" : "blue"}`}/>

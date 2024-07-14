@@ -10,6 +10,7 @@ import Collage from "../types/Collage";
 import useFetch from "../hooks/useFetch";
 import CollageType from "../types/CollageType";
 import Button from "../components/button/Button";
+import { formatDate } from "../utils/datetimeUtil";
 
 const CollageContext = createContext<any>(null);
 
@@ -73,7 +74,7 @@ export const CollageProvider = ({
 
 			if (groupBy === "date") {
 				filteredCollages.forEach((collage) => {
-					const dateKey = collage.date.toISOString().split("T")[0];
+					const dateKey = formatDate(collage.date);
 					if (!grouped[dateKey]) {
 						grouped[dateKey] = [];
 					}
