@@ -21,6 +21,7 @@ import CollageDetail from './pages/media/CollageDetail';
 import { PopupProvider } from './contexts/PopupContext';
 import Leaders from './pages/leiding/Leaders';
 import LeadersAdmin from './pages/admin/leaders/Leaders';
+import WorkingYears from './pages/admin/workingyears/WorkingYears';
 
 const App = () => {
 
@@ -47,6 +48,7 @@ const App = () => {
 					<Route path="/admin/media/:id" element={<AccountProvider><CollageMedia /></AccountProvider>} />
 					<Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
 					<Route path='/admin/leiding' element={<AccountProvider><LeadersAdmin /></AccountProvider>} />
+					<Route path='/admin/werkjaren' element={<AccountProvider><WorkingYears /></AccountProvider>} />
 					<Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
 
 					{/* Fallback */}

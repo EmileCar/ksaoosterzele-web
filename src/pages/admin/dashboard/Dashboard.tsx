@@ -43,6 +43,10 @@ const DashboardAdmin = () => {
                     <i className="pi pi-crown" style={{ color: "white", fontSize: 50 }} />
                     <h3>Leiding</h3>
                 </Link>
+                <Link className="dashboard-card" to="/admin/werkjaren">
+                    <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />
+                    <h3>Werkjaren</h3>
+                </Link>
                 <div className="dashboard-card" onClick={handleClickLogout}>
                     <i className="pi pi-sign-out" style={{ color: "white", fontSize: 50 }} />
                     <h3>Uitloggen</h3>

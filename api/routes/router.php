@@ -6,13 +6,14 @@ require_once 'account.php';
 require_once 'registrations.php';
 require_once 'groups.php';
 require_once 'leaders.php';
+require_once 'workingYears.php';
 
 // Als er geen pagina is opgegeven, zet de page op index
 if(empty($_GET['page'])) {
     $_GET['page'] = 'index';
 }
 
-$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes, $leaderRoutes);
+$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes, $leaderRoutes, $workingYearRoutes);
 
 // Als de route niet bestaat, geef een 404
 if (empty($allowedRoutes[$_GET['page']])) {
