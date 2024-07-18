@@ -13,4 +13,9 @@ class WorkingYear extends Model
     {
         return $this->hasMany(LeaderPlace::class, 'working_year_id');
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class, 'working_year_id');
+    }
 }

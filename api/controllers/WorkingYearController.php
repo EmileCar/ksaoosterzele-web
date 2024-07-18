@@ -10,8 +10,19 @@ class WorkingYearController extends Controller {
     public function getWorkingYears() {
         $account = Account::is_authenticated();
 
-        $workingYears = WorkingYear::get();
-        exit(json_encode($workingYears));
+        $workingYears = WorkingYear::with(['leaderPlaces', 'registrations'])->get();
+
+        $workingYearsWithCounts = $workingYears->map(function ($workingYear) {
+            return [
+                'id' => $workingYear->id,
+                'name' => $workingYear->name,
+                'start_year' => $workingYear->start_year,
+                'registration_count' => $workingYear->registrations->count(),
+                'leader_count' => $workingYear->leaderPlaces->count(),
+            ];
+        });
+
+        exit(json_encode($workingYearsWithCounts));
     }
 }
 

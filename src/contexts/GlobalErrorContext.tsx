@@ -21,16 +21,24 @@ export const GlobalErrorProvider: React.FC<{ children: React.ReactNode }> = ({ c
         setErrorLines((prevLines) => [...prevLines, error]);
     }, []);
 
-    const GlobalError = useMemo(() => () => (
-        <div>
-            {errorLines.map((error, index) => (
-                <div key={index}>
-                    <span className='error'>{error}</span>
-                    <span className='error delete pi pi-times' onClick={() => deleteErrorLine(index)}></span>
+    const GlobalError = useMemo(() => {
+        return () => {
+            if (errorLines.length === 0) {
+                return null;
+            }
+
+            return (
+                <div>
+                    {errorLines.map((error, index) => (
+                        <div key={index}>
+                            <span className='error'>{error}</span>
+                            <span className='error delete pi pi-times' onClick={() => deleteErrorLine(index)}></span>
+                        </div>
+                    ))}
                 </div>
-            ))}
-        </div>
-    ), [errorLines, deleteErrorLine]);
+            );
+        };
+    }, [errorLines, deleteErrorLine]);
 
     return (
         <GlobalErrorContext.Provider value={{ setError, GlobalError }}>

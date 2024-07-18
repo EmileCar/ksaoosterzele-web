@@ -20,4 +20,3 @@ export async function getWorkingYears() : Promise<WorkingYear[]> {
         throw error;
     }
 }
-
