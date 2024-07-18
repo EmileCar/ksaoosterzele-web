@@ -13,7 +13,7 @@ const WorkingYears = () => {
     const { registerPopup } = usePopupContext();
 
     const openCreatePopup = () => {
-        registerPopup(<WorkingYearPopup />);
+        registerPopup(<WorkingYearPopup onClose={() => {}} />);
     }
 
     const currentWorkingYear = workingyears && workingyears.length > 0 ? workingyears.reduce((max, workingyear) => 
@@ -39,9 +39,10 @@ const WorkingYears = () => {
                             <div className="working-year-group">
                                 <h3>Huidig werkjaar:</h3>
                                 <div className="working-year-item current-working-year">
-                                    <p>{currentWorkingYear.name}</p>
+                                    <p className="name">{currentWorkingYear.name}</p>
                                     <div className="working-year-item__info">
-                                        <p><span className="pi pi-users"/>{currentWorkingYear.startYear}</p>
+                                        <p className="working-year-item__info-item"><span className="pi pi-users"/>{currentWorkingYear.registrationCount}</p>
+                                        <p className="working-year-item__info-item"><span className="pi pi-crown"/>{currentWorkingYear.registrationCount}</p>
                                     </div>
                                 </div>
                             </div>
