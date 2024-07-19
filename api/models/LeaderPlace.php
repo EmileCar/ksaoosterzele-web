@@ -9,6 +9,9 @@ class LeaderPlace extends Model
 {
     public $timestamps = false;
 
+    protected $fillable = ['leader_id', 'group_id', 'working_year_id'];
+
+
     public function leader() {
         return $this->belongsTo(Leader::class, 'leader_id');
     }

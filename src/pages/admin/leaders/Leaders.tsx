@@ -6,6 +6,7 @@ import LeadersGroupedListItemAdmin from "../../../components/leaders/list/Leader
 import { useEffect, useRef } from "react";
 import useFetch from "../../../hooks/useFetch";
 import { useGlobalErrorContext } from "../../../contexts/GlobalErrorContext";
+import "./Leaders.css"
 
 const LeadersAdmin = () => {
     const { pending, data: roles, error: fetchLeaderRolesError, refetch } = useFetch<LeaderRole[]>(getLeaderRoles);

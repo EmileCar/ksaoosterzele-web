@@ -1,0 +1,18 @@
+.leader-groups{
+    margin-top: var(--s0);
+    text-align: left;
+}
+
+.leader-groups .leader-groups-title{
+    font-family: var(--title-font);
+    font-size: var(--subtitle-font-size);
+    padding-bottom: 0 !important;
+}
+
+.leader-groups .leader-group{
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s0);
+    padding: var(--s0) 0;
+    border-radius: 2px solid var(--main-color);
+}

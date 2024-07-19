@@ -70,8 +70,6 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
         }
     }, [values.groupId]);
 
-    const pastLeaderGroups = leaderGroups ? leaderGroups.slice(1) : [];
-
     return (
         <Popup title={`Tak van ${leader.firstName} aanpassen`}>
             <FetchedDataLayout error={error || leaderGroupsError} isPending={pending || leaderGroupsPending}>
@@ -89,12 +87,13 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
                 </Form>
 
                 <div className="leader-groups">
-                    <p className="title">Vorige werkjaren:</p>
-                    {pastLeaderGroups.length === 0 && <p>Geen vorige werkjaren gevonden.</p>}
-                    {pastLeaderGroups.map(leaderGroup => (
+                    <p className="leader-group leader-groups-title">Vorige werkjaren:</p>
+                    {leaderGroups && leaderGroups.length === 0 && <p>{leader.firstName} gaf nog geen leiding vorige werkjaren.</p>}
+                    {leaderGroups && leaderGroups.map(leaderGroup => (
                         <div key={leaderGroup.id} className="leader-group">
-                            <p className="leader group-name">{leaderGroup.name}</p>
-                            <p className="leader group-description">{leaderGroup.workingYearName}</p>
+                            <p><strong>{leaderGroup.workingYearName}</strong></p>
+                            <p>-</p>
+                            <p>{leaderGroup.name}</p>
                         </div>
                     ))}
                 </div>

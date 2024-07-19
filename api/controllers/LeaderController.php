@@ -92,7 +92,7 @@ class LeaderController extends Controller {
     }
 
     public function changeGroupOfLeader() {
-        if(!isset($_GET['leader_id']) || !isset($_GET['group_id'])) {
+        if (!isset($_GET['leader_id']) || !isset($_GET['group_id'])) {
             ErrorResponse::exitWithError(400, 'Leider of groep niet opgegeven.');
         }
 
@@ -111,16 +111,24 @@ class LeaderController extends Controller {
             ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
         }
 
-        $leader->groups()->sync([
-            $group->id => ['working_year_id' => $currentWorkingYear->id]
-        ]);
-        $leader->save();
+        $leaderPlace = LeaderPlace::where('leader_id', $leaderId)
+            ->where('working_year_id', $currentWorkingYear->id)
+            ->first();
+
+        if (empty($leaderPlace)) {
+            $leaderPlace = new LeaderPlace();
+            $leaderPlace->leader_id = $leaderId;
+            $leaderPlace->working_year_id = $currentWorkingYear->id;
+        }
+
+        $leaderPlace->group_id = $groupId;
+        $leaderPlace->save();
 
         exit();
     }
 
     public function getLeaderGroups() {
-        if(!isset($_GET['leader_id'])) {
+        if (!isset($_GET['leader_id'])) {
             ErrorResponse::exitWithError(400, 'Leider niet opgegeven.');
         }
 
@@ -132,17 +140,26 @@ class LeaderController extends Controller {
             ErrorResponse::exitWithError(404, "Leider niet gevonden.");
         }
 
-        $sortedLeaderPlaces = $leader->leaderPlaces->sortByDesc(function ($leaderPlace) {
-            return $leaderPlace->workingYear->start_year;
-        });
+        $currentWorkingYear = WorkingYear::orderBy('start_year', 'desc')->first();
+
+        if (!$currentWorkingYear) {
+            ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
+        }
+
+        $sortedLeaderPlaces = $leader->leaderPlaces
+            ->filter(function ($leaderPlace) use ($currentWorkingYear) {
+                return $leaderPlace->workingYear->id !== $currentWorkingYear->id;
+            })
+            ->sortByDesc(function ($leaderPlace) {
+                return $leaderPlace->workingYear->start_year;
+            });
 
         $groups = $sortedLeaderPlaces->map(function ($leaderPlace) {
             return [
                 'group' => $leaderPlace->group->name,
                 'working_year' => $leaderPlace->workingYear->name,
             ];
-        });
-
+        })->values();
         exit(json_encode($groups));
     }
 }
