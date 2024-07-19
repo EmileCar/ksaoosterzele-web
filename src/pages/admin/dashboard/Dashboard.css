@@ -12,7 +12,7 @@
     padding: 1rem;
     border: 5px solid var(--darker-main-color);
     background-color: var(--main-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius-lg);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -20,7 +20,7 @@
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: var(--large-font-size);
     transition: transform 0.2s ease-in-out;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
     cursor: pointer;

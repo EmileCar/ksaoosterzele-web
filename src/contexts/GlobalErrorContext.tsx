@@ -32,7 +32,7 @@ export const GlobalErrorProvider: React.FC<{ children: React.ReactNode }> = ({ c
                     {errorLines.map((error, index) => (
                         <div key={index}>
                             <span className='error'>{error}</span>
-                            <span className='error delete pi pi-times' onClick={() => deleteErrorLine(index)}></span>
+                            <span className='error delete-icon pi pi-times' onClick={() => deleteErrorLine(index)}></span>
                         </div>
                     ))}
                 </div>

@@ -14,7 +14,7 @@
 	flex-direction: column;
 	align-items: center;
 	font-family: var(--title-font);
-	font-size: 1.5rem;
+	font-size: var(--large-font-size);
 	cursor: pointer;
 	transition: transform 0.2s ease-in-out;
 	width: 100%;
@@ -49,7 +49,7 @@
 
 .tak__info-tile{
 	font-family: var(--title-font);
-	font-size: 2rem;
+	font-size: var(--subtitle-font-size);
 }
 
 .tak__info-ages{

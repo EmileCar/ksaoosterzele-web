@@ -17,7 +17,7 @@
 
 .leaders-group h3 {
   font-family: var(--title-font);
-  font-size: 1.8rem;
+  font-size: var(--subtitle-font-size);
   text-decoration: underline;
   text-transform: capitalize;
 }
@@ -25,7 +25,7 @@
 .leaders-group .leader {
   padding: var(--s0);
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  border-radius: var(--border-radius-lg);
   display: grid;
   gap: var(--s1);
   grid-template-columns: auto 1fr auto;
@@ -46,7 +46,7 @@
 
 .leaders-group .leader h4 {
   font-family: var(--title-font);
-  font-size: 1.8rem;
+  font-size: var(--large-font-size);
 }
 
 .leaders-group.admin .leaders{

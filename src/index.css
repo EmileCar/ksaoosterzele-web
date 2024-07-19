@@ -40,21 +40,29 @@ html {
 	--s3: 3rem;
 
 	--main-color: #1576D1;
-	--light-color: #69a7e1;
-	--lighter-color: #d7edfa;
+	--light-main-color: #69a7e1;
+	--lighter-main-color: #d7edfa;
 	--darker-main-color: #0a62b4;
 	--error-color: #ce1010;
 	--positive-color: #0f8a0f;
 	--title-font: PassionOne, Rubik, Helvetica, sans-serif;
 	--main-font: 'Rubik', Arial, Helvetica, sans-serif;
+
+	--border-radius-sm: 5px;
+	--border-radius-md: 0.5rem;
+	--border-radius-lg: 1rem;
+
+	--small-font-size: 1rem;
+	--default-font-size: 1.2rem;
+	--large-font-size: 1.5rem;
+	--subtitle-font-size: 1.8rem;
+	--title-font-size: 3rem;
 }
 
 #root {
 	line-height: 1.2;
 	font-family: var(--main-font);
-	font-weight: normal;
-	font-size: 1.2rem;
-	color: #4A373E;
+	font-size: var(--default-font-size);
 	scroll-behavior: smooth;
 }
 
@@ -66,18 +74,4 @@ html {
 
 .no-scroll {
     overflow: hidden;
-}
-
-.blueBG {
-	background-color: var(--main-color);
-	padding-bottom: 5rem;
-	color: white;
-}
-
-.preload {
-	-webkit-transition: none !important;
-	-moz-transition: none !important;
-	-ms-transition: none !important;
-	-o-transition: none !important;
-	transition: none !important;
 }

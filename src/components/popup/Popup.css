@@ -17,7 +17,7 @@
 .popup {
 	padding: var(--s1);
 	background: white;
-	border-radius: 10px;
+	border-radius: var(--border-radius-lg);
     max-width: 1100px;
 	position: relative;
     color: var(--main-color);

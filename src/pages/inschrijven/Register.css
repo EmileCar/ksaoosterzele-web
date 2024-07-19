@@ -44,7 +44,7 @@
 
 .assignedTak{
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: var(--large-font-size);
 }
 
 .inschrijvenForm{

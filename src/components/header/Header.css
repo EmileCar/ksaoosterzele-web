@@ -48,11 +48,6 @@
     padding: 1rem;
 }
 
-.admin-nav .toggle-button-bar {
-    margin: 4px 0;
-    width: 2rem;
-}
-
 .navbar {
     position: absolute;
     text-align: left;
@@ -87,25 +82,6 @@
     position: relative;
 }
 
-.dropdown {
-    display: flex;
-    flex-direction: column;
-}
-
-.dropdown__menu__item {
-    text-align: center;
-}
-
-.dropdown__item__link {
-    padding: var(--s-1);
-    display: block;
-}
-
-.dropdown__item__link:hover,
-.dropdown:hover .item__link {
-    text-decoration: underline;
-}
-
 .item__link {
     color: inherit;
     text-decoration: none;
@@ -114,14 +90,6 @@
     white-space: nowrap;
     display: block;
     text-align: center;
-}
-
-.item__link--account {
-    position: relative;
-}
-
-.item__link--account img {
-    display: none;
 }
 
 .item__link:hover {
@@ -141,28 +109,9 @@
     cursor: pointer;
 }
 
-.toggle-button-bar {
-    display: block;
-    background: var(--main-color);
-    height: 5px;
-    width: 2.5em;
-    border-radius: 2px;
-    position: relative;
-    content: "";
-    margin: 10px 0;
-}
-
-.header-admin .toggle-button-bar {
-    background: white;
-}
-
 .nav-toggle {
     position: absolute !important;
     top: -100% !important;
-}
-
-.nav-toggle:checked ~ .toggle-button {
-    /* transform: rotate(90deg); */
 }
 
 /* Default breakpoint for non-admin headers */
@@ -194,7 +143,7 @@
 
     .menu__item:not(:last-child):before {
         content: '|';
-        color: var(--light-color);
+        color: var(--light-main-color);
         position: absolute;
         right: 0;
         top: 50%;
@@ -231,7 +180,7 @@
 
     .header-admin .menu__item:not(:last-child):before {
         content: '|';
-        color: var(--light-color);
+        color: var(--light-main-color);
         position: absolute;
         right: 0;
         top: 50%;

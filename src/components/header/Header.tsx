@@ -18,7 +18,7 @@ const Header = ({ adminMode }: { adminMode?: boolean }) => {
 
 	return (
 		<header className={`header ${adminMode && "header-admin"}`}>
-			<div className={`header__content ${adminMode && "admin-nav"} ${isNavOpen ? 'preload open' : 'preload'}`}>
+			<div className={`header__content ${adminMode && "admin-nav"} ${isNavOpen && 'open' }`}>
 				<Link to="/" className="header__logo--container layered-grid">
 					<h1>Ksa Oosterzele</h1>
 					{adminMode ? <img src={logoInvert} alt="KSA Oosterzele logo" className="header__logo" /> : <img src={logo} alt="KSA Oosterzele logo" className="header__logo" />}
@@ -26,7 +26,7 @@ const Header = ({ adminMode }: { adminMode?: boolean }) => {
 				<input type="checkbox" id="nav-toggle" className="nav-toggle" />
 				<nav className={`navbar ${isNavOpen ? 'navOpen' : ''}`}>
 					<ul className="menu__items">
-						{isNavOpen && <h2 style={{fontStyle: "italic", paddingBottom: 10}}>Terug naar normale pagina's</h2>}
+						{(isNavOpen && adminMode) && <h2 style={{fontStyle: "italic", paddingBottom: 10}}>Terug naar normale pagina's</h2>}
 						<li className="menu__item">
 							<Link className="item__link" to="/">
 								Home

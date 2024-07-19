@@ -50,7 +50,7 @@ form .form-group__half {
     pointer-events: initial;
     text-align: left;
     font-style: italic;
-    font-size: 1rem;
+    font-size: var(--small-font-size);
 }
 
 .form .label.error .input {
@@ -64,7 +64,7 @@ form .form-group__half {
     width: 100%;
     outline: var(--s-99) solid var(--main-color);
     border: var(--s-2) solid transparent;
-    border-radius: 5px;
+    border-radius: var(--border-radius-sm);
     transition: box-shadow 0.1s ease-in-out;
 }
 
@@ -123,7 +123,7 @@ form .label .required {
     display: flex;
     width: 100%;
     outline: var(--s-99) solid var(--main-color);
-    border-radius: 5px;
+    border-radius: var(--border-radius-sm);
     position: relative;
 }
 
@@ -200,7 +200,7 @@ form .label .required {
     background-color: var(--main-color);
     color: white;
     padding: var(--s-2) var(--s-1);
-    border-radius: 15px;
+    border-radius: var(--border-radius-lg);
     display: flex;
     gap: var(--s-1);
 }
@@ -208,38 +208,3 @@ form .label .required {
 .autocomplete-value-delete{
     cursor: pointer;
 }
-
-
-/* .form .input-wrapper.autocomplete{
-    position: relative;
-    border-radius: 5px 0 0 5px;
-}
-
-.form .input-wrapper.autocomplete input{
-    outline: none;
-}
-
-.form .input-wrapper button{
-    border-radius: 0 5px 5px 0;
-    background-color: var(--main-color);
-    color: white;
-    border: none;
-    padding: var(--s-1);
-    cursor: pointer;
-    outline: var(--s-99) solid var(--main-color);
-    transition: background-color 0.2s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: bottom;
-    text-align: center;
-}
-
-.form .input-wrapper button svg{
-    position: initial;
-    transform: unset;
-}
-
-.form .input-wrapper button:hover{
-    background-color: var(--darker-main-color);
-} */

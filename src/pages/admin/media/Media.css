@@ -31,7 +31,7 @@
 .collage-type{
     padding: var(--s0);
     border: 2px solid var(--main-color);
-    border-radius: var(--s-1);
+    border-radius: var(--border-radius-md);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

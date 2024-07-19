@@ -6,7 +6,7 @@
 
 .working-year-group h3 {
   font-family: var(--title-font);
-  font-size: 1.8rem;
+  font-size: var(--subtitle-font-size);
 }
 
 .working-year-item {

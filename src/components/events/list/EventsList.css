@@ -7,7 +7,7 @@
 .event-list_item {
 	height: 100%;
 	box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
-	border-radius: 0.5rem;
+	border-radius: var(--border-radius-md);
 	text-decoration: none;
 	color: inherit;
 	overflow: hidden;
@@ -30,7 +30,7 @@
 
 .event-list_item h3 {
 	font-family: var(--title-font);
-	font-size: var(--s1);
+	font-size: var(--large-font-size);
 	text-decoration: none;
 	color: inherit;
 	margin-bottom: var(--s0);

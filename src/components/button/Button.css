@@ -1,7 +1,7 @@
 .button {
 	background-color: var(--main-color);
 	padding: var(--s0);
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius-md);
 	color: white;
 	text-decoration: none;
 	transition: transform 0.1s ease-in-out, filter 0.1s ease-in-out;

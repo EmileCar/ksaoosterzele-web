@@ -10,7 +10,7 @@
 }
 
 .drawer__content h2{
-    font-size: 1.5rem;
+    font-size: var(--large-font-size);
     font-weight: bold;
 }
 
@@ -44,7 +44,7 @@
 @media screen and (min-width: 880px){ /* Groot scherm  */
 
     .drawer{
-        background-color: var(--lighter-color);
+        background-color: var(--lighter-main-color);
         display: flex;
         justify-content: space-between;
         position: relative;
@@ -59,7 +59,7 @@
 }
 
 .drawer-title{
-    font-size: 1.5rem;
+    font-size: var(--large-font-size);
     font-weight: bold;
 }
 
@@ -76,7 +76,7 @@
 
 .drawer__blockItem{
     padding: var(--s0);
-    border-radius: 1rem;
+    border-radius: var(--border-radius-lg);
     font-weight: bold;
     transition: background-color 0.2s ease-in-out;
     background-color: var(--background-color);
@@ -85,7 +85,7 @@
 }
 
 .drawer__content .button{
-    border-radius: 1rem;
+    border-radius: var(--border-radius-lg);
     text-align: center;
 }
 
@@ -103,7 +103,7 @@
     gap: 1rem;
     font-weight: bold;
     padding: var(--s-1);
-    border-radius: 10px;
+    border-radius: var(--border-radius-md);
 }
 
 .admin-drawer-link:hover{
