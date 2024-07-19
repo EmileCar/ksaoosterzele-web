@@ -15,9 +15,10 @@ if(empty($_GET['page'])) {
 
 $allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes, $leaderRoutes, $workingYearRoutes);
 
+require_once __DIR__ . '/../responses/ErrorResponse.php';
+
 // Als de route niet bestaat, geef een 404
 if (empty($allowedRoutes[$_GET['page']])) {
-    http_response_code(404);
     ErrorResponse::exitWithError(404, 'Deze pagina bestaat niet');
 }
 
@@ -27,6 +28,5 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 if (isset($route['methods'][$requestMethod])) {
     $actionMethod = $route['methods'][$requestMethod];
 } else {
-    http_response_code(405);
-    exit("Deze methode is niet toegestaan voor deze route");
+    ErrorResponse::exitWithError(405, 'Deze methode is niet toegestaan');
 }

@@ -59,9 +59,11 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
                 onSuccess();
             }
         } catch (errors: any) {
+            console.log(errors)
             setTimeout(() => {
-                let errorFields = errors.errorFields ?? {};
-                setErrors(errorFields);
+                let errorfields = errors.errorFields ?? {};
+                errorfields.general = errors.message;
+                setErrors(errorfields);
                 setIsPending(false);
                 if (onFailure) {
                     onFailure(errors);

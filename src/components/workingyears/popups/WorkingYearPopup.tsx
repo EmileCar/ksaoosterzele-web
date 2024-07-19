@@ -35,6 +35,7 @@ const WorkingYearPopup = ({ workingYear, onClose } : { workingYear?: WorkingYear
                     <p style={{margin: "var(--s0) 0"}}><strong>Deze gegevens zullen niet meer aangepast kunnen worden na creatie</strong></p>
                 </>
             }
+            <div className="error">{errorStates.general}</div>
             <Form disabled={submitPending}>
                 <Group>
                     <Label text="Naam" errorMessage={errorStates.nameError}>
