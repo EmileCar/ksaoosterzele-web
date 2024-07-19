@@ -4,6 +4,7 @@ $workingYearRoutes = [
         'controller' => 'WorkingYear',
         'methods' => array(
             'GET' => 'getWorkingYears',
+            'POST'=> 'startNewWorkingYear',
         )
     ),
 ];

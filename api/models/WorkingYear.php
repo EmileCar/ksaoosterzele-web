@@ -18,4 +18,25 @@ class WorkingYear extends Model
     {
         return $this->hasMany(Registration::class, 'working_year_id');
     }
+
+    public static function validate($data) {
+		$errors = [];
+
+        if(empty($data["name"])) {
+            $errors["nameError"] = "Gelieve een naam mee te geven.";
+        }
+
+        if(empty($data["startYear"])) {
+            $errors["startYearError"] = "Gelieve een startjaar mee te geven.";
+        } else {
+            $workingYears = WorkingYear::all();
+            foreach ($workingYears as $workingYear) {
+                if ($workingYear->start_year == $data["startYear"]) {
+                    $errors["startYearError"] = "Dit werkjaar met startjaar bestaat al.";
+                }
+            }
+        }
+
+		return $errors;
+	}
 }

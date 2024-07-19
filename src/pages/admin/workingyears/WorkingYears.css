@@ -20,6 +20,7 @@
 
 .working-year-item__info {
   display: flex;
+  justify-content: center;
   gap: var(--s3);
   margin-top: var(--s-1);
 }
@@ -27,4 +28,10 @@
 .working-year-item__info-item{
   display: flex;
   gap: var(--s-1);
+}
+
+@media screen and (min-width: 55rem) {
+  .working-year-item__info {
+    justify-content: flex-start;
+  }
 }

@@ -24,5 +24,25 @@ class WorkingYearController extends Controller {
 
         exit(json_encode($workingYearsWithCounts));
     }
+
+    public function startNewWorkingYear() {
+        $account = Account::is_authenticated();
+
+		$data = json_decode(file_get_contents('php://input'), true);
+
+        $errors = WorkingYear::validate($data);
+
+        if (!empty($errors)) {
+			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
+		}
+
+        $workingYear = new WorkingYear();
+        $workingYear->name = $data["name"];
+        $workingYear->start_year = $data["startYear"];
+        $workingYear->save();
+
+        http_response_code(201);
+        exit(json_encode($workingYear));
+    }
 }
 

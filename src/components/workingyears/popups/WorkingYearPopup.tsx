@@ -39,7 +39,7 @@ const WorkingYearPopup = ({ workingYear, onClose } : { workingYear?: WorkingYear
             <Form disabled={submitPending}>
                 <Group>
                     <Label text="Naam" errorMessage={errorStates.nameError}>
-                        <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus placeholder="Werkjaar 20xx-20xx" />
+                        <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus placeholder="Werkjaar 20xx-20xx"/>
                     </Label>
                     <Label text="Startjaar" errorMessage={errorStates.startYearError}>
                         <Input type={"number"} name="startYear" value={values.startYear} onChange={handleValueChange} />
