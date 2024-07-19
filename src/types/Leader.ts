@@ -45,7 +45,7 @@ class SendLeader {
     email: string;
     imageFileName: string;
     description: string;
-    role_id: number;
+    roleId: number;
 
     constructor(leaderData?: any) {
         this.id = leaderData.id || null;
@@ -56,7 +56,7 @@ class SendLeader {
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.imageFileName || null;
         this.description = leaderData.description || null;
-        this.role_id = leaderData.role_id || null;
+        this.roleId = leaderData.role_id || null;
     }
 }
 

@@ -14,10 +14,12 @@ const Leaders = () => {
                     Onze leiding bestaat uit een groep enthousiaste vrijwilligers die elke zondag klaarstaan om leuke activiteiten te organiseren voor de kinderen. Naast een leidingsgroep zijn wij ook een hechte vriendengroep waardoor de sfeer elke keer weer top is!
                 </p>
             </SectionTitle>
-            <LeadersGroupedList
-                fetchFunction={getLeadersOfWorkingYear}
-                LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItem leader={leader}/>}
-            />
+            <div className="page__section--content">
+                <LeadersGroupedList
+                    fetchFunction={getLeadersOfWorkingYear}
+                    LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItem leader={leader}/>}
+                />
+            </div>
         </PageLayout>
     );
 }

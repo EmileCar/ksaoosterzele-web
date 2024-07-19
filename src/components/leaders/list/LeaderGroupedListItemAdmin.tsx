@@ -39,6 +39,24 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
         });
     }
 
+    const renderLeaderGroup = () => {
+        let text;
+        let isGood = true;
+
+        if (leader.group) {
+            text = "Leider bij de " + leader.group.name;
+        } else if (leader.role_id == 1 || leader.role_id == 2) {
+            text = "Geen tak";
+            isGood = false;
+        } else {
+            return null;
+        }
+
+        return (
+            <p className={`leader-group ${!isGood && "error"}`}>{text}</p>
+        );
+    }
+
     return (
         <div className="leader admin" onClick={handleClick}>
             <img
@@ -51,7 +69,7 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
             />
             <div className="leader-info">
                 <h4 className="leader-name">{leader.firstName} {leader.lastName}</h4>
-                {leader.group && <p className="leader-group">Leider bij de {leader.group.name}</p>}
+                {renderLeaderGroup()}
             </div>
             <div className='change-role form'>
                 <select className='inherit-font input' name='role' value={leader.role_id ?? ""} onChange={changeGroup}>

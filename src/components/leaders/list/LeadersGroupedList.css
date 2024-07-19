@@ -58,6 +58,7 @@
 .leaders-group .leader.admin {
   cursor: pointer;
   transition: transform 0.3s;
+  min-width: 500px;
 }
 
 .leaders-group .leader.admin:hover {

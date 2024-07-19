@@ -62,7 +62,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                         />
                     </Label>
                     <Label text="Huidige rol" errorMessage={errorStates.roleError}>
-                        <select name="role" value={values.role_id} onChange={handleValueChange}>
+                        <select className="input inherit-font" name="roleId" value={values.roleId} onChange={handleValueChange}>
                             {roles?.map(role => (
                                 <option key={role.id} value={role.id?.toString()}>{role.name}</option>
                             ))}

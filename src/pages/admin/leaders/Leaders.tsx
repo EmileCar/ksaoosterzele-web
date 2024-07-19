@@ -8,7 +8,7 @@ import useFetch from "../../../hooks/useFetch";
 import { useGlobalErrorContext } from "../../../contexts/GlobalErrorContext";
 
 const LeadersAdmin = () => {
-    const { pending, data: roles, error: fetchLeaderRolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
+    const { pending, data: roles, error: fetchLeaderRolesError, refetch } = useFetch<LeaderRole[]>(getLeaderRoles);
     const { GlobalError, setError } = useGlobalErrorContext();
     const hasErrorSet = useRef(false);
 
@@ -28,7 +28,8 @@ const LeadersAdmin = () => {
             <LeadersGroupedList
                 fetchFunction={getLeadersByRole}
                 isAdmin
-                LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItemAdmin leader={leader} roles={roles!} leaderRolesPending={pending} refetch={() => {}} />}
+                LeaderComponent={({ leader, refetch }: { leader: Leader, refetch: () => void }) =>
+                    <LeadersGroupedListItemAdmin leader={leader} roles={roles!} leaderRolesPending={pending} refetch={refetch} />}
             />
         </>
     );
