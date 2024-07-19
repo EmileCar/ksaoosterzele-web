@@ -106,7 +106,14 @@ class LeaderController extends Controller {
             ErrorResponse::exitWithError(404, 'Leider of groep niet gevonden.');
         }
 
-        $leader->groups()->sync([$group->id]);
+        $currentWorkingYear = WorkingYear::orderBy('start_year', 'desc')->first();
+        if (!$currentWorkingYear) {
+            ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
+        }
+
+        $leader->groups()->sync([
+            $group->id => ['working_year_id' => $currentWorkingYear->id]
+        ]);
         $leader->save();
 
         exit();
@@ -124,8 +131,17 @@ class LeaderController extends Controller {
         if (!$leader) {
             ErrorResponse::exitWithError(404, "Leider niet gevonden.");
         }
-        // return only
-        $groups = $leader->groups()->get();
+
+        $sortedLeaderPlaces = $leader->leaderPlaces->sortByDesc(function ($leaderPlace) {
+            return $leaderPlace->workingYear->start_year;
+        });
+
+        $groups = $sortedLeaderPlaces->map(function ($leaderPlace) {
+            return [
+                'group' => $leaderPlace->group->name,
+                'working_year' => $leaderPlace->workingYear->name,
+            ];
+        });
 
         exit(json_encode($groups));
     }

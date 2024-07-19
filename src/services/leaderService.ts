@@ -93,10 +93,9 @@ export async function changeRoleOfLeader(leaderId: number, roleId: number) : Pro
 
 export async function changeGroupOfLeader(request: ChangeLeaderGroup) : Promise<void> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=leader_group`, {
+        const response = await fetch(`${API_BASE_URL}?page=leader_group${request.leaderId ? `&leader_id=${request.leaderId}` : ''}${request.groupId ? `&group_id=${request.groupId}` : ''}`, {
             method: 'PATCH',
             credentials: 'include',
-            body: JSON.stringify(request),
         });
 
         if(!response.ok) {

@@ -1,3 +1,5 @@
+import Group from "./Group";
+
 class LeadersGroupedResult {
     [role: string]: Leader[];
 
@@ -20,7 +22,7 @@ class Leader {
     imageFileName: string | null;
     description: string | null;
     role_id: number;
-    group: LeaderGroup | null;
+    group: Group | null;
 
     constructor(leaderData?: any) {
         this.id = leaderData.id || null;
@@ -32,7 +34,7 @@ class Leader {
         this.imageFileName = leaderData.image_file_name || null;
         this.description = leaderData.description || null;
         this.role_id = leaderData.role_id || null;
-        this.group = leaderData.group ? new LeaderGroup(leaderData.group) : null;
+        this.group = leaderData.group ? new Group(leaderData.group) : null;
     }
 }
 
@@ -73,12 +75,12 @@ class LeaderRole {
 class LeaderGroup {
     id: number | null;
     name: string;
-    year: number;
+    workingYearName: string;
 
     constructor(leaderRoleData?: any) {
         this.id = leaderRoleData.id || null;
-        this.name = leaderRoleData.name || null;
-        this.year = leaderRoleData.year || null;
+        this.name = leaderRoleData.group || null;
+        this.workingYearName = leaderRoleData.working_year || null;
     }
 }
 
@@ -88,7 +90,7 @@ class ChangeLeaderGroup {
 
     constructor(data: any) {
         this.leaderId = data.id || null;
-        this.groupId = data.group.id || null;
+        this.groupId = data.group && data.group.id || null;
     }
 }
 

@@ -108,6 +108,10 @@ form .form-group__half {
     color: gray;
 }
 
+.label.disabled {
+    color: gray;
+}
+
 /* VARIOUS STYLING */
 .form select.input option {
     cursor: pointer;

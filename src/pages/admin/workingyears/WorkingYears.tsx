@@ -21,7 +21,8 @@ const WorkingYears = () => {
         (workingyear.startYear > (max.startYear ? max.startYear : 0) ? workingyear : max), workingyears[0]) : null;
 
     const otherWorkingYears = workingyears?.filter(workingyear =>
-        workingyear.id !== currentWorkingYear?.id);
+        workingyear.id !== currentWorkingYear?.id)
+        .sort((a, b) => b.startYear - a.startYear);
 
     return (
         <>
@@ -55,7 +56,7 @@ const WorkingYears = () => {
                             )}
                             {otherWorkingYears &&
                                 otherWorkingYears.map((workingyear: WorkingYear) => (
-                                    <div className="working-year-item current-working-year">
+                                    <div key={workingyear.id} className="working-year-item current-working-year">
                                         <p className="name">{workingyear.name}</p>
                                         <div className="working-year-item__info">
                                             <p className="working-year-item__info-item"><span className="pi pi-users"/>{workingyear.registrationCount}</p>
