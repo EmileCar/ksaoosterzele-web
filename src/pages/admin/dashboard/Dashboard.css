@@ -8,6 +8,12 @@
     grid-template-columns: 1fr;    gap: 1rem;
 }
 
+.dashboard-title{
+    font-family: var(--title-font);
+    font-size: var(--subtitle-font-size);
+    margin-bottom: var(--s-1);
+}
+
 .dashboard-card{
     padding: 1rem;
     border: 5px solid var(--darker-main-color);

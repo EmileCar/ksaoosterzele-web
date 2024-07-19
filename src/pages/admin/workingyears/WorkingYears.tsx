@@ -43,7 +43,7 @@ const WorkingYears = () => {
                                     <p className="name">{currentWorkingYear.name}</p>
                                     <div className="working-year-item__info">
                                         <p className="working-year-item__info-item"><span className="pi pi-users"/>{currentWorkingYear.registrationCount}</p>
-                                        <p className="working-year-item__info-item"><span className="pi pi-crown"/>{currentWorkingYear.registrationCount}</p>
+                                        <p className="working-year-item__info-item"><span className="pi pi-crown"/>{currentWorkingYear.leaderCount}</p>
                                         <p className="working-year-item__info-item"><span className="pi pi-calendar"/>gestart op {formatDate(currentWorkingYear.createdAt)}</p>
                                     </div>
                                 </div>
@@ -59,7 +59,7 @@ const WorkingYears = () => {
                                         <p className="name">{workingyear.name}</p>
                                         <div className="working-year-item__info">
                                             <p className="working-year-item__info-item"><span className="pi pi-users"/>{workingyear.registrationCount}</p>
-                                            <p className="working-year-item__info-item"><span className="pi pi-crown"/>{workingyear.registrationCount}</p>
+                                            <p className="working-year-item__info-item"><span className="pi pi-crown"/>{workingyear.leaderCount}</p>
                                         </div>
                                     </div>
                                 )
