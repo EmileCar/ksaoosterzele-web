@@ -6,6 +6,7 @@ import useFetch from "../../../hooks/useFetch";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import { getWorkingYears } from "../../../services/workingYearService";
 import WorkingYear from "../../../types/WorkingYear";
+import { formatDate } from "../../../utils/datetimeUtil";
 import "./WorkingYears.css";
 
 const WorkingYears = () => {
@@ -13,7 +14,7 @@ const WorkingYears = () => {
     const { registerPopup } = usePopupContext();
 
     const openCreatePopup = () => {
-        registerPopup(<WorkingYearPopup onClose={() => {}} />);
+        registerPopup(<WorkingYearPopup onClose={() => refetch()} />);
     }
 
     const currentWorkingYear = workingyears && workingyears.length > 0 ? workingyears.reduce((max, workingyear) => 
@@ -43,6 +44,7 @@ const WorkingYears = () => {
                                     <div className="working-year-item__info">
                                         <p className="working-year-item__info-item"><span className="pi pi-users"/>{currentWorkingYear.registrationCount}</p>
                                         <p className="working-year-item__info-item"><span className="pi pi-crown"/>{currentWorkingYear.registrationCount}</p>
+                                        <p className="working-year-item__info-item"><span className="pi pi-calendar"/>gestart op {formatDate(currentWorkingYear.createdAt)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -53,8 +55,15 @@ const WorkingYears = () => {
                             )}
                             {otherWorkingYears &&
                                 otherWorkingYears.map((workingyear: WorkingYear) => (
-                                    <p key={workingyear.id}>{workingyear.name}</p>
-                            ))}
+                                    <div className="working-year-item current-working-year">
+                                        <p className="name">{workingyear.name}</p>
+                                        <div className="working-year-item__info">
+                                            <p className="working-year-item__info-item"><span className="pi pi-users"/>{workingyear.registrationCount}</p>
+                                            <p className="working-year-item__info-item"><span className="pi pi-crown"/>{workingyear.registrationCount}</p>
+                                        </div>
+                                    </div>
+                                )
+                            )}
                         </div>
                     </>
                 )}

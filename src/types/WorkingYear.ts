@@ -2,6 +2,7 @@ class WorkingYear {
     id: number | null;
     name: string;
     startYear: number;
+    createdAt: Date;
     registrationCount: number;
     leaderCount: number;
 
@@ -9,6 +10,7 @@ class WorkingYear {
         this.id = workingYearData.id || null;
         this.name = workingYearData.name || null;
         this.startYear = workingYearData.start_year || null;
+        this.createdAt = new Date(workingYearData.created_at) || new Date();
         this.registrationCount = workingYearData.registration_count ?? null;
         this.leaderCount = workingYearData.leader_count ?? null;
     }

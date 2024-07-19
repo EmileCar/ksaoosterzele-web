@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type ValueMethods = {
     notEmpty: () => boolean;
@@ -71,6 +71,15 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
             }, 800);
         }
     };
+
+    useEffect(() => {
+        if (errorStates.general) {
+            setErrorStates((prevErrors: any) => ({
+                ...prevErrors,
+                general: '',
+            }));
+        }
+    }, [values]);
 
     return {
         values: extendedValues,

@@ -17,6 +17,7 @@ class WorkingYearController extends Controller {
                 'id' => $workingYear->id,
                 'name' => $workingYear->name,
                 'start_year' => $workingYear->start_year,
+                'created_at' => $workingYear->created_at,
                 'registration_count' => $workingYear->registrations->count(),
                 'leader_count' => $workingYear->leaderPlaces->count(),
             ];

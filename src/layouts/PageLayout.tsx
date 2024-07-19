@@ -1,7 +1,8 @@
 import React from "react";
 import DefaultLayout from "./DefaultLayout";
 
-const PageLayout = ({children}) => {
+const PageLayout = ({ children }: { children: React.ReactNode }) => {
+
     return (
         <>
             <DefaultLayout>

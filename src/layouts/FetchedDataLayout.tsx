@@ -7,15 +7,15 @@ const FetchedDataLayout = ({isPending, error, children} : {isPending: boolean, e
     return (
         <>
             {isPending
-            ?
-                <LoadingSpinner text={<LoadingText />}/>
-            :
-            <>
-                {(error !== null && typeof error === 'string') &&
-                    <div className="error">{error}</div>
-                }
-                {children}
-            </>
+                ?
+                    <LoadingSpinner text={<LoadingText />}/>
+                :
+                <>
+                    {(error !== null && typeof error === 'string') &&
+                        <div className="error">{error}</div>
+                    }
+                    {children}
+                </>
             }
         </>
     );

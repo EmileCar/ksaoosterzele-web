@@ -21,6 +21,7 @@
 .working-year-item__info {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: var(--s3);
   margin-top: var(--s-1);
 }
