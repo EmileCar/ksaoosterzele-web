@@ -34,7 +34,7 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
         }
     }
 
-    const changeGroup = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const changeRole = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         setIsPending(true);
         await changeRoleOfLeader(leader.id!, e.target.value as unknown as number).then(() => {
             refetch();
@@ -78,7 +78,7 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
                 {renderLeaderGroup()}
             </div>
             <div className='change-role form'>
-                <select className='inherit-font input' name='role' value={leader.role_id ?? ""} onChange={changeGroup}>
+                <select className='inherit-font input' name='role' value={leader.role_id ?? ""} onChange={changeRole}>
                     {(leaderRolesPending || isPending) ? (
                         <option value='' disabled>Laden...</option>
                     ) : (

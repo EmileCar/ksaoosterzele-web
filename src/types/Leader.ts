@@ -87,10 +87,10 @@ class ChangeLeaderGroup {
     groupId: number;
 
     constructor(data: any) {
-        this.leaderId = data.leaderId || null;
-        this.groupId = data.groupId || null;
+        this.leaderId = data.id || null;
+        this.groupId = data.group.id || null;
     }
 }
 
 export default Leader;
-export { LeadersGroupedResult, SendLeader, LeaderRole, ChangeLeaderGroup };
+export { LeadersGroupedResult, SendLeader, LeaderRole, LeaderGroup, ChangeLeaderGroup };

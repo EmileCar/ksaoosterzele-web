@@ -1,19 +1,24 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import useFetch from "../../../hooks/useFetch";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import { getGroups } from "../../../services/groupService";
 import Group from "../../../types/Group";
-import Leader, { ChangeLeaderGroup } from "../../../types/Leader";
+import Leader, { ChangeLeaderGroup, LeaderGroup } from "../../../types/Leader";
 import Popup from "../../popup/Popup";
 import Form from "../../form/Form";
 import useForm from "../../../hooks/useForm";
-import { changeLeaderGroup } from "../../../services/leaderService";
+import { changeGroupOfLeader, getLeaderGroups } from "../../../services/leaderService";
 import Label from "../../form/Label";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () => void }) => {
     const fetchGroups = useCallback(() => getGroups(true), []);
     const { pending, data: groups, error } = useFetch<Group[]>(fetchGroups);
-    const { values, errorStates, handleValueChange, handleSubmitForm, submitPending } = useForm<ChangeLeaderGroup>(new ChangeLeaderGroup(leader || {}), changeLeaderGroup);
+    const fetchLeaderGroups = useCallback(() => getLeaderGroups(leader.id!), [leader.id]);
+    const { pending: leaderGroupsPending, data: leaderGroups, error: leaderGroupsError } = useFetch<LeaderGroup[]>(fetchLeaderGroups);
+    const { values, handleValueChange, handleSubmitForm, changeValue, submitPending } = useForm<ChangeLeaderGroup>(new ChangeLeaderGroup(leader || {}), changeGroupOfLeader);
+    const { closePopup } = usePopupContext();
+    const [generalError, setGeneralError] = useState<string | null>(null);
 
     const renderIntroText = () => {
         switch (leader.role_id) {
@@ -51,11 +56,26 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
         }
     }
 
+    useEffect(() => {
+        if (values.groupId && values.groupId !== leader.group?.id) {
+            console.log("Submitting form");
+            console.log(values);
+            handleSubmitForm("POST", () => {
+                closePopup();
+                onClose();
+            }, (errors) => {
+                setGeneralError(errors.message);
+                changeValue("groupId", leader.group?.id);
+            });
+        }
+    }, [values.groupId]);
+
     return (
         <Popup title={`Tak van ${leader.firstName} aanpassen`}>
-            <FetchedDataLayout error={error} isPending={pending}>
-                <p>{renderIntroText()}</p>
-                <Form>
+            <FetchedDataLayout error={error || leaderGroupsError} isPending={pending || leaderGroupsPending}>
+                <p className="popup-text">{renderIntroText()}</p>
+                <div className="error">{generalError}</div>
+                <Form disabled={submitPending}>
                     <Label text="Verander tak">
                         <select className="input inherit-font" name="groupId" value={values.groupId} onChange={handleValueChange}>
                             <option value="">Geen tak</option>
@@ -65,6 +85,15 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
                         </select>
                     </Label>
                 </Form>
+
+                <div className="leader-groups">
+                    {leaderGroups && leaderGroups.map(leaderGroup => (
+                        <div key={leaderGroup.id} className="leader-group">
+                            <p className="leader group-name">{leaderGroup.name}</p>
+                            <p className="leader group-description">{leaderGroup.year}</p>
+                        </div>
+                    ))}
+                </div>
             </FetchedDataLayout>
         </Popup>
     );

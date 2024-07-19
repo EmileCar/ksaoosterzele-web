@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import { ChangeLeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
+import { ChangeLeaderGroup, LeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
 
 export async function getLeadersOfWorkingYear() : Promise<LeadersGroupedResult> {
     try {
@@ -78,7 +78,7 @@ export async function getLeaderRoles() : Promise<LeaderRole[]> {
 
 export async function changeRoleOfLeader(leaderId: number, roleId: number) : Promise<void> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=leader&leader_id=${leaderId}&role_id=${roleId}`, {
+        const response = await fetch(`${API_BASE_URL}?page=leader_role&leader_id=${leaderId}&role_id=${roleId}`, {
             method: 'PATCH',
             credentials: 'include',
         });
@@ -91,7 +91,7 @@ export async function changeRoleOfLeader(leaderId: number, roleId: number) : Pro
     }
 }
 
-export async function changeLeaderGroup(request: ChangeLeaderGroup) : Promise<void> {
+export async function changeGroupOfLeader(request: ChangeLeaderGroup) : Promise<void> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=leader_group`, {
             method: 'PATCH',
@@ -102,6 +102,25 @@ export async function changeLeaderGroup(request: ChangeLeaderGroup) : Promise<vo
         if(!response.ok) {
             throw await ErrorResponse.createFromResponse(response);
         }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getLeaderGroups(leaderId: number) : Promise<LeaderGroup[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader_groups&leader_id=${leaderId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        const leaderGroups =  data.map((leaderGroup: any) => new LeaderGroup(leaderGroup));
+        return leaderGroups;
     } catch (error) {
         throw error;
     }

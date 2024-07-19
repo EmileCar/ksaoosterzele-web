@@ -25,7 +25,24 @@ $leaderRoutes = [
             'POST' => 'createLeader',
             'PUT' => 'updateLeader',
             'DELETE' => 'deleteLeader',
+        )
+    ),
+    'leader_role' => array(
+        'controller' => 'Leader',
+        'methods' => array(
             'PATCH' => 'changeRoleOfLeader',
+        )
+    ),
+    'leader_group' => array(
+        'controller' => 'Leader',
+        'methods' => array(
+            'PATCH' => 'changeGroupOfLeader',
+        )
+    ),
+    'leader_groups' => array(
+        'controller' => 'Leader',
+        'methods' => array(
+            'GET' => 'getLeaderGroups',
         )
     ),
 ];

@@ -71,6 +71,10 @@ class LeaderController extends Controller {
     }
 
     public function changeRoleOfLeader() {
+        if(!isset($_GET['leader_id']) || !isset($_GET['role_id'])) {
+            ErrorResponse::exitWithError(400, 'Leider of rol niet opgegeven.');
+        }
+
         $leaderId = $_GET['leader_id'];
         $roleId = $_GET['role_id'];
 
@@ -85,5 +89,44 @@ class LeaderController extends Controller {
         $leader->save();
 
         exit();
+    }
+
+    public function changeGroupOfLeader() {
+        if(!isset($_GET['leader_id']) || !isset($_GET['group_id'])) {
+            ErrorResponse::exitWithError(400, 'Leider of groep niet opgegeven.');
+        }
+
+        $leaderId = $_GET['leader_id'];
+        $groupId = $_GET['group_id'];
+
+        $leader = Leader::find($leaderId);
+        $group = Group::find($groupId);
+
+        if (!$leader || !$group) {
+            ErrorResponse::exitWithError(404, 'Leider of groep niet gevonden.');
+        }
+
+        $leader->groups()->sync([$group->id]);
+        $leader->save();
+
+        exit();
+    }
+
+    public function getLeaderGroups() {
+        if(!isset($_GET['leader_id'])) {
+            ErrorResponse::exitWithError(400, 'Leider niet opgegeven.');
+        }
+
+        $leaderId = $_GET['leader_id'];
+
+        $leader = Leader::find($leaderId);
+
+        if (!$leader) {
+            ErrorResponse::exitWithError(404, "Leider niet gevonden.");
+        }
+        // return only
+        $groups = $leader->groups()->get();
+
+        exit(json_encode($groups));
     }
 }
