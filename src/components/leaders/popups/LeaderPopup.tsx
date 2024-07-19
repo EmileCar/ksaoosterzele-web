@@ -14,7 +14,7 @@ import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 
 const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, setErrors, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
+    const { values, errorStates, handleValueChange, handleSubmitForm, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
 	const { closePopup } = usePopupContext();
 

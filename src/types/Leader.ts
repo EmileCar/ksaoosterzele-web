@@ -82,5 +82,15 @@ class LeaderGroup {
     }
 }
 
+class ChangeLeaderGroup {
+    leaderId: number;
+    groupId: number;
+
+    constructor(data: any) {
+        this.leaderId = data.leaderId || null;
+        this.groupId = data.groupId || null;
+    }
+}
+
 export default Leader;
-export { LeadersGroupedResult, SendLeader, LeaderRole };
+export { LeadersGroupedResult, SendLeader, LeaderRole, ChangeLeaderGroup };

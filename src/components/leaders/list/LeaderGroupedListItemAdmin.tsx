@@ -5,6 +5,8 @@ import Leader, { LeaderRole } from '../../../types/Leader';
 import LeaderPopup from '../popups/LeaderPopup';
 import { changeRoleOfLeader } from '../../../services/leaderService';
 import { useGlobalErrorContext } from '../../../contexts/GlobalErrorContext';
+import Button from '../../button/Button';
+import LeaderGroupPopup from '../popups/LeaderGroupPopup';
 
 interface LeadersGroupedListItemAdminProps {
     leader: Leader;
@@ -19,7 +21,11 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
     const [ isPending, setIsPending ] = useState<boolean>(false);
 
     const openEditLeaderPopup = () => {
-        registerPopup(<LeaderPopup leader={leader} onClose={() => {}} />);
+        registerPopup(<LeaderPopup leader={leader} onClose={refetch} />);
+    }
+
+    const openEditLeaderGroupPopup = () => {
+        registerPopup(<LeaderGroupPopup leader={leader} onClose={refetch} />);
     }
 
     const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -84,6 +90,7 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
                         </>
                     )}
                 </select>
+                <Button icon='pi-users' darken onClick={openEditLeaderGroupPopup}/>
             </div>
         </div>
     );

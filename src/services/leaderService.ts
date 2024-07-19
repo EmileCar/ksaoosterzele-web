@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import { LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
+import { ChangeLeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
 
 export async function getLeadersOfWorkingYear() : Promise<LeadersGroupedResult> {
     try {
@@ -76,12 +76,27 @@ export async function getLeaderRoles() : Promise<LeaderRole[]> {
     }
 }
 
-
 export async function changeRoleOfLeader(leaderId: number, roleId: number) : Promise<void> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=leader&leader_id=${leaderId}&role_id=${roleId}`, {
             method: 'PATCH',
             credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function changeLeaderGroup(request: ChangeLeaderGroup) : Promise<void> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader_group`, {
+            method: 'PATCH',
+            credentials: 'include',
+            body: JSON.stringify(request),
         });
 
         if(!response.ok) {

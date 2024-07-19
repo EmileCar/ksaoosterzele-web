@@ -58,7 +58,7 @@
 .leaders-group .leader.admin {
   cursor: pointer;
   transition: transform 0.3s;
-  min-width: 500px;
+  min-width: 530px;
 }
 
 .leaders-group .leader.admin:hover {
@@ -67,7 +67,8 @@
 
 .leaders-group .leader.admin .change-role{
   align-self: center;
-  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 55rem) {
