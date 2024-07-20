@@ -25,10 +25,6 @@ USE `ksaoosterzele_testdatabase`;
 
 -- --------------------------------------------------------
 
---
--- Tabelstructuur voor tabel `accounts`
---
-
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -96,7 +92,7 @@ CREATE TABLE `collages` (
 --
 
 INSERT INTO `collages` (`id`, `internal_name`, `display_name`, `description`, `date`, `active`) VALUES
-(9, 'emile_feest_', 'Emile feest!', NULL, '2024-07-12', 0);
+(10, 'polll', 'Iaaa', NULL, '2024-07-13', 0);
 
 -- --------------------------------------------------------
 
@@ -115,7 +111,7 @@ CREATE TABLE `collage_collage_types` (
 --
 
 INSERT INTO `collage_collage_types` (`id`, `collage_id`, `collage_type_id`) VALUES
-(4, 9, 3);
+(6, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -163,7 +159,8 @@ INSERT INTO `events` (`id`, `name`, `description`, `location`, `datetime`, `imag
 (1, 'erghsqh', 'srdh', 'rsdh', '2024-06-28 18:59:33', 'drhs', 'drhs', 1, 'drh'),
 (3, 'test', NULL, NULL, '2024-07-06 18:00:00', NULL, NULL, 0, NULL),
 (4, 'test', NULL, 'test', '2024-07-06 18:00:00', 'Wiskunde.png', NULL, 0, NULL),
-(12, 'Emile feest', 'Er is een nieuw feest van Emile, dit feest zal doorgaan de 15 februari om eslbgiesb osehoig esgb eosi bgqoisemb gioseg oimsegqmo igbseiom ', 'Den Amb8', '2024-07-18 18:00:00', 'Wiskunde.png', 'emilecaron.be', 1, '8');
+(12, 'Emile feest', 'Er is een nieuw feest van Emile, dit feest zal doorgaan de 15 februari om eslbgiesb osehoig esgb eosi bgqoisemb gioseg oimsegqmo igbseiom ', 'Den Amb8', '2024-07-18 18:00:00', 'Wiskunde.png', 'emilecaron.be', 1, '8'),
+(14, 'gese', NULL, NULL, '2024-07-20 18:00:00', NULL, NULL, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,7 +230,10 @@ CREATE TABLE `leader_places` (
 --
 
 INSERT INTO `leader_places` (`id`, `leader_id`, `group_id`, `working_year_id`) VALUES
-(1, 1, 2, 1);
+(13, 1, 2, 12),
+(16, 1, 4, 13),
+(17, 1, 1, 14),
+(18, 1, 3, 15);
 
 -- --------------------------------------------------------
 
@@ -287,6 +287,7 @@ CREATE TABLE `registrations` (
   `second_telephone_number` varchar(255) DEFAULT NULL,
   `second_email` varchar(255) DEFAULT NULL,
   `allow_media` tinyint(4) NOT NULL,
+  `working_year_id` int(11) DEFAULT NULL,
   `updated_at` datetime NOT NULL,
   `created_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -295,8 +296,8 @@ CREATE TABLE `registrations` (
 -- Gegevens worden geëxporteerd voor tabel `registrations`
 --
 
-INSERT INTO `registrations` (`id`, `group_id`, `first_name`, `last_name`, `birthdate`, `gender`, `birthplace`, `parent_first_name`, `parent_last_name`, `address`, `postal_code`, `town`, `phone_number`, `telephone_number`, `email`, `second_parent_first_name`, `second_parent_last_name`, `second_address`, `second_postal_code`, `second_town`, `second_phone_number`, `second_telephone_number`, `second_email`, `allow_media`, `updated_at`, `created_at`) VALUES
-(1, 2, 'Emile', 'Caron', '2010-06-01', 'M', 'oosterzele', 'sgseh', 'srhrdh', 'testadres 16', '9864', 'Oosterzele', '0412345678', NULL, 'caron.emile@telenet.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, '2024-07-01 19:35:41', '2024-07-01 15:34:30');
+INSERT INTO `registrations` (`id`, `group_id`, `first_name`, `last_name`, `birthdate`, `gender`, `birthplace`, `parent_first_name`, `parent_last_name`, `address`, `postal_code`, `town`, `phone_number`, `telephone_number`, `email`, `second_parent_first_name`, `second_parent_last_name`, `second_address`, `second_postal_code`, `second_town`, `second_phone_number`, `second_telephone_number`, `second_email`, `allow_media`, `working_year_id`, `updated_at`, `created_at`) VALUES
+(1, 2, 'Emile', 'Caron', '2010-06-01', 'M', 'oosterzele', 'Ann', 'De Winter', 'testadres 16', '9860', 'Oosterzele', '0412345678', NULL, 'caron.emile@telenet.be', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2024-07-01 19:35:41', '2024-07-01 15:34:30');
 
 -- --------------------------------------------------------
 
@@ -307,15 +308,20 @@ INSERT INTO `registrations` (`id`, `group_id`, `first_name`, `last_name`, `birth
 CREATE TABLE `working_years` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `start_year` smallint(6) NOT NULL
+  `start_year` smallint(6) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `working_years`
 --
 
-INSERT INTO `working_years` (`id`, `name`, `start_year`) VALUES
-(1, 'Werkjaar 2023-2024', 2023);
+INSERT INTO `working_years` (`id`, `name`, `start_year`, `created_at`, `updated_at`) VALUES
+(12, 'Werkjaar 2024-2025', 2024, '2024-07-19 21:33:00', '2024-07-19 21:33:00'),
+(13, 'Werkjaar 2025-2026', 2025, '2024-07-19 21:39:45', '2024-07-19 21:39:45'),
+(14, 'Werkjaar 2026-2027', 2026, '2024-07-19 21:48:37', '2024-07-19 21:48:37'),
+(15, 'Werkjaar 2027-2028', 2027, '2024-07-19 21:53:07', '2024-07-19 21:53:07');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -400,7 +406,8 @@ ALTER TABLE `leader_roles`
 --
 ALTER TABLE `registrations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `group_id` (`group_id`);
+  ADD KEY `group_id` (`group_id`),
+  ADD KEY `working_year_id` (`working_year_id`);
 
 --
 -- Indexen voor tabel `working_years`
@@ -428,25 +435,25 @@ ALTER TABLE `account_roles`
 -- AUTO_INCREMENT voor een tabel `collages`
 --
 ALTER TABLE `collages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT voor een tabel `collage_collage_types`
 --
 ALTER TABLE `collage_collage_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT voor een tabel `collage_types`
 --
 ALTER TABLE `collage_types`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT voor een tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT voor een tabel `groups`
@@ -464,7 +471,7 @@ ALTER TABLE `leaders`
 -- AUTO_INCREMENT voor een tabel `leader_places`
 --
 ALTER TABLE `leader_places`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT voor een tabel `leader_roles`
@@ -482,7 +489,7 @@ ALTER TABLE `registrations`
 -- AUTO_INCREMENT voor een tabel `working_years`
 --
 ALTER TABLE `working_years`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
@@ -526,7 +533,8 @@ ALTER TABLE `leader_places`
 -- Beperkingen voor tabel `registrations`
 --
 ALTER TABLE `registrations`
-  ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
+  ADD CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
+  ADD CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`working_year_id`) REFERENCES `working_years` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
