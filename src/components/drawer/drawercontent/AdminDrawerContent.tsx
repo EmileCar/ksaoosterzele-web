@@ -27,8 +27,13 @@ const AdminDrawerContent = () => {
                             <i className="pi pi-users" style={{ color: "primary", fontSize: 30 }} />
                             <h3>Inschrijvingen</h3>
                         </Link>
-                        <Link className="admin-drawer-link" to="/admin/mattentaarten">
-                            <h3>Mattentaarten</h3>
+                        <Link className="admin-drawer-link" to="/admin/leiding">
+                            <i className="pi pi-crown" style={{ color: "primary", fontSize: 30 }} />
+                            <h3>Leiding</h3>
+                        </Link>
+                        <Link className="admin-drawer-link" to="/admin/werkjaren">
+                            <i className="pi pi-calendar" style={{ color: "primary", fontSize: 30 }} />
+                            <h3>Werkjaren</h3>
                         </Link>
                     </div>
                 </>
