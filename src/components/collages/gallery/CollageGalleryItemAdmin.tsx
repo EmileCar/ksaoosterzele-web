@@ -5,6 +5,7 @@ import Button from "../../button/Button";
 import ConfirmCollageDeletionPopup from "../popups/ConfirmCollageDeletionPopup";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import CollagePopup from "../popups/CollagePopup";
+import './CollageGallery.css';
 
 const CollageGalleryItemAdmin = ({ collage, reload } : { collage: Collage , reload: () => void }) => {
     const { registerPopup } = usePopupContext();

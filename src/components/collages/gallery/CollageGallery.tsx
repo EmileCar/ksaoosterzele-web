@@ -4,27 +4,17 @@ import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Collage from "../../../types/Collage";
 import CollageGalleryItem from "./CollageGalleryItem";
 import CollageGalleryItemAdmin from './CollageGalleryItemAdmin';
+import GroupedList from '../../groupedList/GroupedList';
 
 const CollageGallery = () => {
     const { pending, error, groupedCollages, isAdmin, refetch } = useCollageContext();
 
-    const renderGroupedCollages = () => {
-        return Object.keys(groupedCollages).map(groupKey => (
-            <div key={groupKey} className="collage_group">
-                <h3>{groupKey}</h3>
-                <div className="collage_gallery horizontal-scroll">
-                    {
-                        groupedCollages[groupKey].map((collage: Collage) => (
-                            isAdmin ? (
-                                <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch} />
-                            ) : (
-                                <CollageGalleryItem key={collage.id} collage={collage} />
-                            )
-                        ))
-                    }
-                </div>
-            </div>
-        ));
+    const renderGroupedCollages = (collage: Collage) => {
+        return isAdmin ? (
+            <CollageGalleryItemAdmin key={collage.id} collage={collage} reload={refetch} />
+        ) : (
+            <CollageGalleryItem key={collage.id} collage={collage} />
+        )
     }
 
     return (
@@ -34,7 +24,11 @@ const CollageGallery = () => {
                     <p>Er zijn geen collages beschikbaar.</p>
                 ) : (
                     <>
-                        {renderGroupedCollages()}
+                        <GroupedList
+                            groupedItems={groupedCollages!}
+                            renderItem={renderGroupedCollages}
+                            emptyMessage="Er zijn geen collages beschikbaar."
+                        />
                     </>
                 )}
             </FetchedDataLayout>

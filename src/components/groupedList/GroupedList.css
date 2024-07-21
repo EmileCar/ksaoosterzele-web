@@ -6,7 +6,7 @@
 
 .grouped-list__group {
     display: grid;
-    gap: var(--s0);
+    gap: var(--s-1);
 }
 
 .grouped-list__group h3 {

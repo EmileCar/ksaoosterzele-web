@@ -1,4 +1,4 @@
-.collage_gallery{
+.collages__container .grouped-list__group--items{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     grid-template-rows: auto;

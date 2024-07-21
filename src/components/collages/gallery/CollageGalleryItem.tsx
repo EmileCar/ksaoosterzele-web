@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Collage from "../../../types/Collage";
 import defaultThumbnail from '../../../assets/img/default.jpg';
+import './CollageGallery.css';
 
 const CollageGalleryItem = ({ collage } : { collage: Collage }) => {
     return (
