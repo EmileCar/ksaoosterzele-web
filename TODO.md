@@ -1,7 +1,8 @@
 # TODO List
 
 - [] Maak TODO functionaliteit
-- [x] Voeg Drive link toe aan admin home
-- [] Refactor components
-- [x] Fix tak kiezen bij inschrijving
-- [x] Fix event detail
+- [] Fix leaderplaces relatie (api in de Cloud) => UNIQUE KEY
+- [] Fix groupedList items die niet goed worden weergegeven
+- [] Fix inschrijvingen styling
+- [] Fix koppelen inschrijvingen met werkjaar
+- [] LONGTERM: Rekeningen via de site
