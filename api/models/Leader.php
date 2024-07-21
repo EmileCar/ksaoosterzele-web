@@ -26,4 +26,50 @@ class Leader extends Model
     public function leaderPlaces() {
         return $this->hasMany(LeaderPlace::class, 'leader_id');
     }
+
+    public static function validate($data) {
+		$errors = [];
+
+		if (empty($data["firstName"])) {
+			$errors["firstNameError"] = "Naam is verplicht.";
+		}
+
+        if (empty($data["lastName"])) {
+            $errors["lastNameError"] = "Achternaam is verplicht.";
+        }
+
+        if (empty($data["roleId"])) {
+            $errors["roleError"] = "Rol is verplicht.";
+        }
+
+		return $errors;
+	}
+
+    public static function create($data, $leader) {
+        if (!empty($data["firstName"])) {
+            $leader->first_name = $data["firstName"];
+        }
+        if (!empty($data["lastName"])) {
+            $leader->last_name = $data["lastName"];
+        }
+        if (!empty($data["birthdate"])) {
+            $leader->birthdate = $data["birthdate"];
+        }
+        if (!empty($data["phoneNumber"])) {
+            $leader->phone_number = $data["phoneNumber"];
+        }
+        if (!empty($data["email"])) {
+            $leader->email = $data["email"];
+        }
+        if (!empty($data["imageFileName"])) {
+            $leader->image_file_name = $data["imageFileName"];
+        }
+        if (!empty($data["description"])) {
+            $leader->description = $data["description"];
+        }
+        if (!empty($data["roleId"])) {
+            $leader->role_id = $data["roleId"];
+        }
+        return $leader;
+    }
 }

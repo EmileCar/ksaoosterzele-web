@@ -65,6 +65,54 @@ class LeaderController extends Controller {
         exit(json_encode($leadersByRole));
     }
 
+    public function createLeader() {
+        $account = Account::is_authenticated();
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $errors = Leader::validate($data);
+
+        if (!empty($errors)) {
+			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
+		}
+
+        $leader = new Leader();
+		$leader = Leader::create($data, $leader);
+		$leader->save();
+
+		http_response_code(201);
+		exit();
+    }
+
+    public function updateLeader() {
+        $account = Account::is_authenticated();
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (empty($data["id"])) {
+			ErrorResponse::exitWithError(400, "Gelieve een id mee te geven.");
+		}
+
+        $leader = Leader::find($data["id"]);
+
+        if (empty($leader)) {
+            ErrorResponse::exitWithError(404, "Leider niet gevonden.");
+        }
+
+        $errors = Leader::validate($data);
+
+        if (!empty($errors)) {
+            ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
+        }
+
+        $leader = Leader::create($data, $leader);
+        $leader->save();
+
+        exit();
+    }
+
+
+
     public function getLeaderRoles() {
         $roles = LeaderRole::get();
         exit(json_encode($roles));

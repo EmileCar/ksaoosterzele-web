@@ -79,6 +79,7 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
                 general: '',
             }));
         }
+        console.log(values);
     }, [values]);
 
     return {

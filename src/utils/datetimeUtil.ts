@@ -32,6 +32,11 @@ export const formatCustomDateTime = (date: Date): string => {
   return `${year}-${month}-${day} ${hours}:${minutes}:00`;
 }
 
+/**
+ * Deze functie zet de DateTime vanuit een input om naar database Date value.
+ * @param {Date} date - De DateTime string afkomstig van een input.
+ * @returns {string} De geformatteerde Date string voor de database.
+**/
 export const formatCustomDate = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -41,35 +46,12 @@ export const formatCustomDate = (date: Date): string => {
 }
 
 /**
- * Deze functie controleert of een DateTime vanuit de database in het verleden ligt.
- * @param {string} dateTimeString - De DateTime string afkomstig van de database.
- * @returns {boolean} Of de DateTime in het verleden ligt.
- **/
-export const isDatabaseDateTimeInPast = (dateTimeString: string): boolean => {
-  const date = new Date(dateTimeString);
-  return date < new Date();
-}
-
-/**
  * Deze functie controleert of een Date of die in het verleden ligt.
  * @param {Date} date - De DateTime string afkomstig van de database.
  * @returns {boolean} Of de DateTime in het verleden ligt.
  **/
 export const isDateTimeInPast = (date: Date): boolean => {
   return date < new Date();
-}
-
-/**
- * Deze functie zet een input date om naar een database date. !GEEN DATETIME!
- * @param {string} date - De input date string.
- * @returns {string} De geformatteerde database date string.
- **/
-export const convertInputDateToDatabaseDate = (date: Date): string => {
-  const dateObj = new Date(date);
-  const year = dateObj.getFullYear();
-  const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-  const day = String(dateObj.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
 }
 
 /**
@@ -104,6 +86,11 @@ export const formatTime = (date: Date): string => {
   return new Intl.DateTimeFormat('nl-NL', options).format(new Date(date));
 };
 
+/**
+ * Deze functie zet een Date om naar een waarde voor een input.
+ * @param {Date} date - De database date string.
+ * @returns {string} De geformatteerde input time string.
+ * */
 export const formatDateToInputDateTime = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -114,6 +101,11 @@ export const formatDateToInputDateTime = (date: Date): string => {
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
+/**
+ * Deze functie zet een Date om naar een waarde voor een input.
+ * @param {Date} date - De database date string.
+ * @returns {string} De geformatteerde input date string.
+ * */
 export const formatDateToInputDate = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

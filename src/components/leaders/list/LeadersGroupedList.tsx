@@ -1,38 +1,34 @@
-import useFetch from "../../../hooks/useFetch";
 import Leader, { LeadersGroupedResult } from "../../../types/Leader";
-import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import './LeadersGroupedList.css';
 import React from "react";
 
 interface LeadersGroupedListProps {
-    fetchFunction: () => Promise<LeadersGroupedResult>;
+    leaders: LeadersGroupedResult;
+    refetch?: () => void;
     isAdmin?: boolean;
     emptyMessage?: string;
     LeaderComponent: React.FC<{ leader: Leader, refetch: () => void }>;
 }
 
-const LeadersGroupedList: React.FC<LeadersGroupedListProps> = ({ fetchFunction, isAdmin = false, emptyMessage, LeaderComponent }) => {
-    const { pending, data, error, refetch } = useFetch<LeadersGroupedResult>(fetchFunction);
+const LeadersGroupedList: React.FC<LeadersGroupedListProps> = ({ leaders, refetch, isAdmin = false, emptyMessage, LeaderComponent }) => {
 
     return (
-        <FetchedDataLayout isPending={pending} error={error}>
-            <div className={`leaders-grouped`}>
-                {data && Object.keys(data).map(role => (
-                    <div key={role} className={`leaders-group ${isAdmin ? "admin" : ""}`}>
-                        <h3>{role}</h3>
-                        <div className="leaders">
-                            {data[role].length === 0 ? (
-                                <p>{emptyMessage || "Geen leiders voor deze groep"}</p>
-                            ) : (
-                                data[role].map((leader: Leader) => (
-                                    <LeaderComponent leader={leader} key={leader.id} refetch={refetch}/>
-                                ))
-                            )}
-                        </div>
+        <div className={`leaders-grouped`}>
+            {leaders && Object.keys(leaders).map(role => (
+                <div key={role} className={`leaders-group ${isAdmin ? "admin" : ""}`}>
+                    <h3>{role}</h3>
+                    <div className="leaders">
+                        {leaders[role].length === 0 ? (
+                            <p>{emptyMessage || "Geen leiders voor deze groep"}</p>
+                        ) : (
+                            leaders[role].map((leader: Leader) => (
+                                <LeaderComponent leader={leader} key={leader.id} refetch={refetch || (() => {})} />
+                            ))
+                        )}
                     </div>
-                ))}
-            </div>
-        </FetchedDataLayout>
+                </div>
+            ))}
+        </div>
     );
 };
 

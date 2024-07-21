@@ -58,10 +58,15 @@ class EventController extends Controller {
 			ErrorResponse::exitWithError(404, "Activiteit niet gevonden.");
 		}
 
+		$errors = Event::validate($data);
+
+		if (!empty($errors)) {
+			ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
+		}
+
 		$event = Event::create($data, $event);
 		$event->save();
 
-		http_response_code(200);
 		exit();
 	}
 

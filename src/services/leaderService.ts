@@ -1,6 +1,7 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
 import { ChangeLeaderGroup, LeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
+import { formatCustomDate } from "../utils/datetimeUtil";
 
 export async function getLeadersOfWorkingYear() : Promise<LeadersGroupedResult> {
     try {
@@ -46,7 +47,10 @@ export async function sendLeader(request: SendLeader, method: string) : Promise<
         const response = await fetch(`${API_BASE_URL}?page=leader`, {
             method: method ?? 'POST',
             credentials: 'include',
-            body: JSON.stringify(request),
+            body: JSON.stringify({
+                ...request,
+                birthdate: formatCustomDate(request.birthdate),
+            }),
         });
 
         if(!response.ok) {

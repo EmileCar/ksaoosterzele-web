@@ -2,10 +2,13 @@ import LeadersGroupedList from "../../components/leaders/list/LeadersGroupedList
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 import { getLeadersOfWorkingYear } from "../../services/leaderService";
-import Leader from "../../types/Leader";
+import Leader, { LeadersGroupedResult } from "../../types/Leader";
 import LeadersGroupedListItem from "../../components/leaders/list/LeaderGroupedListItem";
+import FetchedDataLayout from "../../layouts/FetchedDataLayout";
+import useFetch from "../../hooks/useFetch";
 
 const Leaders = () => {
+    const { pending, data, error, refetch } = useFetch<LeadersGroupedResult>(getLeadersOfWorkingYear);
 
     return (
         <PageLayout>
@@ -15,10 +18,12 @@ const Leaders = () => {
                 </p>
             </SectionTitle>
             <div className="page__section--content">
-                <LeadersGroupedList
-                    fetchFunction={getLeadersOfWorkingYear}
-                    LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItem leader={leader}/>}
-                />
+                <FetchedDataLayout isPending={pending} error={error}>
+                    <LeadersGroupedList
+                        leaders={data!}
+                        LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItem leader={leader}/>}
+                    />
+                </FetchedDataLayout>
             </div>
         </PageLayout>
     );

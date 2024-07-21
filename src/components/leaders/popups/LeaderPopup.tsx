@@ -26,7 +26,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
     }
 
     return (
-		<Popup title={leader ? `${leader.firstName} aanpassen` : "Nieuwe leader"}>
+		<Popup title={leader ? `${leader.firstName} aanpassen` : "Nieuwe leider toevoegen"}>
             <FetchedDataLayout isPending={submitPending} error={errorStates.general}>
                 <Form>
                     <Group>
@@ -39,7 +39,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                     </Group>
                     <Group>
                         <Label text="Geboortedatum" errorMessage={errorStates.birthdateError}>
-                            <Input type={"datetime"} name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleValueChange} focus />
+                            <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
                             {/* <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} /> */}

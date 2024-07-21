@@ -6,7 +6,6 @@ import PageLayout from "../../layouts/PageLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import "./Events.css";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
-import { formatDate, formatTime, isDatabaseDateTimeInPast, isDateTimeInPast } from "../../utils/datetimeUtil";
 import EventInfo from "../../components/events/EventInfo";
 
 const EventDetail = () => {
