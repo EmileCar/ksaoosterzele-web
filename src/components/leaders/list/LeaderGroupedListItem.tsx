@@ -1,5 +1,6 @@
 import DefaultLeider from '../../../assets/img/default-leider.jpeg';
 import Leader from '../../../types/Leader';
+import './LeadersGroupedListItem.css';
 
 const LeadersGroupedListItem = ({ leader }: { leader: Leader }) => {
     return (

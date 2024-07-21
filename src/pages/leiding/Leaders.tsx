@@ -1,4 +1,3 @@
-import LeadersGroupedList from "../../components/leaders/list/LeadersGroupedList";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import PageLayout from "../../layouts/PageLayout";
 import { getLeadersOfWorkingYear } from "../../services/leaderService";
@@ -6,9 +5,17 @@ import Leader, { LeadersGroupedResult } from "../../types/Leader";
 import LeadersGroupedListItem from "../../components/leaders/list/LeaderGroupedListItem";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
 import useFetch from "../../hooks/useFetch";
+import GroupedList from "../../components/groupedList/GroupedList";
 
 const Leaders = () => {
     const { pending, data, error, refetch } = useFetch<LeadersGroupedResult>(getLeadersOfWorkingYear);
+
+    const renderLeadersGroupedListItemAdmin = (leader: Leader) => (
+        <LeadersGroupedListItem
+            key={leader.id}
+            leader={leader}
+        />
+    );
 
     return (
         <PageLayout>
@@ -19,10 +26,7 @@ const Leaders = () => {
             </SectionTitle>
             <div className="page__section--content">
                 <FetchedDataLayout isPending={pending} error={error}>
-                    <LeadersGroupedList
-                        leaders={data!}
-                        LeaderComponent={({ leader }: { leader: Leader }) => <LeadersGroupedListItem leader={leader}/>}
-                    />
+                    <GroupedList groupedItems={data!} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders geregistreerd voor deze tak." />
                 </FetchedDataLayout>
             </div>
         </PageLayout>

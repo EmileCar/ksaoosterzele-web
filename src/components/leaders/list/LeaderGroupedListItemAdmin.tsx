@@ -7,6 +7,7 @@ import { changeRoleOfLeader } from '../../../services/leaderService';
 import { useGlobalErrorContext } from '../../../contexts/GlobalErrorContext';
 import Button from '../../button/Button';
 import LeaderGroupPopup from '../popups/LeaderGroupPopup';
+import './LeadersGroupedListItem.css';
 
 interface LeadersGroupedListItemAdminProps {
     leader: Leader;

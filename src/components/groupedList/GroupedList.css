@@ -1,0 +1,23 @@
+.grouped-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s1);
+}
+
+.grouped-list__group {
+    display: grid;
+    gap: var(--s0);
+}
+
+.grouped-list__group h3 {
+    font-family: var(--title-font);
+    font-size: var(--subtitle-font-size);
+    text-decoration: underline;
+    text-transform: capitalize;
+}
+
+.grouped-list__group--items{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--s0);
+}

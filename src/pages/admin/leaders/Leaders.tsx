@@ -1,5 +1,4 @@
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
-import LeadersGroupedList from "../../../components/leaders/list/LeadersGroupedList";
 import { getLeaderRoles, getLeadersByRole } from "../../../services/leaderService";
 import Leader, { LeaderRole, LeadersGroupedResult } from "../../../types/Leader";
 import LeadersGroupedListItemAdmin from "../../../components/leaders/list/LeaderGroupedListItemAdmin";
@@ -11,6 +10,7 @@ import Button from "../../../components/button/Button";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import LeaderPopup from "../../../components/leaders/popups/LeaderPopup";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
+import GroupedList from "../../../components/groupedList/GroupedList";
 
 const LeadersAdmin = () => {
     const { pending, data, error, refetch } = useFetch<LeadersGroupedResult>(getLeadersByRole);
@@ -30,6 +30,16 @@ const LeadersAdmin = () => {
         registerPopup(<LeaderPopup onClose={refetch} />);
     }
 
+    const renderLeadersGroupedListItemAdmin = (leader: Leader) => (
+        <LeadersGroupedListItemAdmin
+            key={leader.id}
+            leader={leader}
+            roles={roles || []}
+            leaderRolesPending={rolesPending}
+            refetch={refetch}
+        />
+    );
+
     return (
         <>
             <SectionTitle title="Leiding beheren">
@@ -40,13 +50,7 @@ const LeadersAdmin = () => {
                 <Button text="+ Leiding toevoegen" onClick={openCreatePopup} hover/>
             </div>
             <FetchedDataLayout isPending={pending} error={error}>
-                <LeadersGroupedList
-                    leaders={data!}
-                    refetch={refetch}
-                    isAdmin
-                    LeaderComponent={({ leader, refetch }: { leader: Leader, refetch: () => void }) =>
-                        <LeadersGroupedListItemAdmin leader={leader} roles={roles!} leaderRolesPending={pending} refetch={refetch} />}
-                />
+                <GroupedList groupedItems={data!} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders beschikbaar." />
             </FetchedDataLayout>
         </>
     );
