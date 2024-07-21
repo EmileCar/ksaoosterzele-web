@@ -210,4 +210,24 @@ class LeaderController extends Controller {
         })->values();
         exit(json_encode($groups));
     }
+
+    public function getLeaderImagePaths() {
+        $directory = '../assets/leiding';
+		$filenames = [];
+		$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+
+		if (is_dir($directory)) {
+			if ($handle = opendir($directory)) {
+				while (($file = readdir($handle)) !== false) {
+					$extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+					if ($file !== '.' && $file !== '..' && in_array($extension, $allowedExtensions)) {
+						$filenames[] = $file;
+					}
+				}
+				closedir($handle);
+			}
+		}
+
+		exit(json_encode($filenames));
+    }
 }

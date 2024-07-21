@@ -63,7 +63,6 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
                 let errorfields = errors.errorFields ?? {};
                 errorfields.general = errors.message;
                 setErrors(errorfields);
-                console.log(errorfields);
                 setIsPending(false);
                 if (onFailure) {
                     onFailure(errors);
@@ -79,7 +78,6 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
                 general: '',
             }));
         }
-        console.log(values);
     }, [values]);
 
     return {

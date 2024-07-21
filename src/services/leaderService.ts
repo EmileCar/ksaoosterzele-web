@@ -128,3 +128,21 @@ export async function getLeaderGroups(leaderId: number) : Promise<LeaderGroup[]>
         throw error;
     }
 }
+
+export async function getLeaderImagePaths(): Promise<string[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader_images`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Er was een probleem bij het ophalen van de afbeeldingen.');
+    }
+}

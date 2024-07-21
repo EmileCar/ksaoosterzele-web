@@ -45,4 +45,10 @@ $leaderRoutes = [
             'GET' => 'getLeaderGroups',
         )
     ),
+    'leader_images' => array(
+        'controller' => 'Leader',
+        'methods' => array(
+            'GET' => 'getLeaderImagePaths',
+        )
+    ),
 ];

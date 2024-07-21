@@ -31,7 +31,6 @@ class Registration {
     constructor(registrationData?: any) {
         this.id = registrationData.id || null;
         this.group = registrationData.group ? new Group(registrationData.group) : null;
-        console.log(registrationData.group)
         this.firstName = registrationData.first_name || null;
         this.lastName = registrationData.last_name || null;
         this.birthdate = registrationData.birthdate || null;

@@ -9,13 +9,16 @@ import AutoComplete from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import Leader, { LeaderRole, SendLeader } from "../../../types/Leader";
-import { getLeaderRoles, sendLeader } from "../../../services/leaderService";
+import { getLeaderImagePaths, getLeaderRoles, sendLeader } from "../../../services/leaderService";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
+import { useState } from "react";
 
 const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, handleSubmitForm, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
+    const { pending, data: fetchedImagePaths } = useFetch<string[]>(getLeaderImagePaths);
+    const [imagePaths, setImagePaths] = useState<string[]>([]);
 	const { closePopup } = usePopupContext();
 
     const handleSubmit = async () => {
@@ -23,6 +26,11 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
             onClose();
             closePopup();
         });
+    }
+
+    const search = async (e: any) => {
+        if(!fetchedImagePaths) return;
+        setImagePaths(e.query ? fetchedImagePaths.filter((path) => path.toLowerCase().includes(e.query.toLowerCase())) : fetchedImagePaths);
     }
 
     return (
@@ -42,7 +50,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                             <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
-                            {/* <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} /> */}
+                            <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
                         </Label>
                     </Group>
                     <Group>

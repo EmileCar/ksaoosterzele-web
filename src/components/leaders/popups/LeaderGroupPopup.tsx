@@ -58,8 +58,6 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
 
     useEffect(() => {
         if (values.groupId && values.groupId !== leader.group?.id) {
-            console.log("Submitting form");
-            console.log(values);
             handleSubmitForm("POST", () => {
                 closePopup();
                 onClose();
