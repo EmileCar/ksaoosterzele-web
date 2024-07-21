@@ -11,7 +11,6 @@ class LeaderPlace extends Model
 
     protected $fillable = ['leader_id', 'group_id', 'working_year_id'];
 
-
     public function leader() {
         return $this->belongsTo(Leader::class, 'leader_id');
     }
