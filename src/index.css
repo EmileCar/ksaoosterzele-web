@@ -39,9 +39,9 @@ html {
 	--s2: 2rem;
 	--s3: 3rem;
 
-	--main-color: #1576D1;
-	--light-main-color: #69a7e1;
 	--lighter-main-color: #d7edfa;
+	--light-main-color: #69a7e1;
+	--main-color: #1576D1;
 	--darker-main-color: #0a62b4;
 	--error-color: #ce1010;
 	--positive-color: #0f8a0f;

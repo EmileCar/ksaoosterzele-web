@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import './Registrations.css';
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
@@ -56,8 +56,13 @@ const RegistrationsAdmin = () => {
                 </span>
                 <MultiSelect placeholder="Selecteer opties" value={visibleColumns} options={extraColumns} optionLabel="header" onChange={onColumnToggle} className="input" display="chip" />
                 <span className="exportToExcel__container">
-                    <Button text="" onClick={() => exportToExcel(registrations!, "inschrijvingen")} />
-                    <span>Exporteer naar Excel</span>
+                    <Button
+                        icon="pi-file-export"
+                        customClassName="exportToExcel__button"
+                        darken
+                        onClick={() => exportToExcel(registrations!, "inschrijvingen")}
+                    />
+                    <span onClick={() => exportToExcel(registrations!, "inschrijvingen")}>Exporteer naar Excel</span>
                 </span>
             </Form>
         );

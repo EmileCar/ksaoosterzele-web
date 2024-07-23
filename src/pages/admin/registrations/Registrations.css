@@ -1,5 +1,7 @@
 .p-datatable-header{
     padding: 1rem;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    align-items: center;
 }
 
 .p-datatable-thead>tr>th{
@@ -13,10 +15,17 @@
 
 .registrationstable-header{
     flex-direction: row;
+    align-items: center;
 }
 
 .registrationstable-header .input{
     width: auto;
+}
+
+.p-sortable-column{
+    cursor: pointer;
+    font-style: italic;
+    border-bottom: 1px solid var(--light-main-color);
 }
 
 .p-multiselect-panel{
@@ -38,7 +47,7 @@
 }
 
 .p-highlight{
-    color: white;
+    color: var(--main-color);
 }
 
 .p-datatable-table td{
@@ -61,8 +70,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--s-1);
     font-style: italic;
+    cursor: pointer;
+}
+
+.exportToExcel__button{
+    background-color: var(--positive-color);
 }
 
 .popup-text{
