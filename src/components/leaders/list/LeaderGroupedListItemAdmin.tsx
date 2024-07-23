@@ -84,7 +84,6 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
                         <option value='' disabled>Laden...</option>
                     ) : (
                         <>
-                            <option value=''>Geen groep</option>
                             {roles && roles.map(role => (
                                 <option key={role.id} value={role.id!.toString()}>{role.name}</option>
                             ))}
