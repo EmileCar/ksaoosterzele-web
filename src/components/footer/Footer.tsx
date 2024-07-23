@@ -10,11 +10,11 @@ const Footer = () => {
 				<div className="socials__container">
 					<h2>Volg ons op onze socials</h2>
 					<div className="socials">
-						<a href="https://www.facebook.com/KSA.Oosterzele" className="social__item">
+						<a href="https://www.facebook.com/KSA.Oosterzele" className="social__item" target='_blank'>
 							<img src={facebookIcon} className="social__icon" alt="Facebook" />
 							<h3>Facebook</h3>
 						</a>
-						<a href="https://www.instagram.com/ksaoosterzele/" className="social__item">
+						<a href="https://www.instagram.com/ksaoosterzele/" className="social__item" target='_blank'>
 							<img src={instaIcon} className="social__icon" alt="Instagram" />
 							<h3>Instagram</h3>
 						</a>
