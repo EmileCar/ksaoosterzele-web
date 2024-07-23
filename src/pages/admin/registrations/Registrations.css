@@ -46,7 +46,7 @@
     border: 0.1rem solid var(--main-color);
 }
 
-.p-highlight{
+.p-highlight:no-button{
     color: var(--main-color);
 }
 
