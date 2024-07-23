@@ -3,6 +3,6 @@
 - [] Maak TODO functionaliteit
 - [x] Fix leaderplaces relatie (api in de Cloud) => UNIQUE KEY
 - [x] Fix groupedList items die niet goed worden weergegeven
-- [] Fix inschrijvingen styling
+- [x] Fix inschrijvingen styling
 - [] Fix koppelen inschrijvingen met werkjaar
 - [] LONGTERM: Rekeningen via de site
