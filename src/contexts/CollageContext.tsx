@@ -54,11 +54,21 @@ export const CollageProvider = ({
 
 			if (sortedBy === "recent") {
 				filteredCollages = filteredCollages.sort(
-					(a: Collage, b: Collage) => b.date.getTime() - a.date.getTime()
+					(a: Collage, b: Collage) => {
+						if (!a.date && !b.date) return 0;
+						if (!a.date) return 1;
+						if (!b.date) return -1;
+						return b.date.getTime() - a.date.getTime();
+					}
 				);
 			} else if (sortedBy === "oldest") {
 				filteredCollages = filteredCollages.sort(
-					(a, b) => a.date.getTime() - b.date.getTime()
+					(a, b) => {
+						if (!a.date && !b.date) return 0;
+						if (!a.date) return 1;
+						if (!b.date) return -1;
+						return a.date.getTime() - b.date.getTime();
+					}
 				);
 			} else if (sortedBy === "name") {
 				filteredCollages = filteredCollages.sort((a, b) =>
@@ -74,11 +84,18 @@ export const CollageProvider = ({
 
 			if (groupBy === "date") {
 				filteredCollages.forEach((collage) => {
-					const dateKey = formatDate(collage.date);
-					if (!grouped[dateKey]) {
-						grouped[dateKey] = [];
+					if (!collage.date) {
+						if (!grouped["Geen datum"]) {
+							grouped["Geen datum"] = [];
+						}
+						grouped["Geen datum"].push(collage);
+					} else {
+						const dateKey = formatDate(collage.date);
+						if (!grouped[dateKey]) {
+							grouped[dateKey] = [];
+						}
+						grouped[dateKey].push(collage);
 					}
-					grouped[dateKey].push(collage);
 				});
 			} else if (groupBy === "type") {
 				filteredCollages.forEach((collage: Collage) => {

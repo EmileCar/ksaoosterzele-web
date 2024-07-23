@@ -19,10 +19,6 @@ class Collage extends Model
             $errors["nameError"] = "Gelieve een naam mee te geven.";
         }
 
-        if (empty($data["date"])) {
-            $errors["dateError"] = "Gelieve een datum mee te geven.";
-        }
-
         return $errors;
     }
 

@@ -5,7 +5,7 @@ class Collage {
     displayName: string;
     name: string;
     description: string;
-    date: Date;
+    date: Date | null;
     active: boolean;
     types: CollageType[];
     images: string[] | null;
@@ -15,7 +15,7 @@ class Collage {
         this.displayName = collageData.display_name || null;
         this.name = collageData.internal_name || null;
         this.description = collageData.description || null;
-        this.date = new Date(collageData.date) || new Date();
+        this.date = collageData.date ? new Date(collageData.date) : null;
         this.active = collageData.active || false;
         this.types = collageData.types && collageData.types.map((type: any) => new CollageType(type)) || [];
         this.images = collageData.images ?? null;
@@ -26,7 +26,7 @@ class SendCollage {
     id: number | null;
     name: string;
     description: string;
-    date: Date;
+    date: Date | null;
     active: boolean;
     types: string[];
 
@@ -34,7 +34,7 @@ class SendCollage {
         this.id = collageData.id || null;
         this.name = collageData.displayName || null;
         this.description = collageData.description || null;
-        this.date = collageData.date || new Date();
+        this.date = collageData.date || null;
         this.active = collageData.active || false;
         this.types = collageData.types && collageData.types.map((type: CollageType) => type.name) || [];
     }

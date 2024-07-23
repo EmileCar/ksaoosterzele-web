@@ -43,7 +43,6 @@ export async function getLeadersByRole() : Promise<LeadersGroupedResult> {
 }
 
 export async function sendLeader(request: SendLeader, method: string) : Promise<void> {
-    console.log(request);
     try {
         const response = await fetch(`${API_BASE_URL}?page=leader`, {
             method: method ?? 'POST',

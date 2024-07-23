@@ -42,22 +42,3 @@ export async function getRegistrations() : Promise<Registration[]> {
         throw error;
     }
 }
-
-export async function updateInschrijving(registration: Registration) {
-    try {
-        const response = await fetch(`${API_BASE_URL}?page=registration`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify(registration),
-        });
-
-        if (!response.ok) {
-            throw await ErrorResponse.createFromResponse(response);
-        }
-    } catch (errors) {
-        throw errors;
-    }
-}

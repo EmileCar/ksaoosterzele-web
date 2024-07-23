@@ -34,7 +34,6 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
     }
 
     const handleSubmit = async () => {
-        console.log(values);
         await handleSubmitForm(collage ? 'PUT' : 'POST', () => {
             onClose();
             closePopup();
@@ -50,7 +49,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                         <Input type="text" name="name" value={values.name} onChange={handleValueChange} focus />
                     </Label>
                     <Label text="Datum" errorMessage={errorStates.dateError}>
-                        <Input type="date" name="date" value={values.date.toString()} onChange={handleValueChange}/>
+                        <Input type="date" name="date" value={values.date ? values.date.toString() : ""} onChange={handleValueChange}/>
                     </Label>
                 </Group>
                 <Group>
