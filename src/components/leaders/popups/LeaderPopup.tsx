@@ -15,11 +15,16 @@ import useFetch from "../../../hooks/useFetch";
 import { useState } from "react";
 
 const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, handleValueChange, handleSubmitForm, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
+    const { values, errorStates, handleValueChange, handleSubmitForm, changeValue, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
     const { pending, data: fetchedImagePaths } = useFetch<string[]>(getLeaderImagePaths);
     const [imagePaths, setImagePaths] = useState<string[]>([]);
 	const { closePopup } = usePopupContext();
+
+    const handleCalendarChange = (e: any) => {
+        const date = new Date(e.target.value);
+        changeValue("birthdate", date);
+    }
 
     const handleSubmit = async () => {
         await handleSubmitForm(leader ? 'PUT' : 'POST', () => {
@@ -47,7 +52,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                     </Group>
                     <Group>
                         <Label text="Geboortedatum" errorMessage={errorStates.birthdateError}>
-                            <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleValueChange} focus />
+                            <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleCalendarChange} focus />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
                             <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
