@@ -27,6 +27,16 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         }
     } , [collageTypes])
 
+    const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (!value) {
+            changeValue("date", null);
+            return;
+        }
+        const datetime = new Date(value);
+        changeValue("date", datetime);
+    };
+
     const search = async (e: any) => {
         if (!collageTypes) return;
         const allTypeNames = collageTypes.map((type : CollageType) => type.name);
@@ -49,7 +59,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                         <Input type="text" name="name" value={values.name} onChange={handleValueChange} focus />
                     </Label>
                     <Label text="Datum" errorMessage={errorStates.dateError}>
-                        <Input type="date" name="date" value={values.date ? values.date.toString() : ""} onChange={handleValueChange}/>
+                        <Input type="date" name="date" value={formatDateToInputDate(values.date)} onChange={handleCalendarChange}/>
                     </Label>
                 </Group>
                 <Group>

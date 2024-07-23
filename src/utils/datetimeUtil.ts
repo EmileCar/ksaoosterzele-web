@@ -106,8 +106,10 @@ export const formatDateToInputDateTime = (date: Date): string => {
  * @param {Date} date - De database date string.
  * @returns {string} De geformatteerde input date string.
  * */
-export const formatDateToInputDate = (date: Date): string => {
-  const year = date.getFullYear();
+export const formatDateToInputDate = (date: Date | null): string => {
+  if(!date) return '';
+
+  const year = String(date.getFullYear()).padStart(4, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
 

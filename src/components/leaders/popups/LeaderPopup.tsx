@@ -21,10 +21,15 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
     const [imagePaths, setImagePaths] = useState<string[]>([]);
 	const { closePopup } = usePopupContext();
 
-    const handleCalendarChange = (e: any) => {
-        const date = new Date(e.target.value);
-        changeValue("birthdate", date);
-    }
+    const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        if (!value) {
+            changeValue("birthdate", null);
+            return;
+        }
+        const datetime = new Date(value);
+        changeValue("birthdate", datetime);
+    };
 
     const handleSubmit = async () => {
         await handleSubmitForm(leader ? 'PUT' : 'POST', () => {
@@ -47,12 +52,12 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                             <Input type={"text"} name="firstName" value={values.firstName} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Achternaam" errorMessage={errorStates.lastNameError}>
-                            <Input type={"text"} name="lastName" value={values.lastName} onChange={handleValueChange} focus />
+                            <Input type={"text"} name="lastName" value={values.lastName} onChange={handleValueChange} />
                         </Label>
                     </Group>
                     <Group>
                         <Label text="Geboortedatum" errorMessage={errorStates.birthdateError}>
-                            <Input type="date" name="birthdate" value={values.birthdate.toString()} onChange={handleValueChange} focus />
+                            <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
                             <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
@@ -60,10 +65,10 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                     </Group>
                     <Group>
                         <Label text="Gsmnummer" errorMessage={errorStates.phoneNumberError}>
-                            <Input type={"text"} name="phoneNumber" value={values.phoneNumber} onChange={handleValueChange} focus />
+                            <Input type={"text"} name="phoneNumber" value={values.phoneNumber} onChange={handleValueChange} />
                         </Label>
                         <Label text="Email" errorMessage={errorStates.emailError}>
-                            <Input type={"text"} name="email" value={values.email} onChange={handleValueChange} focus />
+                            <Input type={"text"} name="email" value={values.email} onChange={handleValueChange} />
                         </Label>
                     </Group>
                     <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">

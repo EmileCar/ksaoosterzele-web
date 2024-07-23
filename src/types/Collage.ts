@@ -34,7 +34,7 @@ class SendCollage {
         this.id = collageData.id || null;
         this.name = collageData.displayName || null;
         this.description = collageData.description || null;
-        this.date = collageData.date || null;
+        this.date = collageData.date ? new Date(collageData.date) : null;
         this.active = collageData.active || false;
         this.types = collageData.types && collageData.types.map((type: CollageType) => type.name) || [];
     }

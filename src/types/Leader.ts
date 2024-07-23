@@ -28,7 +28,7 @@ class Leader {
         this.id = leaderData.id || null;
         this.firstName = leaderData.first_name || null;
         this.lastName = leaderData.last_name || null;
-        this.birthdate = leaderData.birthdate || null;
+        this.birthdate = leaderData.birthdate ? new Date(leaderData.birthdate) : null;
         this.phoneNumber = leaderData.phone_number || null;
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.image_file_name || null;
@@ -42,7 +42,7 @@ class SendLeader {
     id: number | null;
     firstName: string;
     lastName: string;
-    birthdate: Date;
+    birthdate: Date | null;
     phoneNumber: string;
     email: string;
     imageFileName: string;
@@ -53,7 +53,7 @@ class SendLeader {
         this.id = leaderData.id || null;
         this.firstName = leaderData.firstName || null;
         this.lastName = leaderData.lastName || null;
-        this.birthdate = leaderData.birthdate || new Date();
+        this.birthdate = leaderData.birthdate ? new Date(leaderData.birthdate) : null;
         this.phoneNumber = leaderData.phoneNumber || null;
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.imageFileName || null;

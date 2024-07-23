@@ -48,7 +48,10 @@ export async function sendCollage(request: SendCollage, method: string) : Promis
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify(request),
+            body: JSON.stringify({
+                ...request,
+                date: request.date ? formatCustomDate(request.date) : null,
+            }),
             credentials: 'include',
         });
 
