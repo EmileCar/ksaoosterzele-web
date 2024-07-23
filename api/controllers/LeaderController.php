@@ -18,17 +18,14 @@ class LeaderController extends Controller {
 
         $leaders = $workingYear->leaderPlaces()->with('leader', 'group')->get()
             ->groupBy(function ($item) {
-                return $item->group->group_name;
-            });
+                return $item->group->name;
+        });
 
-        // Retrieve all possible group names
         $groups = Group::all()->pluck('name');
 
-        // Prepare the response structure
         $response = [];
         foreach ($groups as $groupName) {
-            // If there are leaders for this group, add them; otherwise, add an empty array
-            $response[$groupName] = isset($leaders[$groupName]) 
+            $response[$groupName] = isset($leaders[$groupName])
                 ? $leaders[$groupName]->map(function ($item) {
                     return [
                         'id' => $item->leader->id,
