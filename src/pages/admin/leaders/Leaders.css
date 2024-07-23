@@ -16,3 +16,9 @@
     padding: var(--s0) 0;
     border-radius: 2px solid var(--main-color);
 }
+
+@media screen and (max-width: 55rem) {
+    .leaders__section-content .grouped-list__group--items{
+        grid-template-columns: 1fr;
+    }
+}

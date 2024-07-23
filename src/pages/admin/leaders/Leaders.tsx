@@ -50,7 +50,9 @@ const LeadersAdmin = () => {
                 <Button text="+ Leiding toevoegen" onClick={openCreatePopup} hover/>
             </div>
             <FetchedDataLayout isPending={pending} error={error}>
-                <GroupedList groupedItems={data!} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders beschikbaar." />
+                <div className="leaders__section-content">
+                    <GroupedList groupedItems={data!} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders beschikbaar." />
+                </div>
             </FetchedDataLayout>
         </>
     );

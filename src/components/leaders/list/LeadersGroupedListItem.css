@@ -5,6 +5,7 @@
   display: grid;
   gap: var(--s1);
   grid-template-columns: auto 1fr auto;
+  text-align: left;
 }
 
 .leader img {
