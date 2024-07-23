@@ -1,16 +1,17 @@
 <?php
 
-use \Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 require_once __DIR__ . "/Leader.php";
 require_once __DIR__ . "/Group.php";
 require_once __DIR__ . "/WorkingYear.php";
 
-class LeaderPlace extends Model
+class LeaderPlace extends Pivot
 {
     public $timestamps = false;
 
-    protected $fillable = ['leader_id', 'group_id', 'working_year_id'];
+    public $table = 'leader_places';
 
+    protected $fillable = ['leader_id', 'group_id', 'working_year_id'];
 
     public function leader() {
         return $this->belongsTo(Leader::class, 'leader_id');

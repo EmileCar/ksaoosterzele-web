@@ -19,8 +19,9 @@ class Leader extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class, 'leader_places', 'leader_id', 'group_id')
-                    ->withPivot('working_year_id');
+        return $this->belongsToMany(Group::class, 'leader_places')
+                    ->withPivot('working_year_id ')
+                    ->using(LeaderPlace::class);
     }
 
     public function leaderPlaces() {

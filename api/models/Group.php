@@ -8,9 +8,11 @@ class Group extends Model
 {
 	public $timestamps = false;
 
-    public function leaders() {
-        return $this->belongsToMany(Leader::class, 'leader_places', 'group_id', 'leader_id')
-                    ->withPivot('working_year_id');
+    public function leaders()
+    {
+        return $this->belongsToMany(Leader::class, 'leader_places')
+                    ->withPivot('working_year_id ')
+                    ->using(LeaderPlace::class);
     }
 
     public function registrations() {

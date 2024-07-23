@@ -16,26 +16,28 @@ class LeaderController extends Controller {
             ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
         }
 
-        $groups = Group::with(['leaders' => function ($query) use ($workingYear) {
-            $query->whereHas('leaderPlaces', function ($q) use ($workingYear) {
-                $q->where('working_year_id', $workingYear->id);
-            });
-        }])->get();
+        $leaders = $workingYear->leaderPlaces()->with('leader', 'group')->get()
+            ->groupBy(function ($item) {
+                return $item->group->name;
+        });
 
-        $leadersByGroup = [];
+        $groups = Group::all()->pluck('name');
 
-        foreach ($groups as $group) {
-            $leadersByGroup[$group->name] = $group->leaders->map(function ($leader) {
-                return [
-                    'id' => $leader->id,
-                    'first_name' => $leader->first_name,
-                    'last_name' => $leader->last_name,
-                    'image_file_name' => $leader->image_file_name,
-                ];
-            });
+        $response = [];
+        foreach ($groups as $groupName) {
+            $response[$groupName] = isset($leaders[$groupName])
+                ? $leaders[$groupName]->map(function ($item) {
+                    return [
+                        'id' => $item->leader->id,
+                        'first_name' => $item->leader->first_name,
+                        'last_name' => $item->leader->last_name,
+                        'image_file_name' => $item->leader->image_file_name,
+                    ];
+                })->values()->all()
+                : [];
         }
 
-        exit(json_encode($leadersByGroup));
+        exit(json_encode($response));
     }
 
     public function getLeadersByRole() {
@@ -44,10 +46,8 @@ class LeaderController extends Controller {
         if (!$currentWorkingYear) {
             $roles = LeaderRole::with('leaders')->get();
         } else {
-            $roles = LeaderRole::with(['leaders' => function ($query) use ($currentWorkingYear) {
-                $query->with(['groups' => function ($q) use ($currentWorkingYear) {
-                    $q->wherePivot('working_year_id', $currentWorkingYear->id);
-                }]);
+            $roles = LeaderRole::with(['leaders.groups' => function ($query) use ($currentWorkingYear) {
+                $query->wherePivot('working_year_id', $currentWorkingYear->id);
             }])->get();
         }
 
@@ -110,8 +110,6 @@ class LeaderController extends Controller {
 
         exit();
     }
-
-
 
     public function getLeaderRoles() {
         $roles = LeaderRole::get();
