@@ -53,7 +53,7 @@ class SendLeader {
         this.id = leaderData.id || null;
         this.firstName = leaderData.firstName || null;
         this.lastName = leaderData.lastName || null;
-        this.birthdate = leaderData.birthdate ? new Date(leaderData.birthdate) : new Date();
+        this.birthdate = leaderData.birthdate || new Date();
         this.phoneNumber = leaderData.phoneNumber || null;
         this.email = leaderData.email || null;
         this.imageFileName = leaderData.imageFileName || null;

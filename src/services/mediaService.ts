@@ -42,16 +42,14 @@ export async function getCollage(collageId: number) {
 }
 
 export async function sendCollage(request: SendCollage, method: string) : Promise<void> {
+    console.log(request);
     try {
         const response = await fetch(`${API_BASE_URL}?page=collage`, {
             method: method ?? 'POST',
             headers: {
             'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-            ...request,
-            date: formatCustomDate(request.date),
-            }),
+            body: JSON.stringify(request),
             credentials: 'include',
         });
 

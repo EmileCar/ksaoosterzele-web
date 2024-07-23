@@ -27,11 +27,6 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         }
     } , [collageTypes])
 
-    const handleCalendarChange = (e: any) => {
-        const date = new Date(e.target.value);
-        changeValue("date", date);
-    }
-
     const search = async (e: any) => {
         if (!collageTypes) return;
         const allTypeNames = collageTypes.map((type : CollageType) => type.name);
@@ -39,6 +34,7 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
     }
 
     const handleSubmit = async () => {
+        console.log(values);
         await handleSubmitForm(collage ? 'PUT' : 'POST', () => {
             onClose();
             closePopup();
@@ -47,13 +43,14 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
 
     return (
 		<Popup title={collage ? `${collage.displayName} aanpassen` : "Nieuwe collage"}>
+            {errorStates.general && <div className="error">{errorStates.general}</div>}
             <Form disabled={submitPending}>
                 <Group>
                     <Label text="Naam" errorMessage={errorStates.nameError}>
-                        <Input type={"text"} name="name" value={values.name} onChange={handleValueChange} focus />
+                        <Input type="text" name="name" value={values.name} onChange={handleValueChange} focus />
                     </Label>
                     <Label text="Datum" errorMessage={errorStates.dateError}>
-                        <Input type={"date"} name="date" value={formatDateToInputDate(values.date as Date)} onChange={handleCalendarChange}/>
+                        <Input type="date" name="date" value={values.date.toString()} onChange={handleValueChange}/>
                     </Label>
                 </Group>
                 <Group>

@@ -1,29 +1,23 @@
-import React, { useState } from "react";
 import useForm from "../../../hooks/useForm";
 import { formatDateTime } from "../../../utils/datetimeUtil";
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
-import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import Registration, { SendRegistration } from "../../../types/Registration";
 import { sendInschrijving } from "../../../services/registrationService";
+import { usePopupContext } from "../../../contexts/PopupContext";
 
 const RegistrationPopup = ({ registration, onClose } : { registration?: Registration | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendRegistration>(new SendRegistration(registration || {}), sendInschrijving);
-    const [imagePaths, setImagePaths] = useState<string[]>([]);
-    const [imagePathError, setImagePathError] = useState<string>("");
-
-    const handleCalendarChange = (e: any) => {
-        const datetime = new Date(e.target.value);
-        changeValue("datetime", datetime);
-    }
+    const { closePopup } = usePopupContext();
 
     const handleSubmit = async () => {
         await handleSubmitForm(registration ? 'PUT' : 'POST', () => {
             onClose();
+            closePopup();
         });
     }
 

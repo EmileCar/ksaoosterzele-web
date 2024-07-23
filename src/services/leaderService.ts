@@ -43,14 +43,12 @@ export async function getLeadersByRole() : Promise<LeadersGroupedResult> {
 }
 
 export async function sendLeader(request: SendLeader, method: string) : Promise<void> {
+    console.log(request);
     try {
         const response = await fetch(`${API_BASE_URL}?page=leader`, {
             method: method ?? 'POST',
             credentials: 'include',
-            body: JSON.stringify({
-                ...request,
-                birthdate: formatCustomDate(request.birthdate),
-            }),
+            body: JSON.stringify(request),
         });
 
         if(!response.ok) {

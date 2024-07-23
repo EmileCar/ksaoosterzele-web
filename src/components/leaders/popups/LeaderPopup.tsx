@@ -52,7 +52,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                     </Group>
                     <Group>
                         <Label text="Geboortedatum" errorMessage={errorStates.birthdateError}>
-                            <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate as Date)} onChange={handleCalendarChange} focus />
+                            <Input type="date" name="birthdate" value={values.birthdate.toString()} onChange={handleValueChange} focus />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
                             <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
