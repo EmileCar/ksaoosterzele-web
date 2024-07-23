@@ -9,6 +9,12 @@ require_once __DIR__ . '/../models/Account.php';
 class RegistrationController extends Controller {
 
 	public function sendRegistration() {
+		$workingYear = WorkingYear::orderBy('start_year', 'desc')->first();
+
+        if (!$workingYear) {
+            ErrorResponse::exitWithError(500, 'Er is geen werkjaar actief.');
+        }
+
 		$data = json_decode(file_get_contents('php://input'), true);
 
 		$errors = Registration::validate($data);
@@ -41,6 +47,7 @@ class RegistrationController extends Controller {
 		$registration->second_telephone_number = $data["secondTelephoneNumber"];
 		$registration->second_email = $data["secondEmail"];
 		$registration->allow_media = $data["allowMedia"];
+		$registration->working_year_id = $workingYear->id;
 		$registration->save();
 
 		$this->_sendConfirmationMail($registration);
