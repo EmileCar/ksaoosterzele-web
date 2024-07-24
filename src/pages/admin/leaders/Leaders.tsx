@@ -40,6 +40,33 @@ const LeadersAdmin = () => {
         />
     );
 
+    const customGroupOrder = ["Leeuwkes", "Jongknapen", "Knapen", "Jonghernieuwers"];
+
+    const sortLeadersByGroup = (leaders: Leader[]): Leader[] => {
+        leaders.sort((a, b) => {
+            if (a.firstName < b.firstName) return -1;
+            if (a.firstName > b.firstName) return 1;
+            return 0;
+        });
+
+        return leaders.sort((a, b) => {
+            if (!a.group && !b.group) return 0;
+            if (!a.group) return -1;
+            if (!b.group) return 1;
+            return customGroupOrder.indexOf(a.group.name) - customGroupOrder.indexOf(b.group.name);
+        });
+    };
+
+    const sortLeadersGroupedResult = (data: LeadersGroupedResult): LeadersGroupedResult => {
+        const sortedData: LeadersGroupedResult = {};
+        for (const role in data) {
+            if (data.hasOwnProperty(role)) {
+                sortedData[role] = sortLeadersByGroup(data[role]);
+            }
+        }
+        return sortedData;
+    };
+
     return (
         <>
             <SectionTitle title="Leiding beheren">
@@ -51,7 +78,7 @@ const LeadersAdmin = () => {
             </div>
             <FetchedDataLayout isPending={pending} error={error}>
                 <div className="leaders__section-content">
-                    <GroupedList groupedItems={data!} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders beschikbaar." />
+                    <GroupedList groupedItems={data ? sortLeadersGroupedResult(data) : {}} renderItem={renderLeadersGroupedListItemAdmin} emptyMessage="Er zijn geen leiders beschikbaar." />
                 </div>
             </FetchedDataLayout>
         </>
