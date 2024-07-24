@@ -210,7 +210,7 @@ class LeaderController extends Controller {
     }
 
     public function getLeaderImagePaths() {
-        $directory = '../assets/leiding';
+        $directory = '../assets/leiders';
 		$filenames = [];
 		$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
 

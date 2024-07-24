@@ -67,7 +67,7 @@ const LeadersGroupedListItemAdmin: React.FC<LeadersGroupedListItemAdminProps> = 
     return (
         <div className="leader admin" onClick={handleClick}>
             <img
-                src={`assets/leiders/${leader.imageFileName}`}
+                src={`../assets/leiders/${leader.imageFileName}`}
                 className="leader-img"
                 alt={leader.firstName}
                 onError={(e) => {
