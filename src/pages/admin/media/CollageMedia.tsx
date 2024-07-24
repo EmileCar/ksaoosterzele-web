@@ -50,9 +50,10 @@ const CollageMedia = () => {
 
     return (
         <>
-            <SectionTitle title={collage?.displayName || "Collage media"}>
+            <SectionTitle title={collage?.displayName || "Collage media"} fullWidth>
                 <p>Voeg fotos toe of pas de collage van inhoud aan.</p>
                 <p>Klik op een foto om een detail te zien en om die te kunnen verwijderen.</p>
+                <p><strong>Let op! </strong>Het is beter om een grote hoeveelheid foto's rechtstreeks naar de file manager te uploaden ipv ze hier te uploaden. Probeer hier max 15MB en max 20 fotos up te loaden per keer.</p>
             </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 {collage &&
@@ -65,8 +66,8 @@ const CollageMedia = () => {
                             </Label>
                             {totalSize > 0 && (
                                 <>
-                                    <p>Te uploaden grootte: {(totalSize / (1024 * 1024)).toFixed(2)} MB</p>
-                                    <Button text="Uploaden" onClick={() => uploadImagesFunc()} darken disabled={uploadingPending} />
+                                    {uploadingPending ? <p>Bezig met {(totalSize / (1024 * 1024)).toFixed(2)} MB te uploaden...</p> : <p>Te uploaden grootte: {(totalSize / (1024 * 1024)).toFixed(2)} MB</p>}
+                                    <Button text="Uploaden" onClick={() => uploadImagesFunc()} darken disabled={uploadingPending} pending={uploadingPending}/>
                                 </>
                             )}
                         </Form>
