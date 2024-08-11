@@ -46,9 +46,9 @@ const DashboardAdmin = () => {
                         <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />
                         <h3>Werkjaren</h3>
                     </Link>
-                    <Link className="dashboard-card" to="/admin/mattentaarten">
-                        <i className="pi pi-calendar" style={{ color: "white", fontSize: 50 }} />
-                        <h3>Mattentaarten</h3>
+                    <Link className="dashboard-card" to="/admin/rekeningen">
+                        <i className="pi pi-euro" style={{ color: "white", fontSize: 50 }} />
+                        <h3>Rekeningen</h3>
                     </Link>
                 </div>
             </div>

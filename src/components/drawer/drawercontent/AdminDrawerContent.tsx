@@ -31,6 +31,10 @@ const AdminDrawerContent = () => {
                             <i className="pi pi-crown" style={{ color: "primary", fontSize: 30 }} />
                             <h3>Leiding</h3>
                         </Link>
+                        <Link className="admin-drawer-link" to="/admin/rekeningen">
+                            <i className="pi pi-euro" style={{ color: "primary", fontSize: 30 }} />
+                            <h3>Rekeningen</h3>
+                        </Link>
                         <Link className="admin-drawer-link" to="/admin/werkjaren">
                             <i className="pi pi-calendar" style={{ color: "primary", fontSize: 30 }} />
                             <h3>Werkjaren</h3>
