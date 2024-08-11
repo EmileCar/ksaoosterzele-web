@@ -28,6 +28,10 @@ class Leader extends Model
         return $this->hasMany(LeaderPlace::class, 'leader_id');
     }
 
+    public function invoices() {
+        return $this->hasMany(Invoice::class, 'leader_id');
+    }
+
     public static function validate($data) {
 		$errors = [];
 

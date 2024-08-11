@@ -19,6 +19,11 @@ class WorkingYear extends Model
         return $this->hasMany(Registration::class, 'working_year_id');
     }
 
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'working_year_id');
+    }
+
     public static function validate($data) {
 		$errors = [];
 
