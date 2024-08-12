@@ -125,6 +125,7 @@ form .label .required {
 /* AUTOCOMPLETE STYLING */
 .form .autocomplete-wrapper {
     display: flex;
+    justify-content: space-between;
     width: 100%;
     outline: var(--s-99) solid var(--main-color);
     border-radius: var(--border-radius-sm);
@@ -196,8 +197,7 @@ form .label .required {
     display: flex;
     gap: var(--s-1);
     align-self: center;
-    padding: 0 var(--s-1);
-    max-width: 50%;
+    padding: var(--s-1);
 }
 
 .autocomplete-value{

@@ -18,6 +18,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
     const { values, errorStates, handleValueChange, handleSubmitForm, changeValue, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
     const { pending, data: fetchedImagePaths } = useFetch<string[]>(getLeaderImagePaths);
+    const [ imagePaths, setImagePaths ] = useState<AutoCompleteOption[]>([]);
 	const { closePopup } = usePopupContext();
 
     const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +37,12 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
             closePopup();
         });
     }
+
+    useEffect(() => {
+        if (fetchedImagePaths) {
+            setImagePaths(fetchedImagePaths.map(path => ({ value: path, label: path })));
+        }
+    }, [fetchedImagePaths]);
 
     return (
 		<Popup title={leader ? `${leader.firstName} aanpassen` : "Nieuwe leider toevoegen"}>
@@ -56,7 +63,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
                             <AutoComplete
                                 value={values.imageFileName}
-                                suggestions={fetchedImagePaths ? fetchedImagePaths.map(path => ({ value: path, label: path })) : null}
+                                suggestions={imagePaths}
                                 onChange={handleValueChange}
                                 name="imageFileName"
                                 dropdown

@@ -16,11 +16,8 @@ import { useEffect, useMemo, useState } from "react";
 const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendInvoice>(new SendInvoice(invoice || {}), sendInvoice);
     const { pending, data: fetchedLeaders, error } = useFetch<{ id: number, name: string }[]>(getLeaders);
+    const [ leaders, setLeaders ] = useState<AutoCompleteOption[]>([]);
     const { closePopup } = usePopupContext();
-
-    const leaderSuggestions = useMemo(() => {
-        return fetchedLeaders ? fetchedLeaders.map(leader => ({ value: leader.id, label: leader.name })) : [];
-    }, [fetchedLeaders]);
 
     const handleSubmit = async () => {
         await handleSubmitForm(invoice ? 'PUT' : 'POST', () => {
@@ -29,7 +26,11 @@ const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefi
         });
     }
 
-    console.log(fetchedLeaders)
+    useEffect(() => {
+        if (fetchedLeaders) {
+            setLeaders(fetchedLeaders.map(leader => ({ value: leader.id, label: leader.name })));
+        }
+    } , [fetchedLeaders]);
 
     return (
         <Popup title={invoice ? `${invoice.name} aanpassen` : "Nieuwe transactie"}>
@@ -38,9 +39,10 @@ const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefi
                     <Label text="Leider" errorMessage={errorStates.leaderError}>
                         <AutoComplete
                             name="leaderId"
-                            value={values.leaderId}
+                            value={fetchedLeaders ? fetchedLeaders.find(leader => leader.id === values.leaderId)?.name ?? "" : ""}
                             onChange={handleValueChange}
-                            suggestions={fetchedLeaders ? fetchedLeaders.map(leader => ({ value: leader.id, label: leader.name })) : null}
+                            suggestions={leaders}
+                            fixedToSuggestions
                             dropdown
                         />
                     </Label>

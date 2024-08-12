@@ -28,7 +28,7 @@ class SendCollage {
     description: string;
     date: Date | null;
     active: boolean;
-    types: string[];
+    types: number[];
 
     constructor(collageData?: any) {
         this.id = collageData.id || null;
@@ -36,7 +36,7 @@ class SendCollage {
         this.description = collageData.description || null;
         this.date = collageData.date ? new Date(collageData.date) : null;
         this.active = collageData.active || false;
-        this.types = collageData.types && collageData.types.map((type: CollageType) => type.name) || [];
+        this.types = collageData.types && collageData.types.map((type: CollageType) => type.id) || [];
     }
 }
 

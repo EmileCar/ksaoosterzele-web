@@ -17,7 +17,8 @@ import { usePopupContext } from "../../../contexts/PopupContext";
 
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendCollage>(new SendCollage(collage || {}), sendCollage);
-    const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
+    const { data: fetchedCollageTypes } = useFetch<CollageType[]>(getCollageTypes);
+    const [ collageTypes, setCollageTypes ] = useState<AutoCompleteOption[]>([]);
     const { closePopup } = usePopupContext();
 
     const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +38,12 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         });
     }
 
+    useEffect(() => {
+        if (fetchedCollageTypes) {
+            setCollageTypes(fetchedCollageTypes.map(type => ({ value: type.id ?? "", label: type.name })));
+        }
+    } , [fetchedCollageTypes]);
+
     return (
 		<Popup title={collage ? `${collage.displayName} aanpassen` : "Nieuwe collage"}>
             {errorStates.general && <div className="error">{errorStates.general}</div>}
@@ -52,10 +59,10 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                 <Group>
                     <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
                         <AutoComplete
-                            value={values.types}
-                            suggestions={collageTypes ? collageTypes.map(type => ({ value: type.id ?? "", label: type.name })) : null}
-                            onChange={handleValueChange}
                             name="types"
+                            value={values.types}
+                            onChange={handleValueChange}
+                            suggestions={collageTypes}
                             dropdown
                             multiple
                         />

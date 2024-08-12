@@ -26,11 +26,12 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     name,
     dropdown = false,
     multiple = false,
-    fixedToSuggestions = false
+    fixedToSuggestions = false,
 }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [filteredSuggestions, setFilteredSuggestions] = useState<AutoCompleteOption[]>([]);
     const [inputValue, setInputValue] = useState("");
+    const [selectedSuggestion, setSelectedSuggestion] = useState<AutoCompleteOption | null>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -69,6 +70,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
         completeMethod({ query: newValue });
         !showSuggestions && setTimeout(() => setShowSuggestions(true), 100);
         if(!multiple && !fixedToSuggestions) onChange({ target: { value: newValue, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+        if(fixedToSuggestions) onChange({ target: { value: null, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
     };
 
     const handleSuggestionClick = (suggestion: AutoCompleteOption) => {
@@ -78,7 +80,11 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
             setInputValue("");
         } else {
             onChange({ target: { value: suggestion.value, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
-            setInputValue(suggestion.label);
+            if(!fixedToSuggestions) {
+                setInputValue(suggestion.label);
+            } else {
+                setSelectedSuggestion(suggestion);
+            }
         }
         setShowSuggestions(false);
     };
@@ -96,20 +102,29 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                 <div className="autocomplete-values">
                     {value.map((val, index) => (
                         <div key={index} className="autocomplete-value">
-                            {val}
+                            {suggestions?.find(suggestion => suggestion.value === val)?.label}
                             <span onClick={() => removeSuggestionValue(index)} className="autocomplete-value-delete">&times;</span>
                         </div>
                     ))}
                 </div>
             )}
-            <input
-                type="text"
-                className="inherit-font autocomplete-input"
-                value={inputValue}
-                placeholder={placeholder}
-                onChange={handleInputChange}
-                name={name}
-            />
+            {selectedSuggestion ? (
+                <div className="autocomplete-values">
+                    <div className="autocomplete-value">
+                        {selectedSuggestion.label}
+                        <span onClick={() => setSelectedSuggestion(null)} className="autocomplete-value-delete">&times;</span>
+                    </div>
+                </div>
+            ) : (
+                <input
+                    type="text"
+                    className="inherit-font autocomplete-input"
+                    value={inputValue}
+                    placeholder={placeholder}
+                    onChange={handleInputChange}
+                    name={name}
+                />
+            )}
             {showSuggestions && (
                 <div className="autocomplete-suggestions">
                     {filteredSuggestions.length === 0 ? (

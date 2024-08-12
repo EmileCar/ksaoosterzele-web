@@ -36,7 +36,6 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
         if (fetchedImagePaths) {
             setImagePaths(fetchedImagePaths.map(path => ({ value: path, label: path })));
         }
-        console.log(fetchedImagePaths);
     }, [fetchedImagePaths]);
 
     return (
