@@ -13,6 +13,7 @@ interface InputProps {
     disabled?: boolean;
     customClassName?: string;
     focus?: boolean;
+    step?: number;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -24,7 +25,8 @@ const Input: React.FC<InputProps> = ({
     placeholder,
     disabled,
     customClassName = "",
-    focus = false
+    focus = false,
+    step = 1
 }) => {
     useFormContext();
 
@@ -39,6 +41,7 @@ const Input: React.FC<InputProps> = ({
             disabled={disabled}
             className={classNames("input inherit-font", customClassName)}
             autoFocus={focus}
+            step={step}
         />
     );
 }

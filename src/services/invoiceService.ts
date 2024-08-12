@@ -1,7 +1,7 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
 import Event, { SendEvent } from "../types/Event";
-import { InvoiceSummary } from "../types/Invoice";
+import { InvoiceSummary, SendInvoice } from "../types/Invoice";
 import { formatCustomDateTime } from "../utils/datetimeUtil";
 
 export async function getInvoiceSummary(): Promise<InvoiceSummary[]> {
@@ -23,16 +23,15 @@ export async function getInvoiceSummary(): Promise<InvoiceSummary[]> {
     }
 }
 
-export async function sendEvent(request: SendEvent, method: string) : Promise<void> {
+export async function sendInvoice(request: SendInvoice, method: string) : Promise<void> {
     try {
-        const response = await fetch(`${API_BASE_URL}?page=event`, {
+        const response = await fetch(`${API_BASE_URL}?page=invoice`, {
             method: method ?? 'POST',
             headers: {
             'Content-Type': 'application/json',
             },
             body: JSON.stringify({
             ...request,
-            datetime: formatCustomDateTime(request.datetime),
             }),
             credentials: 'include',
         });

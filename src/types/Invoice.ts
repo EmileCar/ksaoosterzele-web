@@ -34,5 +34,19 @@ class Invoice {
     }
 }
 
+class SendInvoice {
+    leaderId: number;
+    name: string;
+    amount: number;
+    remarks: string;
+
+    constructor(sendInvoiceData?: any) {
+        this.leaderId = sendInvoiceData.leaderId || null;
+        this.name = sendInvoiceData.name || null;
+        this.amount = sendInvoiceData.amount || null;
+        this.remarks = sendInvoiceData.remarks || null;
+    }
+}
+
 export default Invoice;
-export { InvoiceSummary };
+export { InvoiceSummary, SendInvoice };
