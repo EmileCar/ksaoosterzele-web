@@ -9,6 +9,8 @@ use Carbon\Carbon;
 class InvoiceController extends Controller {
 
 	public function getInvoiceSummary() {
+        $account = Account::is_authenticated();
+
         $leaders = Leader::with(['invoices' => function($query) {
             $query->selectRaw('leader_id, SUM(amount) as total_gross_amount')
                   ->groupBy('leader_id');

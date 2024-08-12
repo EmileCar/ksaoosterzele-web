@@ -28,4 +28,10 @@ class Account extends Model
 
         return $account;
     }
+
+    public static function is_authorised($account, $roleId) {
+        if ($account->role->id !== $roleId) {
+            ErrorResponse::exitWithError(403, "Je hebt geen toegang tot deze actie.");
+        }
+    }
 }

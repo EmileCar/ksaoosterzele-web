@@ -28,6 +28,7 @@ class WorkingYearController extends Controller {
 
     public function startNewWorkingYear() {
         $account = Account::is_authenticated();
+        Account::is_authorised($account, 2);
 
 		$data = json_decode(file_get_contents('php://input'), true);
 

@@ -1,6 +1,7 @@
 import Button from "../../../components/button/Button";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import WorkingYearPopup from "../../../components/workingyears/popups/WorkingYearPopup";
+import { useAccountContext } from "../../../contexts/AccountContext";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
@@ -12,6 +13,7 @@ import "./WorkingYears.css";
 const WorkingYears = () => {
     const { pending, data: workingyears, error, refetch } = useFetch<WorkingYear[]>(getWorkingYears);
     const { registerPopup } = usePopupContext();
+    const { account } = useAccountContext();
 
     const openCreatePopup = () => {
         registerPopup(<WorkingYearPopup onClose={() => refetch()} />);
@@ -27,9 +29,11 @@ const WorkingYears = () => {
     return (
         <>
             <SectionTitle title="Werkjaren beheren" />
-            <div className="admin__actions">
-                <Button text="Start een nieuw werkjaar" onClick={openCreatePopup} hover/>
-            </div>
+            {account?.role.id === 2 &&
+                <div className="admin__actions">
+                    <Button text="Start een nieuw werkjaar" onClick={openCreatePopup} hover/>
+                </div>
+            }
             <FetchedDataLayout isPending={pending} error={error}>
                 {workingyears && workingyears.length === 0 ? (
                 <p>
