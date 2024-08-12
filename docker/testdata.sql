@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: database
--- Generation Time: Jul 07, 2024 at 02:42 PM
--- Server version: 10.6.17-MariaDB-1:10.6.17+maria~ubu2004
--- PHP Version: 8.2.8
+-- Gegenereerd op: 12 aug 2024 om 05:11
+-- Serverversie: 10.6.17-MariaDB-1:10.6.17+maria~ubu2004
+-- PHP-versie: 8.2.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,10 +20,12 @@ SET time_zone = "+00:00";
 --
 -- Database: `ksaoosterzele_testdatabase`
 --
-CREATE DATABASE IF NOT EXISTS `ksaoosterzele_testdatabase` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `ksaoosterzele_testdatabase`;
 
 -- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `accounts`
+--
 
 CREATE TABLE `accounts` (
   `id` int(11) NOT NULL,
@@ -83,7 +85,7 @@ CREATE TABLE `collages` (
   `internal_name` varchar(255) NOT NULL,
   `display_name` varchar(255) NOT NULL,
   `description` text DEFAULT NULL,
-  `date` date NOT NULL,
+  `date` date DEFAULT NULL,
   `active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -92,7 +94,10 @@ CREATE TABLE `collages` (
 --
 
 INSERT INTO `collages` (`id`, `internal_name`, `display_name`, `description`, `date`, `active`) VALUES
-(10, 'polll', 'Iaaa', NULL, '2024-07-13', 0);
+(11, 'jow', 'jow', NULL, NULL, 0),
+(12, 'pol', 'pol', NULL, '2002-01-17', 0),
+(13, 'yo_', 'Yo<', NULL, NULL, 0),
+(14, 'gilles', 'Gilles', NULL, '3443-05-14', 0);
 
 -- --------------------------------------------------------
 
@@ -105,13 +110,6 @@ CREATE TABLE `collage_collage_types` (
   `collage_id` int(11) NOT NULL,
   `collage_type_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Gegevens worden geëxporteerd voor tabel `collage_collage_types`
---
-
-INSERT INTO `collage_collage_types` (`id`, `collage_id`, `collage_type_id`) VALUES
-(6, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -191,6 +189,31 @@ INSERT INTO `groups` (`id`, `name`, `start_age`, `end_age`, `description`, `age_
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `invoices`
+--
+
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL,
+  `leader_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `working_year_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `invoices`
+--
+
+INSERT INTO `invoices` (`id`, `leader_id`, `name`, `amount`, `remarks`, `working_year_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'betaling badge', -100, 'goedg edaan', 17, '2024-08-11 19:51:06', '2024-08-11 19:51:06'),
+(2, 1, 'scheelkes', 40, NULL, 16, '2024-08-11 19:51:50', '2024-08-11 19:51:50');
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `leaders`
 --
 
@@ -210,7 +233,9 @@ CREATE TABLE `leaders` (
 --
 
 INSERT INTO `leaders` (`id`, `first_name`, `last_name`, `birthdate`, `phone_number`, `email`, `image_file_name`, `role_id`) VALUES
-(1, 'Emile', 'Caron', '2024-07-09', NULL, NULL, '', 1);
+(1, 'Emile', 'Caron', '2002-01-17', NULL, NULL, '', 1),
+(2, 'test', 'tesgee', '2024-07-23', NULL, NULL, NULL, 4),
+(3, 'Nikita', 'Commerman', '2024-07-23', NULL, NULL, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -233,7 +258,11 @@ INSERT INTO `leader_places` (`id`, `leader_id`, `group_id`, `working_year_id`) V
 (13, 1, 2, 12),
 (16, 1, 4, 13),
 (17, 1, 1, 14),
-(18, 1, 3, 15);
+(18, 1, 3, 15),
+(19, 2, 3, 15),
+(20, 1, 1, 16),
+(21, 2, 2, 16),
+(22, 1, 4, 17);
 
 -- --------------------------------------------------------
 
@@ -321,7 +350,9 @@ INSERT INTO `working_years` (`id`, `name`, `start_year`, `created_at`, `updated_
 (12, 'Werkjaar 2024-2025', 2024, '2024-07-19 21:33:00', '2024-07-19 21:33:00'),
 (13, 'Werkjaar 2025-2026', 2025, '2024-07-19 21:39:45', '2024-07-19 21:39:45'),
 (14, 'Werkjaar 2026-2027', 2026, '2024-07-19 21:48:37', '2024-07-19 21:48:37'),
-(15, 'Werkjaar 2027-2028', 2027, '2024-07-19 21:53:07', '2024-07-19 21:53:07');
+(15, 'Werkjaar 2027-2028', 2027, '2024-07-19 21:53:07', '2024-07-19 21:53:07'),
+(16, 'Werkjaar 2028-2029', 2028, '2024-07-23 13:50:03', '2024-07-23 13:50:03'),
+(17, 'Werkjaar 2029-2030', 2029, '2024-07-23 14:25:58', '2024-07-23 14:25:58');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -380,6 +411,14 @@ ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexen voor tabel `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `leader_id` (`leader_id`),
+  ADD KEY `working_year_id` (`working_year_id`);
+
+--
 -- Indexen voor tabel `leaders`
 --
 ALTER TABLE `leaders`
@@ -415,53 +454,6 @@ ALTER TABLE `registrations`
 ALTER TABLE `working_years`
   ADD PRIMARY KEY (`id`);
 
-
-
-CREATE TABLE `invoices` (
-  `id` int(11) NOT NULL,
-  `leader_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `amount` decimal(10,0) NOT NULL,
-  `remarks` text DEFAULT NULL,
-  `working_year_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Indexen voor geëxporteerde tabellen
---
-
---
--- Indexen voor tabel `invoices`
---
-ALTER TABLE `invoices`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `leader_id` (`leader_id`),
-  ADD KEY `working_year_id` (`working_year_id`);
-
---
--- AUTO_INCREMENT voor geëxporteerde tabellen
---
-
---
--- AUTO_INCREMENT voor een tabel `invoices`
---
-ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Beperkingen voor geëxporteerde tabellen
---
-
---
--- Beperkingen voor tabel `invoices`
---
-ALTER TABLE `invoices`
-  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`),
-  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`working_year_id`) REFERENCES `working_years` (`id`);
-COMMIT;
-
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
 --
@@ -482,7 +474,7 @@ ALTER TABLE `account_roles`
 -- AUTO_INCREMENT voor een tabel `collages`
 --
 ALTER TABLE `collages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT voor een tabel `collage_collage_types`
@@ -509,16 +501,22 @@ ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT voor een tabel `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT voor een tabel `leaders`
 --
 ALTER TABLE `leaders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT voor een tabel `leader_places`
 --
 ALTER TABLE `leader_places`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT voor een tabel `leader_roles`
@@ -536,7 +534,7 @@ ALTER TABLE `registrations`
 -- AUTO_INCREMENT voor een tabel `working_years`
 --
 ALTER TABLE `working_years`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
@@ -561,6 +559,13 @@ ALTER TABLE `account_leaders`
 ALTER TABLE `collage_collage_types`
   ADD CONSTRAINT `collage_collage_types_ibfk_1` FOREIGN KEY (`collage_id`) REFERENCES `collages` (`id`),
   ADD CONSTRAINT `collage_collage_types_ibfk_2` FOREIGN KEY (`collage_type_id`) REFERENCES `collage_types` (`id`);
+
+--
+-- Beperkingen voor tabel `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`),
+  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`working_year_id`) REFERENCES `working_years` (`id`);
 
 --
 -- Beperkingen voor tabel `leaders`
