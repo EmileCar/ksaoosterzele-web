@@ -10,30 +10,19 @@ import Checkbox from "../../form/Checkbox";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
-import AutoComplete from "../../form/AutoComplete";
+import AutoComplete, { AutoCompleteOption } from "../../form/AutoComplete";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendEvent>(new SendEvent(event || {}), sendEvent);
     const { pending, data: fetchedImagePaths, error } = useFetch<string[]>(getImagePaths);
-    const [imagePaths, setImagePaths] = useState<string[]>([]);
+    const [ imagePaths, setImagePaths ] = useState<AutoCompleteOption[]>([]);
 	const { closePopup } = usePopupContext();
 
     const handleCalendarChange = (e: any) => {
         const datetime = new Date(e.target.value);
         changeValue("datetime", datetime);
-    }
-
-    useEffect(() => {
-        if(fetchedImagePaths) {
-            setImagePaths(fetchedImagePaths);
-        }
-    }, [fetchedImagePaths]);
-
-    const search = async (e: any) => {
-        if(!fetchedImagePaths) return;
-        setImagePaths(e.query ? fetchedImagePaths.filter((path) => path.toLowerCase().includes(e.query.toLowerCase())) : fetchedImagePaths);
     }
 
     const handleSubmit = async () => {
@@ -42,6 +31,13 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
             closePopup();
         });
     }
+
+    useEffect(() => {
+        if (fetchedImagePaths) {
+            setImagePaths(fetchedImagePaths.map(path => ({ value: path, label: path })));
+        }
+        console.log(fetchedImagePaths);
+    }, [fetchedImagePaths]);
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"}>
@@ -57,7 +53,14 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                 </Group>
                 <Group>
                 <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                        <AutoComplete value={values.imageFileName} suggestions={imagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
+                        <AutoComplete
+                            value={values.imageFileName}
+                            suggestions={imagePaths}
+                            onChange={handleValueChange}
+                            name="imageFileName"
+                            dropdown
+                            noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"}
+                        />
                     </Label>
                     <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
                         <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />

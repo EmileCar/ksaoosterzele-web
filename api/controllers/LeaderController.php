@@ -228,4 +228,17 @@ class LeaderController extends Controller {
 
 		exit(json_encode($filenames));
     }
+
+    public function getLeaders() {
+        $account = Account::is_authenticated();
+
+        $leaders = Leader::all()->map(function ($leader) {
+            return [
+                'id' => $leader->id,
+                'name' => $leader->first_name . ' ' . $leader->last_name,
+            ];
+        });
+
+        exit(json_encode($leaders));
+    }
 }

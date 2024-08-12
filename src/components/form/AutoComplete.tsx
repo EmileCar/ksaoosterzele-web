@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 
+interface AutoCompleteOption {
+    value: number | string;
+    label: string;
+}
+
 interface AutoCompleteProps {
-    value: string[] | string;
+    value: string[] | string | number[] | number | null;
     placeholder?: string;
     noSuggestionsMessage?: string;
-    suggestions: string[];
-    completeMethod: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    suggestions: AutoCompleteOption[] | null;
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     name: string;
     dropdown?: boolean;
@@ -15,10 +19,9 @@ interface AutoCompleteProps {
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
     value,
-    placeholder,
-    noSuggestionsMessage,
+    placeholder = "Typ om te zoeken",
+    noSuggestionsMessage = "Geen suggesties",
     suggestions,
-    completeMethod,
     onChange,
     name,
     dropdown = false,
@@ -26,24 +29,9 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     fixedToSuggestions = false
 }) => {
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+    const [filteredSuggestions, setFilteredSuggestions] = useState<AutoCompleteOption[]>([]);
     const [inputValue, setInputValue] = useState("");
     const wrapperRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (!multiple && value) setInputValue(value as string);
-    } , [value]);
-
-    useEffect(() => {
-        if (!suggestions) return;
-        if (inputValue === "") {
-            setFilteredSuggestions(suggestions);
-        } else {
-            setFilteredSuggestions(suggestions.filter(suggestion =>
-                suggestion.toLowerCase().includes(inputValue.toLowerCase())
-            ));
-        }
-    }, [inputValue, suggestions]);
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -57,29 +45,47 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
         };
     }, [wrapperRef]);
 
+    useEffect(() => {
+        if (!multiple && value) setInputValue(value as string);
+    } , [value]);
+
+    useEffect(() => {
+        completeMethod({ query: "" });
+    }, [suggestions]);
+
+    const completeMethod = async (e: any) => {
+        if(!suggestions) return;
+        if (inputValue === "") {
+            setFilteredSuggestions(suggestions);
+        } else {
+            const validSuggestions = e.query ? suggestions.filter((suggestion) => suggestion.label.toLowerCase().includes(e.query.toLowerCase())) : suggestions;
+            setFilteredSuggestions(validSuggestions.map((suggestion) => ({ value: suggestion.value, label: suggestion.label })));
+        }
+    }
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
         setInputValue(newValue);
-        completeMethod(event);
+        completeMethod({ query: newValue });
         !showSuggestions && setTimeout(() => setShowSuggestions(true), 100);
         if(!multiple && !fixedToSuggestions) onChange({ target: { value: newValue, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
     };
 
-    const handleSuggestionClick = (suggestion: string) => {
+    const handleSuggestionClick = (suggestion: AutoCompleteOption) => {
         if (multiple && Array.isArray(value)) {
-            const newValues = [...value, suggestion];
+            const newValues = [...value, suggestion.value];
             onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
             setInputValue("");
         } else {
-            onChange({ target: { value: suggestion, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
-            setInputValue(suggestion);
+            onChange({ target: { value: suggestion.value, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
+            setInputValue(suggestion.label);
         }
         setShowSuggestions(false);
     };
 
     const removeSuggestionValue = (index: number) => {
         if (Array.isArray(value)) {
-            const newValues = value.filter((_, i) => i !== index);
+            const newValues = (value as Array<string | number>).filter((_, i) => i !== index);
             onChange({ target: { value: newValues, name } } as unknown as React.ChangeEvent<HTMLInputElement>);
         }
     };
@@ -108,7 +114,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                 <div className="autocomplete-suggestions">
                     {filteredSuggestions.length === 0 ? (
                         <div className="autocomplete-suggestion no-suggestions">
-                            {noSuggestionsMessage ?? "Geen suggesties"}
+                            {noSuggestionsMessage}
                         </div>
                     ) : filteredSuggestions.map((suggestion, index) => (
                         <div
@@ -116,7 +122,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
                             className="autocomplete-suggestion"
                             onClick={() => handleSuggestionClick(suggestion)}
                         >
-                            {suggestion}
+                            {suggestion.label}
                         </div>
                     ))}
                 </div>
@@ -131,3 +137,4 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
 }
 
 export default AutoComplete;
+export type { AutoCompleteOption };

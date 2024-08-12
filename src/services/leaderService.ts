@@ -146,3 +146,22 @@ export async function getLeaderImagePaths(): Promise<string[]> {
         throw new Error('Er was een probleem bij het ophalen van de afbeeldingen.');
     }
 }
+
+export async function getLeaders(): Promise<{ id: number, name: string }[]> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leaders`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Er was een probleem bij het ophalen van de leiders.');
+    }
+}

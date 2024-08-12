@@ -9,7 +9,7 @@ import { formatDateToInputDate } from "../../../utils/datetimeUtil";
 import Checkbox from "../../form/Checkbox";
 import { getCollageTypes, sendCollage } from "../../../services/mediaService";
 import CollageType from "../../../types/CollageType";
-import AutoComplete from "../../form/AutoComplete";
+import AutoComplete, { AutoCompleteOption } from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import useFetch from "../../../hooks/useFetch";
@@ -18,14 +18,7 @@ import { usePopupContext } from "../../../contexts/PopupContext";
 const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendCollage>(new SendCollage(collage || {}), sendCollage);
     const { data: collageTypes } = useFetch<CollageType[]>(getCollageTypes);
-    const [filteredTypes, setFilteredTypes] = useState<string[]>([]);
     const { closePopup } = usePopupContext();
-
-    useEffect(() => {
-        if (collageTypes) {
-            search({ query: "" });
-        }
-    } , [collageTypes])
 
     const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -36,12 +29,6 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
         const datetime = new Date(value);
         changeValue("date", datetime);
     };
-
-    const search = async (e: any) => {
-        if (!collageTypes) return;
-        const allTypeNames = collageTypes.map((type : CollageType) => type.name);
-        setFilteredTypes(e.query ? allTypeNames.filter(type => type.toLowerCase().includes(e.query.toLowerCase())) : allTypeNames);
-    }
 
     const handleSubmit = async () => {
         await handleSubmitForm(collage ? 'PUT' : 'POST', () => {
@@ -64,7 +51,14 @@ const CollagePopup = ({ collage, onClose } : { collage?: Collage | null | undefi
                 </Group>
                 <Group>
                     <Label text="Hoort bij welke type(s)?" errorMessage={errorStates.typesError}>
-                        <AutoComplete value={values.types} suggestions={filteredTypes} completeMethod={search} onChange={handleValueChange} name="types" dropdown multiple/>
+                        <AutoComplete
+                            value={values.types}
+                            suggestions={collageTypes ? collageTypes.map(type => ({ value: type.id ?? "", label: type.name })) : null}
+                            onChange={handleValueChange}
+                            name="types"
+                            dropdown
+                            multiple
+                        />
                     </Label>
                     <Label text="Tonen?">
                         <Checkbox name="active" checked={values.active} onChange={(e) => changeValue("active", e.target.checked)} />

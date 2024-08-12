@@ -5,7 +5,7 @@ import Label from "../../form/Label";
 import Input from "../../form/Input";
 import useForm from "../../../hooks/useForm";
 import { formatDateToInputDate } from "../../../utils/datetimeUtil";
-import AutoComplete from "../../form/AutoComplete";
+import AutoComplete, { AutoCompleteOption } from "../../form/AutoComplete";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
 import Leader, { LeaderRole, SendLeader } from "../../../types/Leader";
@@ -18,14 +18,7 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
     const { values, errorStates, handleValueChange, handleSubmitForm, changeValue, submitPending } = useForm<SendLeader>(new SendLeader(leader || {}), sendLeader);
     const { pending: pendingRoles, data: roles, error: rolesError } = useFetch<LeaderRole[]>(getLeaderRoles);
     const { pending, data: fetchedImagePaths } = useFetch<string[]>(getLeaderImagePaths);
-    const [ filteredImagePaths, setFilteredImagePaths ] = useState<string[]>([]);
 	const { closePopup } = usePopupContext();
-
-    useEffect(() => {
-        if (fetchedImagePaths) {
-            search({ query: "" });
-        }
-    } , [fetchedImagePaths])
 
     const handleCalendarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -42,12 +35,6 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
             onClose();
             closePopup();
         });
-    }
-
-    const search = async (e: any) => {
-        if(!fetchedImagePaths) return;
-        console.log(fetchedImagePaths);
-        setFilteredImagePaths(e.query ? fetchedImagePaths.filter((path) => path.toLowerCase().includes(e.query.toLowerCase())) : fetchedImagePaths);
     }
 
     return (
@@ -67,7 +54,15 @@ const LeaderPopup = ({ leader, onClose } : { leader?: Leader | null | undefined,
                             <Input type="date" name="birthdate" value={formatDateToInputDate(values.birthdate)} onChange={handleCalendarChange} />
                         </Label>
                         <Label text="Afbeelding" errorMessage={errorStates.imageFileNameError}>
-                            <AutoComplete value={values.imageFileName} suggestions={filteredImagePaths} completeMethod={search} onChange={handleValueChange} name="imageFileName" dropdown fixedToSuggestions noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"} />
+                            <AutoComplete
+                                value={values.imageFileName}
+                                suggestions={fetchedImagePaths ? fetchedImagePaths.map(path => ({ value: path, label: path })) : null}
+                                onChange={handleValueChange}
+                                name="imageFileName"
+                                dropdown
+                                fixedToSuggestions
+                                noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"}
+                            />
                         </Label>
                     </Group>
                     <Group>
