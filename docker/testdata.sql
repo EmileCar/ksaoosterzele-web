@@ -415,6 +415,53 @@ ALTER TABLE `registrations`
 ALTER TABLE `working_years`
   ADD PRIMARY KEY (`id`);
 
+
+
+CREATE TABLE `invoices` (
+  `id` int(11) NOT NULL,
+  `leader_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `working_year_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexen voor geëxporteerde tabellen
+--
+
+--
+-- Indexen voor tabel `invoices`
+--
+ALTER TABLE `invoices`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `leader_id` (`leader_id`),
+  ADD KEY `working_year_id` (`working_year_id`);
+
+--
+-- AUTO_INCREMENT voor geëxporteerde tabellen
+--
+
+--
+-- AUTO_INCREMENT voor een tabel `invoices`
+--
+ALTER TABLE `invoices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Beperkingen voor geëxporteerde tabellen
+--
+
+--
+-- Beperkingen voor tabel `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`leader_id`) REFERENCES `leaders` (`id`),
+  ADD CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`working_year_id`) REFERENCES `working_years` (`id`);
+COMMIT;
+
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
 --
