@@ -1,6 +1,7 @@
 import Button from "../../../components/button/Button";
 import InvoicePopup from "../../../components/invoices/popups/InvoicePopup";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
+import { useAccountContext } from "../../../contexts/AccountContext";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
@@ -11,6 +12,7 @@ import "./Rekeningen.css";
 
 const Rekeningen = () => {
     const { pending, data: invoices, error, refetch } = useFetch<InvoiceSummary[]>(getInvoiceSummary);
+    const { account } = useAccountContext();
     const { registerPopup } = usePopupContext();
 
     const openInvoicePopup = () => {
@@ -23,9 +25,11 @@ const Rekeningen = () => {
                 <p>Beheer hier de rekeningen van de leiding.</p>
                 <p>Klik op een persoon om details te zien over zijn historiek.</p>
             </SectionTitle>
-            <div className="admin__actions">
-                <Button text="Transactie toevoegen" hover onClick={openInvoicePopup} />
-            </div>
+            {account?.role.id === 2 &&
+                <div className="admin__actions">
+                    <Button text="Transactie toevoegen" hover onClick={openInvoicePopup} />
+                </div>
+            }
             <FetchedDataLayout isPending={pending} error={error}>
                 {invoices && invoices.length === 0 && (
                     <p>Geen rekeningen gevonden.</p>

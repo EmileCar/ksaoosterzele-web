@@ -1,6 +1,8 @@
 <?php
 
 use \Illuminate\Database\Eloquent\Model;
+require_once __DIR__ . "/Leader.php";
+require_once __DIR__ . "/WorkingYear.php";
 
 class Invoice extends Model
 {
@@ -21,37 +23,45 @@ class Invoice extends Model
 			$errors["nameError"] = "Naam is verplicht.";
 		}
 
+		if (empty($data["leaderId"])) {
+			$errors["leaderError"] = "Een leider is verplicht.";
+		} else {
+			$leader = Leader::find($data["leaderId"]);
+			if (empty($leader)) {
+				$errors["leaderError"] = "Leider niet gevonden of invalid.";
+			}
+		}
+
+		if (empty($data["amount"])) {
+			$errors["amountError"] = "Bedrag is verplicht.";
+		} else if (!is_numeric($data["amount"])) {
+			$errors["amountError"] = "Bedrag moet numeriek zijn.";
+		}
+
 		return $errors;
 	}
 
-	public static function create($data, $event) {
+	public static function create($data, $invoice) {
 		if (!empty($data["name"])) {
-			$event->name = $data["name"];
+			$invoice->name = $data["name"];
 		}
-		if (!empty($data["datetime"])) {
-			$event->datetime = $data["datetime"];
+		if (!empty($data["leaderId"])) {
+			$invoice->leader_id = $data["leaderId"];
 		}
-		if (!empty($data["location"])) {
-			$event->location = $data["location"];
+		if (!empty($data["workingYearId"])) {
+			$invoice->working_year_id = $data["workingYearId"];
+		} else {
+			$currentWorkingYear = WorkingYear::orderBy('start_year', 'desc')->first();
+			if(!empty($currentWorkingYear)) {
+				$invoice->working_year_id = $currentWorkingYear->id;
+			}
 		}
-		if (!empty($data["description"])) {
-			$event->description = $data["description"];
+		if (!empty($data["amount"])) {
+			$invoice->amount = $data["amount"];
 		}
-		if (!empty($data["timestamp"])) {
-			$event->timestamp = $data["timestamp"];
+		if (!empty($data["remarks"])) {
+			$invoice->description = $data["remarks"];
 		}
-		if (!empty($data["featured"])) {
-			$event->featured = $data["featured"];
-		}
-		if (!empty($data["imageFileName"])) {
-			$event->image_file_name = $data["imageFileName"];
-		}
-		if (!empty($data["url"])) {
-			$event->url = $data["url"];
-		}
-		if (!empty($data["entryPrice"])) {
-			$event->entryprice = $data["entryPrice"];
-		}
-		return $event;
+		return $invoice;
 	}
 }

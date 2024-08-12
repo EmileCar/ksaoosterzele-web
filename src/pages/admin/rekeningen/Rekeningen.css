@@ -27,3 +27,8 @@
 .invoices-table tbody tr:hover {
     background-color: #e6e6e6;
 }
+
+.inputnumber{
+    font-family: inherit !important;
+    font-size: inherit !important;
+}

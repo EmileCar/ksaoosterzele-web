@@ -12,6 +12,7 @@ import { sendInvoice } from "../../../services/invoiceService";
 import useFetch from "../../../hooks/useFetch";
 import { getLeaders } from "../../../services/leaderService";
 import { useEffect, useMemo, useState } from "react";
+import { InputNumber } from "primereact/inputnumber";
 
 const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefined, onClose: () => void }) => {
     const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendInvoice>(new SendInvoice(invoice || {}), sendInvoice);
@@ -35,8 +36,11 @@ const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefi
     return (
         <Popup title={invoice ? `${invoice.name} aanpassen` : "Nieuwe transactie"}>
             <Form disabled={submitPending}>
+                <Label text="Naam van transactie" errorMessage={errorStates.nameError} required>
+                    <Input name="name" type="text" value={values.name} onChange={handleValueChange} focus/>
+                </Label>
                 <Group>
-                    <Label text="Leider" errorMessage={errorStates.leaderError}>
+                    <Label text="Leider" errorMessage={errorStates.leaderError} required>
                         <AutoComplete
                             name="leaderId"
                             value={fetchedLeaders ? fetchedLeaders.find(leader => leader.id === values.leaderId)?.name ?? "" : ""}
@@ -46,11 +50,27 @@ const InvoicePopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefi
                             dropdown
                         />
                     </Label>
-                    <Label text="Amount" errorMessage={errorStates.amountError}>
-                        <Input name="amount" type="number" value={values.amount} onChange={handleValueChange} step={0.50}  />
+                    <Label text="Amount" errorMessage={errorStates.amountError} required>
+                        <InputNumber
+                            inputId="currency-belgium"
+                            value={values.amount}
+                            onValueChange={handleValueChange}
+                            name="amount"
+                            mode="currency"
+                            currency="EUR"
+                            locale="nl-BE"
+                            style={{ width: '100%' }}
+                        />
                     </Label>
                 </Group>
-                
+                <Label text="Opmerkingen?" errorMessage={errorStates.remarksError}>
+                    <textarea
+                        className="input"
+                        onChange={handleValueChange}
+                        name="remarks"
+                        value={values.remarks ?? ""}
+                    />
+                </Label>
                 <Button text="Opslaan" onClick={handleSubmit} darken uppercase pending={submitPending}/>
             </Form>
         </Popup>
