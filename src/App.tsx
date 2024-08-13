@@ -23,6 +23,7 @@ import Leaders from './pages/leiding/Leaders';
 import LeadersAdmin from './pages/admin/leaders/Leaders';
 import WorkingYears from './pages/admin/workingyears/WorkingYears';
 import Rekeningen from './pages/admin/rekeningen/Rekeningen';
+import RekeningenLeider from './pages/admin/rekeningen/leider/RekeningenLeider';
 
 const App = () => {
 
@@ -50,6 +51,7 @@ const App = () => {
 					<Route path="/admin/inschrijvingen" element={<AccountProvider><RegistrationsAdmin /></AccountProvider>} />
 					<Route path='/admin/leiding' element={<AccountProvider><LeadersAdmin /></AccountProvider>} />
 					<Route path='/admin/rekeningen' element={<AccountProvider><Rekeningen /></AccountProvider>} />
+					<Route path='/admin/rekeningen/leider/:id' element={<AccountProvider><RekeningenLeider /></AccountProvider>} />
 					<Route path='/admin/werkjaren' element={<AccountProvider><WorkingYears /></AccountProvider>} />
 					<Route path="/admin/*" element={<AccountProvider><DashboardAdmin /></AccountProvider>} />
 

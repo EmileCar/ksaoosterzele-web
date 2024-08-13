@@ -1,6 +1,6 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
-import { ChangeLeaderGroup, LeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
+import Leader, { ChangeLeaderGroup, LeaderGroup, LeaderRole, LeadersGroupedResult, SendLeader } from "../types/Leader";
 import { formatCustomDate } from "../utils/datetimeUtil";
 
 export async function getLeadersOfWorkingYear() : Promise<LeadersGroupedResult> {
@@ -163,5 +163,25 @@ export async function getLeaders(): Promise<{ id: number, name: string }[]> {
     } catch (error) {
         console.error(error);
         throw new Error('Er was een probleem bij het ophalen van de leiders.');
+    }
+}
+
+export async function getLeader(leaderId: number): Promise<Leader> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=leader&id=${leaderId}`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        const leader = new Leader(data);
+        return leader;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Er was een probleem bij het ophalen van de leider.');
     }
 }

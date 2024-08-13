@@ -23,6 +23,7 @@ class InvoiceController extends Controller {
         $result = [];
         foreach ($leaders as $leader) {
             $result[] = [
+                'leader_id' => $leader->id,
                 'first_name' => $leader->first_name,
                 'last_name' => $leader->last_name,
                 'total_gross_amount' => $leader->invoices->first() ? $leader->invoices->first()->total_gross_amount : 0,
@@ -59,5 +60,20 @@ class InvoiceController extends Controller {
 
 		http_response_code(201);
 		exit();
+    }
+
+    public function getInvoicesOfLeader() {
+        $account = Account::is_authenticated();
+        Account::is_authorised($account, 2);
+
+        if (!isset($_GET['leader_id'])) {
+            ErrorResponse::exitWithError(400, "Gelieve een leider ID mee te geven.");
+        }
+
+        $leaderId = $_GET['leader_id'];
+
+        $invoices = Invoice::where('leader_id', $leaderId)->get();
+
+        exit(json_encode($invoices));
     }
 }

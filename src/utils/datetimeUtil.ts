@@ -1,6 +1,6 @@
 /**
 * Deze functie zet de DateTime vanuit de database om naar een leesbare string.
-* @param {string} dateTimeString - De DateTime string afkomstig van de database.
+* @param {string} datetime - De DateTime string afkomstig van de database.
 * @returns {string} De geformatteerde leesbare DateTime string.
 **/
 export const formatDateTime = (datetime: Date): string => {
@@ -114,4 +114,19 @@ export const formatDateToInputDate = (date: Date | null): string => {
   const day = String(date.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+};
+
+/**
+ * Deze functie zet een Date om naar een waarde voor een input.
+ * @param {Date} date - De database date string.
+ * @returns {string} De geformatteerde input date string.
+ * */
+export const formatDateToDate = (date: Date | null): string => {
+  if(!date) return '';
+
+  const year = String(date.getFullYear()).padStart(4, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${day}/${month}/${year}`;
 };

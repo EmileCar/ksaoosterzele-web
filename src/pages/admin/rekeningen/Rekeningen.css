@@ -22,6 +22,7 @@
 
 .invoices-table tbody tr {
     cursor: pointer;
+    color: inherit;
 }
 
 .invoices-table tbody tr:hover {
@@ -31,4 +32,59 @@
 .inputnumber{
     font-family: inherit !important;
     font-size: inherit !important;
+}
+
+
+@media (max-width: 700px) {
+    .invoices-table,
+    .invoices-table thead,
+    .invoices-table tbody,
+    .invoices-table th,
+    .invoices-table td,
+    .invoices-table tr {
+        display: block; /* Force all elements to display as block */
+    }
+
+    .invoices-table thead {
+        display: none; /* Hide table headers on mobile */
+    }
+
+    .invoices-table tr {
+        margin-bottom: var(--s1);
+        border-bottom: 3px solid var(--main-color);
+    }
+
+    .invoices-table td {
+        padding: var(--s0) var(--s1);
+        text-align: center;
+        position: relative;
+    }
+
+    .invoices-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: var(--s1);
+        width: calc(100% - var(--s2));
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .invoices-table td.invoice-name{
+        font-weight: bold;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .invoices-table td.invoice-amount{
+        font-style: italic;
+        padding-top: var(--s-1);
+    }
+
+    .invoices-table tbody tr:nth-child(even) {
+        background-color: transparent;
+    }
+
+    .invoices-table tbody tr:hover {
+        background-color: transparent;
+    }
 }

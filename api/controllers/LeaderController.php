@@ -241,4 +241,20 @@ class LeaderController extends Controller {
 
         exit(json_encode($leaders));
     }
+
+    public function getLeader() {
+        $account = Account::is_authenticated();
+
+        if (!isset($_GET['id'])) {
+            ErrorResponse::exitWithError(400, 'Gelieve een id mee te geven.');
+        }
+
+        $leader = Leader::find($_GET['id']);
+
+        if (!$leader) {
+            ErrorResponse::exitWithError(404, 'Leider niet gevonden.');
+        }
+
+        exit(json_encode($leader));
+    }
 }

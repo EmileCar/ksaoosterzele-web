@@ -1,10 +1,12 @@
 class InvoiceSummary {
+    leaderId: number;
     firstName: string;
     lastName: string;
     totalGrossAmount: number;
     mostRecentInvoice: Invoice | null;
 
     constructor(invoiceSummaryData?: any) {
+        this.leaderId = invoiceSummaryData.leader_id || null
         this.firstName = invoiceSummaryData.first_name || null;
         this.lastName = invoiceSummaryData.last_name || null;
         this.totalGrossAmount = invoiceSummaryData.total_gross_amount || null;

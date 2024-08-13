@@ -1,9 +1,9 @@
 <?php
 $invoiceRoutes = [
-    'invoices' => array(
+    'invoices_leader' => array(
         'controller' => 'Invoice',
         'methods' => array(
-            'GET' => 'getInvoices',
+            'GET' => 'getInvoicesOfLeader',
         )
     ),
     'invoice' => array(

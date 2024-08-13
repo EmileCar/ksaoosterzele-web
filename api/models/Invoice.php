@@ -60,7 +60,7 @@ class Invoice extends Model
 			$invoice->amount = $data["amount"];
 		}
 		if (!empty($data["remarks"])) {
-			$invoice->description = $data["remarks"];
+			$invoice->remarks = $data["remarks"];
 		}
 		return $invoice;
 	}
