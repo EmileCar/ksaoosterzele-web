@@ -42,7 +42,7 @@ const RekeningenLeider = () => {
 						<FetchedDataLayout isPending={pending} error={error}>
 							<DataTable
 								value={invoices || []}
-								className="invoices-table"
+								className="table"
 								style={{ width: '100%' }}
 								emptyMessage="Er zijn nog geen transacties gevonden."
 							>

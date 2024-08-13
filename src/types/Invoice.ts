@@ -9,7 +9,7 @@ class InvoiceSummary {
         this.leaderId = invoiceSummaryData.leader_id || null
         this.firstName = invoiceSummaryData.first_name || null;
         this.lastName = invoiceSummaryData.last_name || null;
-        this.totalGrossAmount = invoiceSummaryData.total_gross_amount || null;
+        this.totalGrossAmount = invoiceSummaryData.total_gross_amount || 0;
         this.mostRecentInvoice = invoiceSummaryData.most_recent_invoice ? new Invoice(invoiceSummaryData.most_recent_invoice) : null;
     }
 }

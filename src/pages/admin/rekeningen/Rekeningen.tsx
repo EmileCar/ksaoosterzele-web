@@ -7,9 +7,11 @@ import { usePopupContext } from "../../../contexts/PopupContext";
 import useFetch from "../../../hooks/useFetch";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
 import { getInvoiceSummary } from "../../../services/invoiceService";
-import { InvoiceSummary } from "../../../types/Invoice";
+import Invoice, { InvoiceSummary } from "../../../types/Invoice";
 import { formatCustomDate, formatDateToDate } from "../../../utils/datetimeUtil";
 import "./Rekeningen.css";
+import { Table } from "../../../components/table/Table";
+import { Column } from "../../../components/table/Column";
 
 const Rekeningen = () => {
     const { pending, data: invoices, error, refetch } = useFetch<InvoiceSummary[]>(getInvoiceSummary);
@@ -37,24 +39,20 @@ const Rekeningen = () => {
                     <p>Geen rekeningen gevonden.</p>
                 )}
                 {invoices && invoices.length > 0 && (
-                    <table className="invoices-table" style={account?.role.id !== 2 ? { pointerEvents: 'none' } : {}}>
-                        <thead>
-                            <tr>
-                                <th>Naam leider</th>
-                                <th>Huidig saldo</th>
-                                <th>Recentste transactie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {invoices.map((invoice: InvoiceSummary) => (
-                                <tr key={invoice.firstName + invoice.lastName} onClick={() => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`)}>
-                                    <td className="invoice-name">{invoice.firstName} {invoice.lastName}</td>
-                                    <td className="invoice-amount">€ {invoice.totalGrossAmount || 0}</td>
-                                    <td>{invoice.mostRecentInvoice ? `${formatDateToDate(invoice.mostRecentInvoice.createdAt)} - ${invoice.mostRecentInvoice.name}` : "/"}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <Table
+                        values={invoices}
+                        rows={10}
+                        responsiveLayout="scroll"
+                        onRowClick={(invoice) => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`)}
+                    >
+                        <Column field="name" header="Naam" body={(rowData: InvoiceSummary) => `${rowData.firstName} ${rowData.lastName}`} sortable/>
+                        <Column field="totalGrossAmount" header="Bedrag" body={(rowData: InvoiceSummary) => `€ ${rowData.totalGrossAmount}`} sortable/>
+                        <Column field="recentTransaction" header="Recentste transactie" body={(rowData: InvoiceSummary) =>
+                                rowData.mostRecentInvoice
+                                    ? `${formatDateToDate(rowData.mostRecentInvoice.createdAt)} - ${rowData.mostRecentInvoice.name}`
+                                    : "/"
+                            } />
+                    </Table>
                 )}
             </FetchedDataLayout>
         </>

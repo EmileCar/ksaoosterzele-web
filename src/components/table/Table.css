@@ -1,0 +1,81 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--border-radius-md);
+}
+
+.table th,
+.table td {
+    padding: var(--s0);
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr {
+    cursor: inherit; /* Default cursor */
+    color: inherit;
+}
+
+.table tbody tr.hoverable {
+    cursor: pointer;
+}
+
+.table tbody tr.hoverable:hover {
+    background-color: #e6e6e6;
+}
+
+.table th.sortable{
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .table,
+    .table thead,
+    .table tbody,
+    .table th,
+    .table td,
+    .table tr {
+        display: block; /* Force all elements to display as block */
+    }
+
+    .table thead {
+        display: none; /* Hide table headers on mobile */
+    }
+
+    .table tr {
+        margin-bottom: var(--s1);
+        border-bottom: 3px solid var(--main-color);
+    }
+
+    .table td {
+        padding: var(--s0) var(--s1);
+        text-align: center;
+        position: relative;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: var(--s1);
+        width: calc(100% - var(--s2));
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: transparent;
+    }
+
+    .table tbody tr.hoverable:hover {
+        background-color: transparent;
+    }
+}
