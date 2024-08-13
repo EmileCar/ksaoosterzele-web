@@ -45,13 +45,13 @@ const Rekeningen = () => {
                         responsiveLayout="scroll"
                         onRowClick={(invoice) => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`)}
                     >
-                        <Column field="name" header="Naam" body={(rowData: InvoiceSummary) => `${rowData.firstName} ${rowData.lastName}`} sortable/>
+                        <Column field="firstName" header="Naam" body={(rowData: InvoiceSummary) => `${rowData.firstName} ${rowData.lastName}`} sortable/>
                         <Column field="totalGrossAmount" header="Bedrag" body={(rowData: InvoiceSummary) => `€ ${rowData.totalGrossAmount}`} sortable/>
-                        <Column field="recentTransaction" header="Recentste transactie" body={(rowData: InvoiceSummary) =>
+                        <Column field="mostRecentInvoice.createdAt" header="Recentste transactie" body={(rowData: InvoiceSummary) =>
                                 rowData.mostRecentInvoice
                                     ? `${formatDateToDate(rowData.mostRecentInvoice.createdAt)} - ${rowData.mostRecentInvoice.name}`
                                     : "/"
-                            } />
+                            } sortable/>
                     </Table>
                 )}
             </FetchedDataLayout>

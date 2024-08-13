@@ -5,8 +5,9 @@ interface ColumnProps<T> {
     header: string;
     body?: (rowData: T, fieldValue: any) => React.ReactNode;
     sortable?: boolean;
+    sortFunction?: (a: T, b: T, sortDirection: 'asc' | 'desc') => number;
 }
 
-export const Column = <T,>({ field, header, body, sortable }: ColumnProps<T>) => {
+export const Column = <T,>({ field, header, body, sortable, sortFunction }: ColumnProps<T>) => {
     return null;
 }

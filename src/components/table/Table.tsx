@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import './Table.css';
 import { Paginator } from './Paginator';
 import { Column } from './Column';
@@ -16,13 +16,15 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     const [page, setPage] = useState(0);
     const [sortField, setSortField] = useState<keyof T | string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+    const [paginatedData, setPaginatedData] = useState<T[]>([]);
+    const [totalPages, setTotalPages] = useState(0);
 
-    const totalPages = Math.ceil(values.length / rows);
-    const start = page * rows;
-    const end = start + rows;
-
-    const sortData = (data: T[]) => {
+    const sortData = (data: T[], sortFunction?: (a: T, b: T, sortDirection: 'asc' | 'desc') => number) => {
         if (!sortField) return data;
+
+        if (sortFunction) {
+            return [...data].sort((a, b) => sortFunction(a, b, sortDirection));
+        }
 
         return [...data].sort((a, b) => {
             const valueA = (a as any)[sortField];
@@ -34,8 +36,15 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
         });
     };
 
-    const sortedData = sortData(values);
-    const paginatedData = sortedData.slice(start, end);
+    useEffect(() => {
+        const totalPages = Math.ceil(values.length / rows);
+        setTotalPages(totalPages);
+        const start = page * rows;
+        const end = start + rows;
+        const sortedData = sortData(values);
+        const paginatedData = sortedData.slice(start, end);
+        setPaginatedData(paginatedData);
+    }, [sortField, sortDirection]);
 
     const handleSort = (field: keyof T | string) => {
         if (sortField === field) {
@@ -55,7 +64,7 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     const renderColumns = () => {
         return React.Children.map(children, (child, index) => {
             if (React.isValidElement(child) && child.type === Column) {
-                const { field, header, sortable } = child.props;
+                const { field, header, sortable, sortFunction } = child.props;
                 const isSortable = sortable;
                 const handleClick = isSortable ? () => handleSort(field) : undefined;
                 const sortIndicator = sortField === field ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : '';
