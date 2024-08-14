@@ -38,14 +38,13 @@ const RegistrationForm = () => {
         }
     } , [isPending]);
 
-    const submitValuesHandler = (allowMedia: boolean | null) => {
-        changeValue("allowMedia", allowMedia);
+    const submitValuesHandler = () => {
         submitValues();
         closePopup();
     }
 
     const openConfirmPopup = () => {
-        registerPopup(<ConfirmPopup submit={submitValuesHandler} />);
+        registerPopup(<ConfirmPopup changeValue={changeValue} submit={submitValuesHandler} />);
     };
 
     return (

@@ -92,7 +92,7 @@ class SendRegistration {
         this.groupId = registration?.group?.id ?? null;
         this.firstName = registration.firstName || null;
         this.lastName = registration.lastName || null;
-        this.birthdate = registration.birthdate || new Date();
+        this.birthdate = registration.birthdate || null;
         this.gender = registration.gender || null;
         this.birthplace = registration.birthplace || null;
         this.parentFirstName = registration.parentFirstName || null;

@@ -63,6 +63,12 @@ const useForm = <T extends Record<string, any>>(initialValues: T, submitFunction
                 let errorfields = errors.errorFields ?? {};
                 errorfields.general = errors.message;
                 setErrors(errorfields);
+
+                //if error.general and errorfields are empty, set general error to the message
+                if (errors.message && Object.keys(errorfields).length === 0) {
+                    setErrors({ error: "Er is iets misgegaan. Probeer het later opnieuw." });
+                }
+
                 setIsPending(false);
                 if (onFailure) {
                     onFailure(errors);

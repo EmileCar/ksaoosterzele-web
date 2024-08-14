@@ -4,6 +4,7 @@ require_once __DIR__ . '/Controller.php';
 require_once __DIR__ . '/../models/Registration.php';
 require_once __DIR__ . '/../responses/ErrorResponse.php';
 require_once __DIR__ . '/../responses/RegistrationResponse.php';
+require_once __DIR__ . '/../models/WorkingYear.php';
 require_once __DIR__ . '/../models/Account.php';
 
 class RegistrationController extends Controller {

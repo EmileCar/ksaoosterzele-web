@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Popup from "../../popup/Popup";
 import Button from "../../button/Button";
 
-const ConfirmPopup = ({submit} : {submit: (allowMedia: boolean | null) => void}) => {
+const ConfirmPopup = ({ changeValue, submit }: { changeValue: (name: string, value: any) => void, submit: () => void }) => {
     const [allowMedia, setAllowMedia] = useState<boolean | null>(null);
     const [showConfirm, setShowConfirm] = useState<boolean | null>(null);
     const [confirmPrivacy, setConfirmPrivacy] = useState(false);
@@ -53,8 +53,8 @@ const ConfirmPopup = ({submit} : {submit: (allowMedia: boolean | null) => void})
                     <p>Geeft u toestemming dat er beeldmateriaal van uw kind gemaakt mag worden voor deze publicatie?</p>
                 </div>
                 <div className="buttons">
-                    <Button text="Ja" onClick={() => setAllowMedia(true)} customClassName={`inschrijving-button ${allowMedia ? "active" : "button-inverted"}`} round/>
-                    <Button text="Nee" onClick={() => setAllowMedia(false)} customClassName={`inschrijving-button ${allowMedia === false ? "active" : "button-inverted"}`} round/>
+                    <Button text="Ja" onClick={() => {changeValue("allowMedia", true); setAllowMedia(true)}} customClassName={`inschrijving-button ${allowMedia ? "active" : "button-inverted"}`} round/>
+                    <Button text="Nee" onClick={() => {changeValue("allowMedia", false); setAllowMedia(false)}} customClassName={`inschrijving-button ${allowMedia === false ? "active" : "button-inverted"}`} round/>
                 </div>
             </div>
             {showConfirm &&
@@ -88,7 +88,7 @@ const ConfirmPopup = ({submit} : {submit: (allowMedia: boolean | null) => void})
             </div>}
             {confirmFinal &&
             <div className="takken__submit-container" ref={scrollRefFinal}>
-                <Button text="Verstuur inschrijving" onClick={() => submit(allowMedia)} submit uppercase darken round/>
+                <Button text="Verstuur inschrijving" onClick={submit} submit uppercase darken round/>
             </div>}
         </Popup>
     )

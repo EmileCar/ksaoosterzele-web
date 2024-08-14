@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { sendInschrijving } from "../services/registrationService";
 import { useNavigate } from "react-router-dom";
 import useForm from "../hooks/useForm";
@@ -19,6 +19,12 @@ const RegistrationContext = createContext<RegistrationContextType | undefined>(u
 export const RegistrationProvider = ({ children } : { children: React.ReactNode }) => {
     const { values, errorStates, handleValueChange, setErrors, changeValue, submitPending, handleSubmitForm } = useForm<SendRegistration>(new SendRegistration({}), sendInschrijving);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        console.log("---------")
+        console.log(values);
+        console.log(values.notEmpty())
+    } , [values]);
 
     const submitValues = async () => {
         await handleSubmitForm("POST", () => {
