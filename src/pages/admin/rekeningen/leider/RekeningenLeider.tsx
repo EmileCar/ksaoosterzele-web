@@ -11,6 +11,8 @@ import { formatDateToDate } from "../../../../utils/datetimeUtil";
 import { Table } from "../../../../components/table/Table";
 import { Column } from "../../../../components/table/Column";
 import ReturnLink from "../../../../components/returnlink/ReturnLink";
+import { usePopupContext } from "../../../../contexts/PopupContext";
+import InvoiceDetailPopup from "../../../../components/invoices/popups/InvoiceDetailPopup";
 
 const RekeningenLeider = () => {
 		const { id } = useParams();
@@ -18,12 +20,17 @@ const RekeningenLeider = () => {
 		const { pending, data: invoices, error } = useFetch<Invoice[]>(fetchInvoicesOfLeader);
 		const fetchLeader = useCallback(() => getLeader(id as unknown as number), [id]);
 		const { pending: pendingLeader, data: leader, error: errorLeader } = useFetch<Leader>(fetchLeader);
+		const { registerPopup } = usePopupContext();
 
 		const calculateTotal = (invoices: Invoice[]): number => {
 			if (!invoices) return 0;
 
 			return invoices.reduce((acc, invoice) => acc + Number(invoice.amount), 0);
 		};
+
+		const openDetailPopup = (invoice: Invoice) => {
+			registerPopup(<InvoiceDetailPopup invoice={invoice} onClose={() => {}} />);
+		}
 
 		const renderIcons = (rowData: Invoice) => {
 			if (rowData.remarks) {
@@ -55,7 +62,8 @@ const RekeningenLeider = () => {
 								values={invoices}
 								rows={10}
 								responsiveLayout="scroll"
-							>
+								onRowClick={(invoice) => openDetailPopup(invoice)}
+								>
 								<Column
 									field="name"
 									header="Naam"
