@@ -50,6 +50,11 @@
     background-color: var(--darker-main-color);
 }
 
+.paginator{
+    text-align: center;
+    margin-top: var(--s-1);
+}
+
 @media (max-width: 700px) {
     .table,
     .table thead,

@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface ColumnProps<T> {
+export interface ColumnProps<T> {
     field: keyof T | string;
     header: string;
     body?: (rowData: T, fieldValue: any) => React.ReactNode;

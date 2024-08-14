@@ -45,13 +45,38 @@ const Rekeningen = () => {
                         responsiveLayout="scroll"
                         onRowClick={(invoice) => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`)}
                     >
-                        <Column field="firstName" header="Naam" body={(rowData: InvoiceSummary) => `${rowData.firstName} ${rowData.lastName}`} sortable/>
-                        <Column field="totalGrossAmount" header="Bedrag" body={(rowData: InvoiceSummary) => `€ ${rowData.totalGrossAmount}`} sortable/>
-                        <Column field="mostRecentInvoice.createdAt" header="Recentste transactie" body={(rowData: InvoiceSummary) =>
+                        <Column
+                            field="firstName"
+                            header="Naam"
+                            body={(rowData: InvoiceSummary) => `${rowData.firstName} ${rowData.lastName}`}
+                            sortable
+                        />
+                        <Column
+                            field="totalGrossAmount"
+                            header="Bedrag"
+                            body={(rowData: InvoiceSummary) => `€ ${rowData.totalGrossAmount}`}
+                            sortable
+                            sortFunction={(a, b, sortDirection) => {
+                                const valueA = a.mostRecentInvoice ? parseFloat(a.mostRecentInvoice.amount.toString()) : 0;
+                                const valueB = b.mostRecentInvoice ? parseFloat(b.mostRecentInvoice.amount.toString()) : 0;
+                                return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+                            }}
+                        />
+                        <Column
+                            field="mostRecentInvoice.createdAt"
+                            header="Recentste transactie"
+                            body={(rowData: InvoiceSummary) =>
                                 rowData.mostRecentInvoice
                                     ? `${formatDateToDate(rowData.mostRecentInvoice.createdAt)} - ${rowData.mostRecentInvoice.name}`
                                     : "/"
-                            } sortable/>
+                            }
+                            sortable
+                            sortFunction={(a, b, sortDirection) => {
+                                const valueA = a.mostRecentInvoice ? a.mostRecentInvoice.createdAt : new Date();
+                                const valueB = b.mostRecentInvoice ? b.mostRecentInvoice.createdAt : new Date();
+                                return sortDirection === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
+                            }
+                        }/>
                     </Table>
                 )}
             </FetchedDataLayout>

@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import './Table.css';
 import { Paginator } from './Paginator';
-import { Column } from './Column';
+import { Column, ColumnProps } from './Column';
 
 interface TableProps<T> {
     values: T[];
@@ -19,11 +19,16 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     const [paginatedData, setPaginatedData] = useState<T[]>([]);
     const [totalPages, setTotalPages] = useState(0);
 
-    const sortData = (data: T[], sortFunction?: (a: T, b: T, sortDirection: 'asc' | 'desc') => number) => {
+    const sortData = (data: T[]) => {
         if (!sortField) return data;
 
-        if (sortFunction) {
-            return [...data].sort((a, b) => sortFunction(a, b, sortDirection));
+        const columns = React.Children.toArray(children).filter((child): child is React.ReactElement<ColumnProps<T>> =>
+            React.isValidElement(child) && child.type === Column
+        );
+        const column = columns.find(col => col.props.field === sortField);
+
+        if (column && column.props.sortFunction) {
+            return [...data].sort((a, b) => column.props.sortFunction!(a, b, sortDirection));
         }
 
         return [...data].sort((a, b) => {
@@ -64,7 +69,7 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     const renderColumns = () => {
         return React.Children.map(children, (child, index) => {
             if (React.isValidElement(child) && child.type === Column) {
-                const { field, header, sortable, sortFunction } = child.props;
+                const { field, header, sortable } = child.props;
                 const isSortable = sortable;
                 const handleClick = isSortable ? () => handleSort(field) : undefined;
                 const sortIndicator = sortField === field ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : '';
@@ -104,7 +109,7 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     };
 
     return (
-        <div className={`${responsiveLayout} ${className}`}>
+        <div className={`${responsiveLayout} ${className} table-container`}>
             <table className='table'>
                 <thead>
                     <tr>{renderColumns()}</tr>

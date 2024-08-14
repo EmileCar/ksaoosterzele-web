@@ -15,13 +15,25 @@ export const Paginator: React.FC<PaginatorProps> = ({ totalPages, currentPage, o
         if (currentPage < totalPages - 1) onPageChange(currentPage + 1);
     };
 
+    if (totalPages <= 1) {
+        return null;
+    }
+
     return (
         <div className="paginator">
-            <button onClick={handlePrev} disabled={currentPage === 0}>
+            <button
+                onClick={handlePrev}
+                disabled={currentPage === 0}
+                aria-label="Previous Page"
+            >
                 Prev
             </button>
-            <span>{`Page ${currentPage + 1} of ${totalPages}`}</span>
-            <button onClick={handleNext} disabled={currentPage === totalPages - 1}>
+            <span>{`Pagina ${currentPage + 1} van de ${totalPages}`}</span>
+            <button
+                onClick={handleNext}
+                disabled={currentPage === totalPages - 1}
+                aria-label="Next Page"
+            >
                 Next
             </button>
         </div>
