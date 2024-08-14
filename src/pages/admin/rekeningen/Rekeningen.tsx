@@ -57,8 +57,8 @@ const Rekeningen = () => {
                             body={(rowData: InvoiceSummary) => `€ ${rowData.totalGrossAmount}`}
                             sortable
                             sortFunction={(a, b, sortDirection) => {
-                                const valueA = a.mostRecentInvoice ? parseFloat(a.mostRecentInvoice.amount.toString()) : 0;
-                                const valueB = b.mostRecentInvoice ? parseFloat(b.mostRecentInvoice.amount.toString()) : 0;
+                                const valueA = a.totalGrossAmount;
+                                const valueB = b.totalGrossAmount;
                                 return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
                             }}
                         />

@@ -4,12 +4,12 @@ import { getInvoicesOfLeader } from "../../../../services/invoiceService";
 import useFetch from "../../../../hooks/useFetch";
 import FetchedDataLayout from "../../../../layouts/FetchedDataLayout";
 import Invoice from "../../../../types/Invoice";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import SectionTitle from "../../../../components/sectionTitle/SectionTitle";
 import { getLeader } from "../../../../services/leaderService";
 import Leader from "../../../../types/Leader";
-import { formatDateTime } from "../../../../utils/datetimeUtil";
+import { formatDateTime, formatDateToDate } from "../../../../utils/datetimeUtil";
+import { Table } from "../../../../components/table/Table";
+import { Column } from "../../../../components/table/Column";
 
 const RekeningenLeider = () => {
 		const { id } = useParams();
@@ -18,17 +18,10 @@ const RekeningenLeider = () => {
 		const fetchLeader = useCallback(() => getLeader(id as unknown as number), [id]);
 		const { pending: pendingLeader, data: leader, error: errorLeader } = useFetch<Leader>(fetchLeader);
 
-		const createdAtBodyTemplate = (rowData: Invoice) => {
-			const formattedDateTime = formatDateTime(rowData.createdAt);
-			return (
-				<div className="flex align-items-center gap-2">
-					<span>{formattedDateTime}</span>
-				</div>
-			);
-		};
+		const calculateTotal = (invoices: Invoice[]): number => {
+			if (!invoices) return 0;
 
-		const amountBodyTemplate = (rowData: Invoice) => {
-			return `€ ${rowData.amount}`;
+			return invoices.reduce((acc, invoice) => acc + Number(invoice.amount), 0);
 		};
 
 		return (
@@ -38,18 +31,52 @@ const RekeningenLeider = () => {
 						<div className="top__nav--buttons">
 							<Link to="/admin/rekeningen" className="cursive">{`<< Terug naar overzicht`}</Link>
 						</div>
-						<SectionTitle title={`Rekeningen van ${leader.firstName} ${leader.lastName}`} />
+						<SectionTitle title={`Rekeningen van ${leader.firstName} ${leader.lastName}`}>
+							<p>Dit is het overzicht van alle transacties van leider {leader.firstName} {leader.lastName}.</p>
+							<p>Momenteel zit zijn totale rekening op € {calculateTotal(invoices!)}.</p>
+						</SectionTitle>
 						<FetchedDataLayout isPending={pending} error={error}>
-							<DataTable
-								value={invoices || []}
-								className="table"
-								style={{ width: '100%' }}
-								emptyMessage="Er zijn nog geen transacties gevonden."
+						{invoices && invoices.length === 0 && (
+							<p>Geen rekeningen gevonden.</p>
+						)}
+						{invoices && invoices.length > 0 && (
+							<Table
+								values={invoices}
+								rows={10}
+								responsiveLayout="scroll"
 							>
-								<Column field="name" header="Naam" sortable/>
-								<Column field="amount" header="Bedrag" sortable body={amountBodyTemplate}/>
-								<Column field="created_at" body={createdAtBodyTemplate} header="Toegevoegd op" sortable></Column>
-							</DataTable>
+								<Column
+									field="name"
+									header="Naam"
+								/>
+								<Column
+									field="totalGrossAmount"
+									header="Bedrag"
+									body={(rowData: Invoice) => `€ ${rowData.amount}`}
+									sortable
+									sortFunction={(a, b, sortDirection) => {
+										const valueA = a.amount;
+										const valueB = b.amount;
+										return sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+									}}
+								/>
+								<Column
+									field="createdAt"
+									header="Op datum"
+									body={(rowData: Invoice) =>
+										rowData.createdAt
+											? `${formatDateToDate(rowData.createdAt, true)}`
+											: "/"
+									}
+									sortable
+									sortFunction={(a, b, sortDirection) => {
+										const valueA = a.createdAt ? new Date(a.createdAt) : new Date(0);
+										const valueB = b.createdAt ? new Date(b.createdAt) : new Date(0);
+										return sortDirection === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
+									}
+								}/>
+							</Table>
+						)}
 						</FetchedDataLayout>
 					</>
 				)}
