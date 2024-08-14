@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { getInvoicesOfLeader } from "../../../../services/invoiceService";
 import useFetch from "../../../../hooks/useFetch";
 import FetchedDataLayout from "../../../../layouts/FetchedDataLayout";
@@ -7,9 +7,10 @@ import Invoice from "../../../../types/Invoice";
 import SectionTitle from "../../../../components/sectionTitle/SectionTitle";
 import { getLeader } from "../../../../services/leaderService";
 import Leader from "../../../../types/Leader";
-import { formatDateTime, formatDateToDate } from "../../../../utils/datetimeUtil";
+import { formatDateToDate } from "../../../../utils/datetimeUtil";
 import { Table } from "../../../../components/table/Table";
 import { Column } from "../../../../components/table/Column";
+import ReturnLink from "../../../../components/returnlink/ReturnLink";
 
 const RekeningenLeider = () => {
 		const { id } = useParams();
@@ -28,9 +29,7 @@ const RekeningenLeider = () => {
 			<FetchedDataLayout isPending={pendingLeader} error={errorLeader}>
 				{leader && (
 					<>
-						<div className="top__nav--buttons">
-							<Link to="/admin/rekeningen" className="cursive">{`<< Terug naar overzicht`}</Link>
-						</div>
+						<ReturnLink url="/admin/rekeningen" text="Terug naar overzicht" />
 						<SectionTitle title={`Rekeningen van ${leader.firstName} ${leader.lastName}`}>
 							<p>Dit is het overzicht van alle transacties van leider {leader.firstName} {leader.lastName}.</p>
 							<p>Momenteel zit zijn totale rekening op € {calculateTotal(invoices!)}.</p>

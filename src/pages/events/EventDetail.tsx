@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getEvent } from "../../services/eventService";
 import useFetch from "../../hooks/useFetch";
 import PageLayout from "../../layouts/PageLayout";
@@ -7,6 +7,7 @@ import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import "./Events.css";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
 import EventInfo from "../../components/events/EventInfo";
+import ReturnLink from "../../components/returnlink/ReturnLink";
 
 const EventDetail = () => {
 		const { id } = useParams();
@@ -15,9 +16,7 @@ const EventDetail = () => {
 
 		return (
 			<PageLayout>
-				<div className="top__nav--buttons">
-					<Link to="/evenementen" className="cursive">{`<< Terug naar activiteiten`}</Link>
-				</div>
+				<ReturnLink url="/events" text="Terug naar evenementen" />
 				<FetchedDataLayout isPending={pending} error={error}>
 					<div className="eventDetail-container">
 						{event && (

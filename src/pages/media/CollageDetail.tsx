@@ -1,23 +1,21 @@
-import { useCallback, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useCallback } from "react";
+import { useParams } from "react-router-dom";
 import { getCollage } from "../../services/mediaService";
 import useFetch from "../../hooks/useFetch";
 import PageLayout from "../../layouts/PageLayout";
 import FetchedDataLayout from "../../layouts/FetchedDataLayout";
 import SectionTitle from "../../components/sectionTitle/SectionTitle";
 import ImageList from "../../components/collages/ImageList";
+import ReturnLink from "../../components/returnlink/ReturnLink";
 
 const CollageDetail = () => {
     const { id } = useParams();
     const fetchEvent = useCallback(() => getCollage(id as unknown as number), [id]);
     const { pending, data: collage, error } = useFetch(fetchEvent);
-    const [detail, setDetail] = useState<string | null>(null);
 
     return (
         <PageLayout>
-            <div className="top__nav--buttons">
-                <Link to="/media" className="cursive link-back">{"<<Terug naar media"}</Link>
-            </div>
+            <ReturnLink url="/media" text="Terug naar media" />
             <FetchedDataLayout isPending={pending} error={error}>
                 {collage && (
                     <>
