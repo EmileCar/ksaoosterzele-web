@@ -25,6 +25,18 @@ const RekeningenLeider = () => {
 			return invoices.reduce((acc, invoice) => acc + Number(invoice.amount), 0);
 		};
 
+		const renderIcons = (rowData: Invoice) => {
+			if (rowData.remarks) {
+				return (
+					<div className="table-row-icon">
+						<i className="pi pi-align-center"></i>
+					</div>
+				);
+			}
+
+			return null;
+		}
+
 		return (
 			<FetchedDataLayout isPending={pendingLeader} error={errorLeader}>
 				{leader && (
@@ -74,6 +86,11 @@ const RekeningenLeider = () => {
 										return sortDirection === 'asc' ? valueA.getTime() - valueB.getTime() : valueB.getTime() - valueA.getTime();
 									}
 								}/>
+								<Column
+									field="icons"
+									header=""
+									body={renderIcons}
+								/>
 							</Table>
 						)}
 						</FetchedDataLayout>
