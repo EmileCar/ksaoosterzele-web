@@ -10,9 +10,18 @@ interface TableProps<T> {
     responsiveLayout?: 'stack' | 'scroll';
     className?: string;
     onRowClick?: (row: T) => void;
+    emptyMessage?: string;
 }
 
-export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'stack', className = '', onRowClick }: TableProps<T>) => {
+export const Table = <T,>({
+    values,
+    children,
+    rows = 10,
+    responsiveLayout = 'stack',
+    className = '',
+    onRowClick,
+    emptyMessage = 'Geen data gevonden',
+}: TableProps<T>) => {
     const [page, setPage] = useState(0);
     const [sortField, setSortField] = useState<keyof T | string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
@@ -90,6 +99,16 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
     };
 
     const renderRows = () => {
+        if (paginatedData.length === 0) {
+            return (
+                <tr>
+                    <td colSpan={React.Children.count(children)} className="empty-message">
+                        {emptyMessage}
+                    </td>
+                </tr>
+            );
+        }
+
         return paginatedData.map((row, rowIndex) => (
             <tr
                 key={rowIndex}
