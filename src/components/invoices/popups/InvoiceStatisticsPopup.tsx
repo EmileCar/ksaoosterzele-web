@@ -12,9 +12,14 @@ const InvoiceStatisticsPopup = ({ onClose } : { onClose: () => void }) => {
     const invoicesCountCanvasRef = useRef<HTMLCanvasElement | null>(null);
     const revenueAmountCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
+    const formatMonthYear = (month: number, year: number) => {
+        const date = new Date(year, month - 1);
+        return new Intl.DateTimeFormat('nl-NL', { month: 'short', year: 'numeric' }).format(date);
+    };
+
     useEffect(() => {
         if (statistics && invoicesCountCanvasRef.current && revenueAmountCanvasRef.current) {
-            const labels = statistics.monthlyInvoicesCount.map(m => `${m.year}-${m.month}`);
+            const labels = statistics.monthlyInvoicesCount.map(m => formatMonthYear(m.month, m.year));
             const invoiceCounts = statistics.monthlyInvoicesCount.map(m => m.count);
             const revenueAmounts = statistics.monthlyRevenueAmount.map(m => m.total);
 
@@ -24,7 +29,7 @@ const InvoiceStatisticsPopup = ({ onClose } : { onClose: () => void }) => {
                     labels,
                     datasets: [
                         {
-                            label: 'Aantal transacties per maand',
+                            label: 'Aantal transacties deze maand',
                             data: invoiceCounts,
                             backgroundColor: 'rgba(54, 162, 235, 0.5)',
                             borderColor: 'rgba(54, 162, 235, 1)',
@@ -65,7 +70,7 @@ const InvoiceStatisticsPopup = ({ onClose } : { onClose: () => void }) => {
                     labels,
                     datasets: [
                         {
-                            label: 'Maandelijks balans (€)',
+                            label: 'Balans van de maand (€)',
                             data: revenueAmounts,
                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
                             borderColor: 'rgba(255, 99, 132, 1)',

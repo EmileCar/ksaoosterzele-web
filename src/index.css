@@ -75,3 +75,11 @@ html {
 .no-scroll {
     overflow: hidden;
 }
+
+.p-inputtext{
+    border: var(--s-2) solid transparent;
+    outline: var(--s-99) solid var(--main-color);
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
