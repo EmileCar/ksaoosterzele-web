@@ -13,7 +13,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: var(--s0);
-    padding: var(--s0) 0;
+    margin: var(--s0) 0;
     border-radius: 2px solid var(--main-color);
 }
 

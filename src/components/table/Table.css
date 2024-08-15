@@ -58,8 +58,17 @@
 }
 
 .paginator{
+    display: flex;
+    gap: var(--s-1);
+    justify-content: center;
+    align-items: center;
     text-align: center;
     margin-top: var(--s-1);
+}
+
+.paginator .button{
+    padding: var(--s-2) var(--s0);
+    line-height: 0;
 }
 
 @media (max-width: 700px) {

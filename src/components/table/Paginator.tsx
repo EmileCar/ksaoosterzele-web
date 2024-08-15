@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../button/Button';
 
 interface PaginatorProps {
     totalPages: number;
@@ -21,21 +22,20 @@ export const Paginator: React.FC<PaginatorProps> = ({ totalPages, currentPage, o
 
     return (
         <div className="paginator">
-            <button
+            <Button
                 onClick={handlePrev}
                 disabled={currentPage === 0}
-                aria-label="Previous Page"
-            >
-                Prev
-            </button>
+                darken
+                text='<'
+            />
             <span>{`Pagina ${currentPage + 1} van de ${totalPages}`}</span>
-            <button
+            <Button
                 onClick={handleNext}
                 disabled={currentPage === totalPages - 1}
                 aria-label="Next Page"
-            >
-                Next
-            </button>
+                darken
+                text='>'
+            />
         </div>
     );
 };

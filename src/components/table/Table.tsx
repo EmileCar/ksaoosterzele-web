@@ -2,6 +2,11 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import './Table.css';
 import { Paginator } from './Paginator';
 import { Column, ColumnProps } from './Column';
+import Form from '../form/Form';
+import Label from '../form/Label';
+import Input from '../form/Input';
+import Button from '../button/Button';
+import { exportToExcel as exportToExcelFunction } from '../../utils/exportToExcel';
 
 interface TableProps<T> {
     values: T[];
@@ -11,6 +16,8 @@ interface TableProps<T> {
     className?: string;
     onRowClick?: (row: T) => void;
     emptyMessage?: string;
+    globalSearchFunction?: (value: string) => T[];
+    exportToExcel?: boolean; // Fixed typo from 'exortToExcel' to 'exportToExcel'
 }
 
 export const Table = <T,>({
@@ -21,12 +28,16 @@ export const Table = <T,>({
     className = '',
     onRowClick,
     emptyMessage = 'Geen data gevonden',
+    globalSearchFunction,
+    exportToExcel, // Changed the name to match the interface
 }: TableProps<T>) => {
     const [page, setPage] = useState(0);
     const [sortField, setSortField] = useState<keyof T | string | null>(null);
     const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
     const [paginatedData, setPaginatedData] = useState<T[]>([]);
+    const [filteredData, setFilteredData] = useState<T[]>([]);
     const [totalPages, setTotalPages] = useState(0);
+    const [globalSearchValue, setGlobalSearchValue] = useState('');
 
     const sortData = (data: T[]) => {
         if (!sortField) return data;
@@ -51,14 +62,14 @@ export const Table = <T,>({
     };
 
     useEffect(() => {
-        const totalPages = Math.ceil(values.length / rows);
+        const totalPages = Math.ceil(filteredData.length / rows);
         setTotalPages(totalPages);
         const start = page * rows;
         const end = start + rows;
-        const sortedData = sortData(values);
+        const sortedData = sortData(filteredData);
         const paginatedData = sortedData.slice(start, end);
         setPaginatedData(paginatedData);
-    }, [sortField, sortDirection, values, rows, page]);
+    }, [sortField, sortDirection, filteredData, rows, page]);
 
     const handleSort = (field: keyof T | string) => {
         if (sortField === field) {
@@ -74,6 +85,16 @@ export const Table = <T,>({
             onRowClick(row);
         }
     };
+
+    useEffect(() => {
+        if (globalSearchFunction) {
+            const filtered = globalSearchFunction(globalSearchValue);
+            setPage(0);
+            setFilteredData(filtered);
+        } else {
+            setFilteredData(values);
+        }
+    }, [globalSearchValue, values, globalSearchFunction]);
 
     const renderColumns = () => {
         return React.Children.map(children, (child, index) => {
@@ -133,14 +154,42 @@ export const Table = <T,>({
     };
 
     return (
-        <div className={`${responsiveLayout} ${className} table-container`}>
-            <table className='table'>
-                <thead>
-                    <tr>{renderColumns()}</tr>
-                </thead>
-                <tbody>{renderRows()}</tbody>
-            </table>
-            <Paginator totalPages={totalPages} currentPage={page} onPageChange={setPage} />
-        </div>
+        <>
+            {(globalSearchFunction || exportToExcel) && (
+                <Form customClassName="registrationstable-header">
+                    {globalSearchFunction && (
+                        <Label text="Zoeken">
+                            <Input 
+                                type="text"
+                                name="search"
+                                value={globalSearchValue}
+                                onChange={(e) => setGlobalSearchValue(e.target.value)}
+                                placeholder="Zoeken..."
+                            />
+                        </Label>
+                    )}
+                    {exportToExcel && (
+                        <span className="exportToExcel__container">
+                            <Button
+                                icon="pi-file-export"
+                                customClassName="exportToExcel__button"
+                                darken
+                                onClick={() => exportToExcelFunction(filteredData, "inschrijvingen")}
+                            />
+                            <span onClick={() => exportToExcelFunction(filteredData, "inschrijvingen")}>Exporteer naar Excel</span>
+                        </span>
+                    )}
+                </Form>
+            )}
+            <div className={`${responsiveLayout} ${className} table-container`}>
+                <table className='table'>
+                    <thead>
+                        <tr>{renderColumns()}</tr>
+                    </thead>
+                    <tbody>{renderRows()}</tbody>
+                </table>
+                <Paginator totalPages={totalPages} currentPage={page} onPageChange={setPage} />
+            </div>
+        </>
     );
 };

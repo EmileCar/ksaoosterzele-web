@@ -18,31 +18,20 @@ import Label from "../../../components/form/Label";
 
 const RegistrationsAdmin = () => {
     const { pending, data: registrations, error, refetch } = useFetch(getRegistrations);
-    const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [visibleColumns, setVisibleColumns] = useState<{ field: string; header: string; }[]>([]);
     const [filteredRegistrations, setFilteredRegistrations] = useState<Registration[]>([]);
     const { registerPopup } = usePopupContext();
 
-    useEffect(() => {
-        if (!registrations) {
-            setFilteredRegistrations([]);
-            return;
-        }
+    const searchFunction = (value: string) => {
+        if (!registrations) return [];
 
-        const lowerCaseFilter = globalFilterValue.toLowerCase();
-
-        const filtered = registrations.filter((registration) => 
-            registration.firstName.toLowerCase().includes(lowerCaseFilter) || 
-            registration.lastName.toLowerCase().includes(lowerCaseFilter)
-        );
-
-        setFilteredRegistrations(filtered);
-    }, [globalFilterValue, registrations]);
-
-    const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setGlobalFilterValue(value);
-    };
+        return registrations.filter((registration) => {
+            return (
+                registration.firstName.toLowerCase().includes(value.toLowerCase()) ||
+                registration.lastName.toLowerCase().includes(value.toLowerCase())
+            );
+        });
+    }
 
     const openRegistrationPopup = (registration: Registration) => {
         registerPopup(<RegistrationPopup registration={registration} onClose={refetch} />);
@@ -54,26 +43,13 @@ const RegistrationsAdmin = () => {
                 <p>Hier kun je inschrijvingen zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
             </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
-                <Form customClassName="registrationstable-header">
-                    <Label text="Zoeken">
-                        <Input type="text" name="search" value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Zoeken..." />
-                    </Label>
-
-                    <span className="exportToExcel__container">
-                        <Button
-                            icon="pi-file-export"
-                            customClassName="exportToExcel__button"
-                            darken
-                            onClick={() => exportToExcel(filteredRegistrations, "inschrijvingen")}
-                        />
-                        <span onClick={() => exportToExcel(filteredRegistrations, "inschrijvingen")}>Exporteer naar Excel</span>
-                    </span>
-                </Form>
                 <Table
                     values={filteredRegistrations}
                     rows={20}
                     emptyMessage={(registrations && registrations.length > 0)? 'Geen inschrijvingen gevonden' : 'Geen data gevonden'}
                     onRowClick={(registration: Registration) => openRegistrationPopup(registration)}
+                    globalSearchFunction={searchFunction}
+                    exportToExcel
                 >
                     <Column field="firstName" header="Voornaam" sortable></Column>
                     <Column field="lastName" header="Achternaam" sortable></Column>

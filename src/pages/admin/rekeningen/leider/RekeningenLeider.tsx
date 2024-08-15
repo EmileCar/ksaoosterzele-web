@@ -34,6 +34,16 @@ const RekeningenLeider = () => {
 			return null;
 		}
 
+		const searchFunction = (value: string) => {
+			if (!invoicesData) return [];
+
+			return invoicesData.invoices.filter((invoice) => {
+				return (
+					invoice.name.toLowerCase().includes(value.toLowerCase())
+				);
+			});
+		}
+
 		return (
 			<>
 				<ReturnLink url="/admin/rekeningen" text="Terug naar overzicht" />
@@ -48,9 +58,10 @@ const RekeningenLeider = () => {
 					{invoicesData && invoicesData.invoices.length > 0 && (
 						<Table
 							values={invoicesData.invoices}
-							rows={10}
+							rows={3}
 							responsiveLayout="scroll"
 							onRowClick={(invoice) => openDetailPopup(invoice)}
+							globalSearchFunction={searchFunction}
 							>
 							<Column
 								field="name"
