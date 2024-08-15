@@ -50,6 +50,13 @@
     background-color: var(--darker-main-color);
 }
 
+.sort-indicator {
+    display: inline-block;
+    width: var(--s0);
+    margin-left: var(--s-1);
+    text-align: left;
+}
+
 .paginator{
     text-align: center;
     margin-top: var(--s-1);

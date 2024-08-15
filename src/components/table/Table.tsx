@@ -49,7 +49,7 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
         const sortedData = sortData(values);
         const paginatedData = sortedData.slice(start, end);
         setPaginatedData(paginatedData);
-    }, [sortField, sortDirection]);
+    }, [sortField, sortDirection, values, rows, page]);
 
     const handleSort = (field: keyof T | string) => {
         if (sortField === field) {
@@ -72,11 +72,16 @@ export const Table = <T,>({ values, children, rows = 10, responsiveLayout = 'sta
                 const { field, header, sortable } = child.props;
                 const isSortable = sortable;
                 const handleClick = isSortable ? () => handleSort(field) : undefined;
-                const sortIndicator = sortField === field ? (sortDirection === 'asc' ? ' ▲' : ' ▼') : '';
+                const sortIndicator = sortField === field ? (sortDirection === 'asc' ? '▲' : '▼') : '';
 
                 return (
                     <th key={index} className={isSortable ? 'sortable' : ''} onClick={handleClick}>
-                        {header}{isSortable && sortIndicator}
+                        {header}
+                        {isSortable && (
+                            <span className="sort-indicator">
+                                {sortIndicator}
+                            </span>
+                        )}
                     </th>
                 );
             }
