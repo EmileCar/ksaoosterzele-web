@@ -72,8 +72,61 @@ class InvoiceController extends Controller {
 
         $leaderId = $_GET['leader_id'];
 
-        $invoices = Invoice::where('leader_id', $leaderId)->get();
+        $leader = Leader::with(['invoices' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->find($leaderId);
 
-        exit(json_encode($invoices));
+        if (!$leader) {
+            ErrorResponse::exitWithError(404, "Leider niet gevonden.");
+        }
+
+        $totalGrossAmount = $leader->invoices->sum('amount');
+
+        $response = [
+            'leader_name' => $leader->first_name . ' ' . $leader->last_name,
+            'total_gross_amount' => $totalGrossAmount,
+            'invoices' => $leader->invoices->map(function($invoice) {
+                return [
+                    'id' => $invoice->id,
+                    'name' => $invoice->name,
+                    'amount' => $invoice->amount,
+                    'remarks' => $invoice->remarks,
+                    'created_at' => $invoice->created_at,
+                    'updated_at' => $invoice->updated_at
+                ];
+            })
+        ];
+
+        exit(json_encode($response));
+    }
+
+    public function getInvoiceStatistics() {
+        $account = Account::is_authenticated();
+        Account::is_authorised($account, 2);
+
+        $totalAmountCollected = Invoice::sum('amount');
+
+        $totalInvoicesIssued = Invoice::count();
+
+        $monthlyInvoicesCount = Invoice::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, COUNT(*) as count')
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        $monthlyRevenueAmount = Invoice::selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, SUM(amount) as total')
+            ->groupBy('year', 'month')
+            ->orderBy('year')
+            ->orderBy('month')
+            ->get();
+
+        $statistics = [
+            'total_amount_collected' => $totalAmountCollected,
+            'total_invoices_issued' => $totalInvoicesIssued,
+            'monthly_invoices_count' => $monthlyInvoicesCount,
+            'monthly_revenue_amount' => $monthlyRevenueAmount
+        ];
+
+        exit(json_encode($statistics));
     }
 }

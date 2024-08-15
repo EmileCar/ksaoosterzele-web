@@ -14,6 +14,18 @@ class InvoiceSummary {
     }
 }
 
+class InvoiceOfLeaderResponse {
+    leaderName: string;
+    totalGrossAmount: number;
+    invoices: Invoice[];
+
+    constructor(invoiceOfLeaderData?: any) {
+        this.leaderName = invoiceOfLeaderData.leader_name || null;
+        this.totalGrossAmount = invoiceOfLeaderData.total_gross_amount || 0;
+        this.invoices = invoiceOfLeaderData.invoices.map((invoice: any) => new Invoice(invoice)) || [];
+    }
+}
+
 class Invoice {
     id: number;
     leaderId: number;
@@ -50,5 +62,34 @@ class SendInvoice {
     }
 }
 
+class MonthlyRevenue {
+    year: number;
+    month: number;
+    count: number;
+    total: number;
+
+    constructor(monthlyRevenueData: any) {
+        this.year = monthlyRevenueData.year || null;
+        this.month = monthlyRevenueData.month || null;
+        this.count = monthlyRevenueData.count || 0;
+        this.total = monthlyRevenueData.total || 0;
+    }
+}
+
+class InvoiceStatistics {
+    totalAmountCollected: number;
+    totalInvoicesIssued: number;
+    monthlyInvoicesCount: MonthlyRevenue[];
+    monthlyRevenueAmount: MonthlyRevenue[];
+
+    constructor(invoiceStatisticsData?: any) {
+        this.totalAmountCollected = invoiceStatisticsData.total_amount_collected || 0;
+        this.totalInvoicesIssued = invoiceStatisticsData.total_invoices_issued || 0;
+        this.monthlyInvoicesCount = invoiceStatisticsData.monthly_invoices_count.map((data: any) => new MonthlyRevenue(data)) || [];
+        this.monthlyRevenueAmount = invoiceStatisticsData.monthly_revenue_amount.map((data: any) => new MonthlyRevenue(data)) || [];
+    }
+}
+
 export default Invoice;
-export { InvoiceSummary, SendInvoice };
+export { InvoiceSummary, SendInvoice, InvoiceOfLeaderResponse };
+export { InvoiceStatistics, MonthlyRevenue };

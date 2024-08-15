@@ -12,6 +12,7 @@ import { formatCustomDate, formatDateToDate } from "../../../utils/datetimeUtil"
 import "./Rekeningen.css";
 import { Table } from "../../../components/table/Table";
 import { Column } from "../../../components/table/Column";
+import InvoiceStatisticsPopup from "../../../components/invoices/popups/InvoiceStatisticsPopup";
 
 const Rekeningen = () => {
     const { pending, data: invoices, error, refetch } = useFetch<InvoiceSummary[]>(getInvoiceSummary);
@@ -23,6 +24,10 @@ const Rekeningen = () => {
         registerPopup(<InvoicePopup onClose={refetch} />);
     }
 
+    const openStatisticsPopup = () => {
+        registerPopup(<InvoiceStatisticsPopup onClose={refetch} />);
+    }
+
     return (
         <>
             <SectionTitle title="Rekeningen beheren">
@@ -32,6 +37,7 @@ const Rekeningen = () => {
             {account?.role.id === 2 &&
                 <div className="admin__actions">
                     <Button text="Transactie toevoegen" hover onClick={openInvoicePopup} />
+                    <Button text="Statistieken" hover onClick={openStatisticsPopup} customClassName="open-statistics-button"/>
                 </div>
             }
             <FetchedDataLayout isPending={pending} error={error}>

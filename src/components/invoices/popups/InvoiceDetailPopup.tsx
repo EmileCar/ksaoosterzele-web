@@ -1,14 +1,32 @@
 import Invoice from '../../../types/Invoice';
+import { formatDateTime } from '../../../utils/datetimeUtil';
 import Popup from '../../popup/Popup';
 
-const InvoiceDetailPopup = ({ invoice, onClose } : { invoice?: Invoice | null | undefined, onClose: () => void }) => {
+const InvoiceDetailPopup = ({ invoice, onClose, name } : { invoice: Invoice, onClose: () => void, name: string }) => {
     return (
         <Popup title={`Transactie detail`}>
-            {/* <p>Deze transactie is voor leider {invoice?.leaderId.firstName} {invoice?.leader.lastName}.</p> */}
-            <div>
-                <p>Naam transactie: <strong>{invoice?.name}</strong></p>
-                <p>Bedrag: <strong>€ {invoice?.amount}</strong></p>
-                <p>Opmerkingen: {invoice?.remarks}</p>
+            <p>Deze transactie is gemaakt voor <strong>{name}</strong></p>
+            <div className='invoice-details'>
+                <div className="invoice-detail-row">
+                    <span className="invoice-detail-label">Naam:</span>
+                    <span className="invoice-detail-value">{invoice.name}</span>
+                </div>
+                <div className="invoice-detail-row">
+                    <span className="invoice-detail-label">Bedrag:</span>
+                    <span className="invoice-detail-value">€ {invoice.amount}</span>
+                </div>
+                <div className="invoice-detail-row">
+                    <span className="invoice-detail-label">Opmerkingen:</span>
+                    <span className="invoice-detail-value">{invoice.remarks ?? '/'}</span>
+                </div>
+                <div className="invoice-detail-row">
+                    <span className="invoice-detail-label">Gemaakt op:</span>
+                    <span className="invoice-detail-value">{formatDateTime(invoice.createdAt)}</span>
+                </div>
+                <div className="invoice-detail-row">
+                    <span className="invoice-detail-label">Bijgewerkt op:</span>
+                    <span className="invoice-detail-value">{formatDateTime(invoice.updatedAt)}</span>
+                </div>
             </div>
         </Popup>
     );

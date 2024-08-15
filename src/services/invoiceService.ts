@@ -1,7 +1,7 @@
 import API_BASE_URL from "../config";
 import ErrorResponse from "../types/ErrorResponse";
 import Event, { SendEvent } from "../types/Event";
-import Invoice, { InvoiceSummary, SendInvoice } from "../types/Invoice";
+import Invoice, { InvoiceOfLeaderResponse, InvoiceStatistics, InvoiceSummary, SendInvoice } from "../types/Invoice";
 import { formatCustomDateTime } from "../utils/datetimeUtil";
 
 export async function getInvoiceSummary(): Promise<InvoiceSummary[]> {
@@ -44,7 +44,7 @@ export async function sendInvoice(request: SendInvoice, method: string) : Promis
     }
 }
 
-export async function getInvoicesOfLeader(leaderId: number): Promise<Invoice[]> {
+export async function getInvoicesOfLeader(leaderId: number): Promise<InvoiceOfLeaderResponse> {
     try {
         const response = await fetch(`${API_BASE_URL}?page=invoices_leader&leader_id=${leaderId}`, {
             method: 'GET',
@@ -56,7 +56,26 @@ export async function getInvoicesOfLeader(leaderId: number): Promise<Invoice[]> 
         }
 
         const data = await response.json();
-        const invoices = data.map((data: any) => new Invoice(data));
+        const invoices = new InvoiceOfLeaderResponse(data);
+        return invoices;
+    } catch (error) {
+        throw error;
+    }
+}
+
+export async function getInvoiceStatistics(): Promise<InvoiceStatistics> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=invoice_statistics`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if(!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+
+        const data = await response.json();
+        const invoices = new InvoiceStatistics(data);
         return invoices;
     } catch (error) {
         throw error;

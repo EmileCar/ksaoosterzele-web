@@ -3,6 +3,34 @@
     font-size: inherit !important;
 }
 
+.invoice-details{
+    margin-top: var(--s0);
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--s-1);
+}
+
+.invoice-detail-row {
+    display: contents;
+}
+
+.invoice-detail-label {
+    font-weight: bold;
+}
+
+.invoice-detail-value {
+    word-break: break-word;
+    font-weight: normal;
+}
+
+.open-statistics-button{
+    background-color: var(--positive-color);
+}
+
+.chart-containers{
+    margin-top: var(--s0);
+}
+
 @media (max-width: 700px) {
     .table td.invoice-name{
         font-weight: bold;

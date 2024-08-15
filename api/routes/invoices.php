@@ -21,4 +21,10 @@ $invoiceRoutes = [
             'GET' => 'getInvoiceSummary',
         )
     ),
+    'invoice_statistics' => array(
+        'controller' => 'Invoice',
+        'methods' => array(
+            'GET' => 'getInvoiceStatistics',
+        )
+    ),
 ];
