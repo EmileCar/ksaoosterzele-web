@@ -58,7 +58,7 @@ const RekeningenLeider = () => {
 					{invoicesData && invoicesData.invoices.length > 0 && (
 						<Table
 							values={invoicesData.invoices}
-							rows={3}
+							rows={25}
 							responsiveLayout="scroll"
 							onRowClick={(invoice) => openDetailPopup(invoice)}
 							globalSearchFunction={searchFunction}
