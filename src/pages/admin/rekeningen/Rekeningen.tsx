@@ -49,7 +49,7 @@ const Rekeningen = () => {
                         values={invoices}
                         rows={10}
                         responsiveLayout="scroll"
-                        onRowClick={(invoice) => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`)}
+                        onRowClick={account?.role.id === 2 ? (invoice) => navigate(`/admin/rekeningen/leider/${invoice.leaderId}`) : undefined}
                     >
                         <Column
                             field="firstName"

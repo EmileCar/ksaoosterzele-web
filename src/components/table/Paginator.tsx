@@ -22,20 +22,23 @@ export const Paginator: React.FC<PaginatorProps> = ({ totalPages, currentPage, o
 
     return (
         <div className="paginator">
-            <Button
-                onClick={handlePrev}
-                disabled={currentPage === 0}
-                darken
-                text='<'
-            />
+            {currentPage > 0 && (
+                <Button
+                    onClick={handlePrev}
+                    darken
+                    text='<'
+                    aria-label="Previous Page"
+                />
+            )}
             <span>{`Pagina ${currentPage + 1} van de ${totalPages}`}</span>
-            <Button
-                onClick={handleNext}
-                disabled={currentPage === totalPages - 1}
-                aria-label="Next Page"
-                darken
-                text='>'
-            />
+            {currentPage < totalPages - 1 && (
+                <Button
+                    onClick={handleNext}
+                    darken
+                    text='>'
+                    aria-label="Next Page"
+                />
+            )}
         </div>
     );
 };
