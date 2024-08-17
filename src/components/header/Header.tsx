@@ -17,7 +17,7 @@ const Header = ({ adminMode }: { adminMode?: boolean }) => {
 	};
 
 	return (
-		<header className={`header ${adminMode && "header-admin"}`}>
+		<header className={`header ${adminMode ? "header-admin" : ""}`}>
 			<div className={`header__content ${adminMode && "admin-nav"} ${isNavOpen && 'open' }`}>
 				<Link to="/" className="header__logo--container layered-grid">
 					<h1>Ksa Oosterzele</h1>

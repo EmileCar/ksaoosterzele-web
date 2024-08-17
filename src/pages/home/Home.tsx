@@ -82,8 +82,8 @@ const Home = () => {
 								leeftijdsgroep.
 							</p>
 						</SectionTitle>
+						<Takken />
 					</div>
-					<Takken />
 				</section>
 			</div>
 		</DefaultLayout>
