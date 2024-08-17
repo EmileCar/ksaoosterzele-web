@@ -10,12 +10,14 @@ import RegistrationPopup from "../../../components/inschrijven/popups/Registrati
 import { usePopupContext } from "../../../contexts/PopupContext";
 import { Table } from "../../../components/table/Table";
 import { Column } from "../../../components/table/Column";
+import { useAccountContext } from "../../../contexts/AccountContext";
 
 const RegistrationsAdmin = () => {
     const { pending, data: registrations, error, refetch } = useFetch(getRegistrations);
     const [visibleColumns, setVisibleColumns] = useState<{ field: string; header: string; }[]>([]);
     const [filteredRegistrations, setFilteredRegistrations] = useState<Registration[]>([]);
     const { registerPopup } = usePopupContext();
+    const { account } = useAccountContext();
 
     const searchFunction = (value: string) => {
         if (!registrations) return [];
@@ -35,14 +37,14 @@ const RegistrationsAdmin = () => {
     return (
         <>
             <SectionTitle title="Inschrijvingen beheren">
-                <p>Hier kun je inschrijvingen van dit werkjaar zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
+                <p>Hier kun je inschrijvingen van dit werkjaar zien{account?.role.id === 2 && " en aanpassen"}. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
             </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 <Table
                     values={filteredRegistrations}
                     rows={20}
                     emptyMessage={(registrations && registrations.length > 0)? 'Geen inschrijvingen gevonden' : 'Geen data gevonden'}
-                    onRowClick={(registration: Registration) => openRegistrationPopup(registration)}
+                    onRowClick={account?.role.id === 2 ? (registration: Registration) => openRegistrationPopup(registration) : undefined}
                     globalSearchFunction={searchFunction}
                     exportToExcel
                 >
