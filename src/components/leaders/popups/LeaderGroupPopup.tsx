@@ -76,7 +76,7 @@ const LeaderGroupPopup = ({ leader, onClose } : { leader: Leader, onClose: () =>
                 <Form disabled={submitPending}>
                     <Label text="Verander tak">
                         <select className="input inherit-font" name="groupId" value={values.groupId} onChange={handleValueChange}>
-                            <option value="">Geen tak</option>
+                            <option value={0}>Geen tak</option>
                             {groups && groups.map(group => (
                                 <option key={group.id} value={group.id!}>{group.name}</option>
                             ))}
