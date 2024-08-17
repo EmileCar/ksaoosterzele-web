@@ -13,4 +13,10 @@ $inschrijvingRoutes = [
             'PUT' => 'updateRegistration',
         )
     ),
+    'test_mail' => array(
+        'controller' => 'Registration',
+        'methods' => array(
+            'GET' => 'test_mail',
+        )
+    ),
 ];
