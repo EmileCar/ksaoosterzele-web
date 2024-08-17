@@ -402,6 +402,8 @@ class Registration extends Model
 		}
 		if (!empty($data["allowMedia"])) {
 			$registration->allow_media = $data["allowMedia"];
+		} else {
+			$registration->allow_media = false;
 		}
 
 		return $registration;

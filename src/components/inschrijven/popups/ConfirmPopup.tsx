@@ -2,9 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Popup from "../../popup/Popup";
 import Button from "../../button/Button";
 
-const ConfirmPopup = ({ changeValue, submit }: { changeValue: (name: string, value: any) => void, submit: () => void }) => {
-    const [allowMedia, setAllowMedia] = useState<boolean | null>(null);
-    const [showConfirm, setShowConfirm] = useState<boolean | null>(null);
+const ConfirmPopup = ({ submit }: { submit: () => void }) => {
     const [confirmPrivacy, setConfirmPrivacy] = useState(false);
     const [showFinal, setShowFinal] = useState(false);
     const [confirmFinal, setConfirmFinal] = useState(false);
@@ -12,17 +10,6 @@ const ConfirmPopup = ({ changeValue, submit }: { changeValue: (name: string, val
     const scrollRef = useRef<HTMLDivElement>(null);
     const scrollRef2 = useRef<HTMLDivElement>(null);
     const scrollRefFinal = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if(allowMedia !== null) {
-            setShowConfirm(true);
-            setTimeout(() => {
-                if (scrollRef.current) {
-                    scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }, 100);
-        }
-    }, [allowMedia]);
 
     useEffect(() => {
         if(confirmPrivacy || confirmPrivacy) {
@@ -48,17 +35,6 @@ const ConfirmPopup = ({ changeValue, submit }: { changeValue: (name: string, val
     return (
         <Popup title="Bevestiging inschrijving">
             <div className="confirm__container">
-                <div>
-                    <p>Doorheen het jaar worden er foto's en filmpjes gemaakt van de activiteiten om die op de website en sociale media van KSA Oosterzele te plaatsen.</p>
-                    <p>Geeft u toestemming dat er beeldmateriaal van uw kind gemaakt mag worden voor deze publicatie?</p>
-                </div>
-                <div className="buttons">
-                    <Button text="Ja" onClick={() => {changeValue("allowMedia", true); setAllowMedia(true)}} customClassName={`inschrijving-button ${allowMedia ? "active" : "button-inverted"}`} round/>
-                    <Button text="Nee" onClick={() => {changeValue("allowMedia", false); setAllowMedia(false)}} customClassName={`inschrijving-button ${allowMedia === false ? "active" : "button-inverted"}`} round/>
-                </div>
-            </div>
-            {showConfirm &&
-            <div className="confirm__container">
                 <p>
                     De ingevulde persoonsgegevens worden bewaard en verwerkt door KSA Reik je hand Oosterzele.
                 </p>
@@ -75,7 +51,7 @@ const ConfirmPopup = ({ changeValue, submit }: { changeValue: (name: string, val
                 <div className="buttons" ref={scrollRef}>
                     <Button text="Ja" onClick={() => setConfirmPrivacy(true)} customClassName={`inschrijving-button ${confirmPrivacy ? "active" : "button-inverted"}`} round/>
                 </div>
-            </div>}
+            </div>
             {showFinal &&
             <div className="confirm__container">
                 <p><strong>

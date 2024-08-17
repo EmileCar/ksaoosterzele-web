@@ -13,19 +13,32 @@ const RegistrationForm = () => {
     const { values, errorStates, handleValueChange, isPending, submitValues, changeValue } = useRegistrationContext();
     const { registerPopup, closePopup } = usePopupContext();
     const [tweedeVerblijfplaatsActive, setTweedeVerblijfplaatsActive] = useState<boolean | null>(null);
+    const [showAllowMedia, setShowAllowMedia] = useState(false);
     const [showContinueButton, setShowContinueButton] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const scrollRefToTop = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if(tweedeVerblijfplaatsActive === null) return;
-        setShowContinueButton(true);
+        setShowAllowMedia(true);
         if (tweedeVerblijfplaatsActive === false && scrollRef.current) {
             setTimeout(() => {
                 if(scrollRef.current) scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
     } , [tweedeVerblijfplaatsActive]);
+
+    useEffect(() => {
+        console.log(values.allowMedia)
+        if(values.allowMedia === true || values.allowMedia === false) {
+            setShowContinueButton(true);
+            if (scrollRef.current) {
+                setTimeout(() => {
+                    if(scrollRef.current) scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            }
+        }
+    } , [values.allowMedia]);
 
     useEffect(() => {
         if(isPending){
@@ -44,7 +57,7 @@ const RegistrationForm = () => {
     }
 
     const openConfirmPopup = () => {
-        registerPopup(<ConfirmPopup changeValue={changeValue} submit={submitValuesHandler} />);
+        registerPopup(<ConfirmPopup submit={submitValuesHandler} />);
     };
 
     return (
@@ -160,6 +173,18 @@ const RegistrationForm = () => {
                                     </Label>
                                 </Group>
                             </>
+                        )}
+                        {showAllowMedia && (
+                            <div className="break">
+                                <div>
+                                    <p>Doorheen het jaar worden er foto's en filmpjes gemaakt van de activiteiten om die op de website en sociale media van KSA Oosterzele te plaatsen.</p>
+                                    <p style={{ marginTop: "var(--s-1)"}}><strong>Geeft u toestemming dat er beeldmateriaal van uw kind gemaakt mag worden voor deze publicatie?</strong></p>
+                                </div>
+                                <div className="buttons">
+                                    <Button text="Ja" onClick={() => changeValue("allowMedia", true)} customClassName={`inschrijving-button ${values.allowMedia === true ? "active" : "button-inverted"}`} round/>
+                                    <Button text="Nee" onClick={() => changeValue("allowMedia", false)} customClassName={`inschrijving-button ${values.allowMedia === false ? "active" : "button-inverted"}`} round/>
+                                </div>
+                            </div>
                         )}
                         {showContinueButton && (
                             <div className="break" ref={scrollRef}>

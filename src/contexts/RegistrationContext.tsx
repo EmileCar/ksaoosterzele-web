@@ -23,7 +23,7 @@ export const RegistrationProvider = ({ children } : { children: React.ReactNode 
     useEffect(() => {
         console.log("---------")
         console.log(values);
-        console.log(values.notEmpty())
+        console.log(values.allowMedia)
     } , [values]);
 
     const submitValues = async () => {
