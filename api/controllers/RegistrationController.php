@@ -38,7 +38,13 @@ class RegistrationController extends Controller {
     public function getRegistrations() {
 		$account = Account::is_authenticated();
 
-        $registrations = Registration::all();
+		$workingYear = WorkingYear::orderBy('start_year', 'desc')->first();
+
+        if (!$workingYear) {
+			exit(json_encode([]));
+        }
+
+        $registrations = Registration::where('working_year_id', $workingYear->id)->get();
 		$registrationResponses = [];
 		foreach ($registrations as $registration) {
 			$registrationResponses[] = new RegistrationResponse($registration);

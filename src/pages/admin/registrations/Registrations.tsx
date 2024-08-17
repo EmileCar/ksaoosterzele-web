@@ -35,7 +35,7 @@ const RegistrationsAdmin = () => {
     return (
         <>
             <SectionTitle title="Inschrijvingen beheren">
-                <p>Hier kun je inschrijvingen zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
+                <p>Hier kun je inschrijvingen van dit werkjaar zien en aanpassen. Verwijderen kan niet, daarvoor moet je Emile contacteren.</p>
             </SectionTitle>
             <FetchedDataLayout isPending={pending} error={error}>
                 <Table
