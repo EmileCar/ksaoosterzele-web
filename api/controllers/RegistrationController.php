@@ -25,29 +25,7 @@ class RegistrationController extends Controller {
 		}
 
 		$registration = new Registration();
-		$registration->group_id = $data["groupId"];
-		$registration->first_name = $data["firstName"];
-		$registration->last_name = $data["lastName"];
-		$registration->birthdate = $data["birthdate"];
-		$registration->gender = $data["gender"];
-		$registration->birthplace = $data["birthplace"];
-		$registration->parent_first_name = $data["parentFirstName"];
-		$registration->parent_last_name = $data["parentLastName"];
-		$registration->address = $data["address"];
-		$registration->postal_code = $data["postalCode"];
-		$registration->town = $data["town"];
-		$registration->phone_number = $data["phoneNumber"];
-		$registration->telephone_number = $data["telephoneNumber"];
-		$registration->email = $data["email"];
-		$registration->second_parent_first_name = $data["secondParentFirstName"];
-		$registration->second_parent_last_name = $data["secondParentLastName"];
-		$registration->second_address = $data["secondAddress"];
-		$registration->second_postal_code = $data["secondPostalCode"];
-		$registration->second_town = $data["secondTown"];
-		$registration->second_phone_number = $data["secondPhoneNumber"];
-		$registration->second_telephone_number = $data["secondTelephoneNumber"];
-		$registration->second_email = $data["secondEmail"];
-		$registration->allow_media = $data["allowMedia"];
+		$registration = Registration::create($data, $registration);
 		$registration->working_year_id = $workingYear->id;
 		$registration->save();
 

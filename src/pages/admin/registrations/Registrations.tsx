@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import './Registrations.css';
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
@@ -6,15 +6,10 @@ import useFetch from "../../../hooks/useFetch";
 import { getRegistrations } from "../../../services/registrationService";
 import { formatDateTime } from "../../../utils/datetimeUtil";
 import Registration from "../../../types/Registration";
-import { exportToExcel } from "../../../utils/exportToExcel";
-import Input from "../../../components/form/Input";
-import Form from "../../../components/form/Form";
-import Button from "../../../components/button/Button";
 import RegistrationPopup from "../../../components/inschrijven/popups/RegistrationPopup";
 import { usePopupContext } from "../../../contexts/PopupContext";
 import { Table } from "../../../components/table/Table";
 import { Column } from "../../../components/table/Column";
-import Label from "../../../components/form/Label";
 
 const RegistrationsAdmin = () => {
     const { pending, data: registrations, error, refetch } = useFetch(getRegistrations);
