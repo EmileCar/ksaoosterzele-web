@@ -67,6 +67,17 @@
     border-right: 1px solid var(--main-color);
 }
 
+.streepkes-table td:not(.leader-label){
+    max-width: 100px;
+    overflow: hidden;
+}
+
+
+.streepkes-table td.total{
+    background-color: var(--main-color);
+    color: white;
+}
+
 .streepkes-table .leader-label{
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -94,4 +105,5 @@
     border: none;
     outline: none;
     box-shadow: none;
+    max-width: 100px;
 }

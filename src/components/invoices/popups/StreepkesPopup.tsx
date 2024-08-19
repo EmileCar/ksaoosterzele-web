@@ -173,6 +173,17 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                                                     </td>
                                                 );
                                             })}
+                                            <td className="total">{`€
+                                                ${Object.keys(streepjesData[leader.id] || {}).reduce((sum, priceType) => {
+                                                    const amount = streepjesData[leader.id]?.[priceType as PriceType] || 0;
+
+                                                    if (priceType === PriceType.Andere) {
+                                                        return sum + amount;
+                                                    }
+
+                                                    return sum + (PRICES[priceType as PriceType] ?? 0) * amount;
+                                                }, 0).toFixed(2)}`}
+                                            </td>
                                         </tr>
                                     ) : null
                                     ))}
@@ -184,7 +195,7 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                 </>
             }
         </Popup>
-    )
+    );
 };
 
 export default StreepkesPopup;
