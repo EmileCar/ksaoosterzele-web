@@ -82,23 +82,18 @@ class RegistrationController extends Controller {
 		exit();
 	}
 
-	public function test_mail () {
-		$registration = new Registration();
-		$registration->first_name = "Emile";
-		$registration->last_name = "Caron";
-		$registration->email = "test@test.be";
-		$registration->phone = "0499999999";
-
-		$this->_sendConfirmationMail($registration);
-	}
-
 	private function _sendConfirmationMail($registration) {
+		$group_name = $registration->group ? $registration->group->name : '/';
+
+		$registrationData = $registration->toArray();
+		$registrationData['group_name'] = $group_name;
+
 		// Verstuur bevestigingsmail naar de gebruiker
-        $userTemplate = Template::render(__DIR__ . '/../mail_templates/registration_confirmation.php', $registration->toArray());
+        $userTemplate = Template::render(__DIR__ . '/../mail_templates/registration_confirmation.php', $registrationData);
         Mailer::send("caron.emile@telenet.be", "Inschrijving Bevestiging", $userTemplate);
 
         // Verstuur notificatie naar de admin
-        $adminTemplate = Template::render(__DIR__ . '/../mail_templates/registration_notification_admin.php', $registration->toArray());
+        $adminTemplate = Template::render(__DIR__ . '/../mail_templates/registration_notification_admin.php', $registrationData);
         //Mailer::send("ksaoosterzele9860@gmail.com", "Nieuwe inschrijving!!", $adminTemplate);
         Mailer::send("caron.emile@telenet.be", "Nieuwe inschrijving!!", $adminTemplate);
 

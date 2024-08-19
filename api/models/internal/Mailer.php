@@ -1,7 +1,7 @@
 <?php
 
 class Mailer {
-    public static function send($to, $subject, $body, $replyTo = 'no-reply@ksaoosterzele.be') {
+    public static function send($to, $subject, $body, $replyTo = 'contact@ksaoosterzele.be') {
         $headers = "From: ksaoosterzele@ksaoosterzele.be\r\n";
         $headers .= "Reply-To: $replyTo\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
