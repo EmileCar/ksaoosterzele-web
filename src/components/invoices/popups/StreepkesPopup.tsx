@@ -11,6 +11,7 @@ import useFetch from "../../../hooks/useFetch";
 import { getLeaders } from "../../../services/leaderService";
 import { useEffect, useState } from "react";
 import FetchedDataLayout from "../../../layouts/FetchedDataLayout";
+import { InputNumber } from "primereact/inputnumber";
 
 enum PriceType {
     Bier = 'Bier',
@@ -43,12 +44,12 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
     const { pending, data: leaders, error } = useFetch<{ id: number, name: string }[]>(getLeaders);
     const { closePopup } = usePopupContext();
 
-    const handleChange = (leaderId: number, priceType: PriceType, amount: number) => {
+    const handleChange = (leaderId: number, priceType: PriceType, amount: number | null) => {
         setStreepjesData(prevState => ({
             ...prevState,
             [leaderId]: {
                 ...prevState[leaderId],
-                [priceType]: amount
+                [priceType]: amount ?? 0
             }
         }));
     };
@@ -66,6 +67,11 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
             const leaderData = streepjesData[parseInt(leaderId)];
             const totalAmount = Object.keys(leaderData).reduce((sum, priceType) => {
                 const amount = leaderData[priceType as PriceType] || 0;
+
+                if (priceType === PriceType.Andere) {
+                    return sum + amount;
+                }
+
                 return sum + (PRICES[priceType as PriceType] ?? 0) * amount;
             }, 0);
 
@@ -108,7 +114,7 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
             {!isNameSet ?
                 <Form disabled={submitPending}>
                     <Label text="Naam van periode/evenement" errorMessage={errorStates.nameError} required>
-                        <Input name="name" type="text" value={name ?? ""} onChange={(event) => setName(event.target.value)} focus />
+                        <Input name="name" type="text" value={name ?? ""} onChange={(event) => setName(event.target.value)} focus placeholder="Streepkes van september / kamp 2024"/>
                     </Label>
                     <Button text="Ga verder" onClick={() => setIsNameSet(true)} darken uppercase pending={submitPending} />
                 </Form>
@@ -138,6 +144,23 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                                             <td className="leader-label">{leader.name}</td>
                                             {Object.keys(PriceType).map((key) => {
                                                 const priceType = PriceType[key as keyof typeof PriceType];
+
+                                                if (priceType === PriceType.Andere) {
+                                                    return (
+                                                        <td key={priceType}>
+                                                            <InputNumber
+                                                                mode="currency"
+                                                                currency="EUR"
+                                                                locale="nl-BE"
+                                                                name={`${leader.name}-${priceType}`}
+                                                                onValueChange={(event) => handleChange(leader.id, priceType, event.value ?? null)}
+                                                                value={streepjesData[leader.id]?.[priceType] ?? 0}
+                                                                className="streepkes-input"
+                                                            />
+                                                        </td>
+                                                    );
+                                                }
+
                                                 return (
                                                     <td key={priceType}>
                                                         <Input

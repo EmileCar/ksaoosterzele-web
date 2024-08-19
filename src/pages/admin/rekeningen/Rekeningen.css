@@ -88,3 +88,10 @@
     outline: none;
     box-shadow: none;
 }
+
+.streepkes-table .p-inputtext {
+    padding: 0;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
