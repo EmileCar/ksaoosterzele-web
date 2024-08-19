@@ -4,9 +4,8 @@ import Label from "../../form/Label";
 import Input from "../../form/Input";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
-import AutoComplete, { AutoCompleteOption } from "../../form/AutoComplete";
 import { usePopupContext } from "../../../contexts/PopupContext";
-import Invoice, { SendInvoice } from "../../../types/Invoice";
+import { SendInvoice } from "../../../types/Invoice";
 import { sendInvoices } from "../../../services/invoiceService";
 import useFetch from "../../../hooks/useFetch";
 import { getLeaders } from "../../../services/leaderService";
@@ -52,6 +51,14 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                 [priceType]: amount
             }
         }));
+    };
+
+    const handleRemoveLeader = (leaderId: number) => {
+        setStreepjesData(prevState => {
+            const newState = { ...prevState };
+            delete newState[leaderId];
+            return newState;
+        });
     };
 
     useEffect(() => {
@@ -116,13 +123,18 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                             <table className="streepkes-table">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Naam</th>
                                         {Object.keys(PriceType).map((key) => <th key={key}>{PriceType[key as keyof typeof PriceType]}</th>)}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {leaders && leaders.map(leader => (
+                                        streepjesData[leader.id] ? (
                                         <tr key={leader.id}>
+                                            <td>
+                                                <span className="remove-leader" onClick={() => handleRemoveLeader(leader.id)}>&times;</span>
+                                            </td>
                                             <td className="leader-label">{leader.name}</td>
                                             {Object.keys(PriceType).map((key) => {
                                                 const priceType = PriceType[key as keyof typeof PriceType];
@@ -139,6 +151,7 @@ const StreepkesPopup = ({ onClose }: { onClose: () => void }) => {
                                                 );
                                             })}
                                         </tr>
+                                    ) : null
                                     ))}
                                 </tbody>
                             </table>
