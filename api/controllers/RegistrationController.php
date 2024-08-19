@@ -90,11 +90,11 @@ class RegistrationController extends Controller {
 
 		// Verstuur bevestigingsmail naar de gebruiker
         $userTemplate = Template::render(__DIR__ . '/../mail_templates/registration_confirmation.php', $registrationData);
-        Mailer::send("caron.emile@telenet.be", "Inschrijving Bevestiging", $userTemplate);
+        Mailer::send($registration->email, "Inschrijving Bevestiging", $userTemplate);
 
         // Verstuur notificatie naar de admin
         $adminTemplate = Template::render(__DIR__ . '/../mail_templates/registration_notification_admin.php', $registrationData);
-        //Mailer::send("ksaoosterzele9860@gmail.com", "Nieuwe inschrijving!!", $adminTemplate);
+        Mailer::send("ksaoosterzele9860@gmail.com", "Nieuwe inschrijving!!", $adminTemplate);
         Mailer::send("caron.emile@telenet.be", "Nieuwe inschrijving!!", $adminTemplate);
 
 		exit();

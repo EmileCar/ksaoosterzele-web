@@ -119,7 +119,7 @@ const RegistrationForm = () => {
                             <Label text="Gsm-nummer:" errorMessage={errorStates.phoneNumberError} required>
                                 <Input type="text" name="phoneNumber" value={values.phoneNumber} onChange={handleValueChange} placeholder="Gsm-nummer" />
                             </Label>
-                            <Label text="Telefoonnummer/Gsm 2:" errorMessage={errorStates.telephoneNumber}>
+                            <Label text="Telefoonnummer/Gsm 2:" errorMessage={errorStates.telephoneNumberError}>
                                 <Input type="text" name="telephoneNumber" value={values.telephoneNumber} onChange={handleValueChange} placeholder="Telefoonnummer" />
                             </Label>
                         </Group>
