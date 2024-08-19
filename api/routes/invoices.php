@@ -27,4 +27,10 @@ $invoiceRoutes = [
             'GET' => 'getInvoiceStatistics',
         )
     ),
+    'invoices' => array(
+        'controller' => 'Invoice',
+        'methods' => array(
+            'POST' => 'addInvoices',
+        )
+    ),
 ];

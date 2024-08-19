@@ -129,4 +129,26 @@ class InvoiceController extends Controller {
 
         exit(json_encode($statistics));
     }
+
+    public function addInvoices() {
+        $account = Account::is_authenticated();
+        Account::is_authorised($account, 2);
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        foreach ($data as $invoiceData) {
+            $errors = Invoice::validate($invoiceData);
+
+            if (!empty($errors)) {
+                ErrorResponse::exitWithError(400, "Validatie fouten gevonden.", $errors);
+            }
+
+            $invoice = new Invoice();
+            $invoice = Invoice::create($invoiceData, $invoice);
+            $invoice->save();
+        }
+
+        http_response_code(201);
+        exit();
+    }
 }

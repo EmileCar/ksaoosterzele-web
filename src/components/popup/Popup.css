@@ -23,6 +23,7 @@
     color: var(--main-color);
 	margin: 4.5rem 0;
 	animation: entryPopup 300ms ease-in-out;
+	text-align: left;
 }
 .popup .close {
 	position: absolute;

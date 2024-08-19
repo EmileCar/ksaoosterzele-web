@@ -43,3 +43,46 @@
         padding-top: var(--s-1);
     }
 }
+
+
+.streepkes-table th{
+    font-weight: bold;
+}
+
+.streepkes-table thead{
+    border-bottom: 2px solid var(--main-color);
+}
+
+.streepkes-table th, .streepkes-table td{
+    border-bottom: 1px solid var(--main-color);
+}
+
+.streepkes-table td{
+    border-right: 1px solid var(--main-color);
+}
+
+.streepkes-table .leader-label{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 300px;
+}
+
+.streepkes-table td{
+    padding: var(--s-1);
+}
+
+.streepkes-table td.leader-label{
+    padding-left: 0;
+}
+
+.streepkes-table .streepkes-input{
+    outline: none;
+    border: none;
+    padding: 0;
+}
+
+.streepkes-table .streepkes-input:focus{
+    outline: none;
+    box-shadow: none;
+}

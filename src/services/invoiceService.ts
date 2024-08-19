@@ -81,3 +81,22 @@ export async function getInvoiceStatistics(): Promise<InvoiceStatistics> {
         throw error;
     }
 }
+
+export async function sendInvoices(invoices: SendInvoice[]): Promise<void> {
+    try {
+        const response = await fetch(`${API_BASE_URL}?page=invoices`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(invoices),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw await ErrorResponse.createFromResponse(response);
+        }
+    } catch (error) {
+        throw error;
+    }
+}

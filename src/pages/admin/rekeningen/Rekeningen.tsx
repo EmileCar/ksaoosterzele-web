@@ -13,6 +13,7 @@ import "./Rekeningen.css";
 import { Table } from "../../../components/table/Table";
 import { Column } from "../../../components/table/Column";
 import InvoiceStatisticsPopup from "../../../components/invoices/popups/InvoiceStatisticsPopup";
+import StreepkesPopup from "../../../components/invoices/popups/StreepkesPopup";
 
 const Rekeningen = () => {
     const { pending, data: invoices, error, refetch } = useFetch<InvoiceSummary[]>(getInvoiceSummary);
@@ -28,6 +29,10 @@ const Rekeningen = () => {
         registerPopup(<InvoiceStatisticsPopup onClose={refetch} />);
     }
 
+    const openStreepkesPopup = () => {
+        registerPopup(<StreepkesPopup onClose={refetch} />);
+    }
+
     return (
         <>
             <SectionTitle title="Rekeningen beheren">
@@ -37,6 +42,7 @@ const Rekeningen = () => {
             {account?.role.id === 2 &&
                 <div className="admin__actions">
                     <Button text="Transactie toevoegen" hover onClick={openInvoicePopup} />
+                    <Button text="Streepkes" hover onClick={openStreepkesPopup} />
                     <Button text="Statistieken" hover onClick={openStatisticsPopup} customClassName="open-statistics-button"/>
                 </div>
             }
