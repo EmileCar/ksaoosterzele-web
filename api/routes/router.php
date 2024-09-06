@@ -8,13 +8,14 @@ require_once 'groups.php';
 require_once 'leaders.php';
 require_once 'workingYears.php';
 require_once 'invoices.php';
+require_once 'imageupload.php';
 
 // Als er geen pagina is opgegeven, zet de page op index
 if(empty($_GET['page'])) {
     $_GET['page'] = 'index';
 }
 
-$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes, $leaderRoutes, $workingYearRoutes, $invoiceRoutes);
+$allowedRoutes = array_merge($eventRoutes, $accountRoutes, $inschrijvingRoutes, $mediaRoutes, $mattentaartenOrderRoutes, $groupRoutes, $leaderRoutes, $workingYearRoutes, $invoiceRoutes, $imageUploadRoutes);
 
 require_once __DIR__ . '/../responses/ErrorResponse.php';
 

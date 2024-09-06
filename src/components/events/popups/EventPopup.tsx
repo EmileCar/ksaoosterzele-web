@@ -1,23 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Event, { SendEvent } from "../../../types/Event";
 import useForm from "../../../hooks/useForm";
 import { formatDateToInputDateTime, isDateTimeInPast } from "../../../utils/datetimeUtil";
 import Popup from "../../popup/Popup";
 import Label from "../../form/Label";
 import Input from "../../form/Input";
-import { getImagePaths, sendEvent } from "../../../services/eventService";
+import { sendEvent } from "../../../services/eventService";
 import Checkbox from "../../form/Checkbox";
 import Button from "../../button/Button";
 import Form from "../../form/Form";
 import Group from "../../form/Group";
-import AutoComplete, { AutoCompleteOption } from "../../form/AutoComplete";
 import { usePopupContext } from "../../../contexts/PopupContext";
-import useFetch from "../../../hooks/useFetch";
+import ImageUploader from "../../form/ImageUploader";
+import { uploadImage } from "../../../services/imageuploadService";
 
 const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onClose: () => void }) => {
-    const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending } = useForm<SendEvent>(new SendEvent(event || {}), sendEvent);
-    const { pending, data: fetchedImagePaths, error } = useFetch<string[]>(getImagePaths);
-    const [ imagePaths, setImagePaths ] = useState<AutoCompleteOption[]>([]);
+    const { values, errorStates, handleValueChange, changeValue, handleSubmitForm, submitPending, setErrors } = useForm<SendEvent>(new SendEvent(event || {}), sendEvent);
+    const [ imageFile, setImageFile ] = useState<File | null>(null);
 	const { closePopup } = usePopupContext();
 
     const handleCalendarChange = (e: any) => {
@@ -26,17 +25,23 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
     }
 
     const handleSubmit = async () => {
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('folder', 'events');
+
+            await uploadImage(formData)
+                .catch((error) => {
+                    setErrors({ imgpathError: error.message });
+                    return;
+            });
+        }
+
         await handleSubmitForm(event ? 'PUT' : 'POST', () => {
             onClose();
             closePopup();
         });
     }
-
-    useEffect(() => {
-        if (fetchedImagePaths) {
-            setImagePaths(fetchedImagePaths.map(path => ({ value: path, label: path })));
-        }
-    }, [fetchedImagePaths]);
 
     return (
         <Popup title={event ? `${event.name} aanpassen` : "Nieuw evenement"}>
@@ -51,20 +56,16 @@ const EventPopup = ({ event, onClose } : { event?: Event | null | undefined, onC
                     </Label>
                 </Group>
                 <Group>
-                <Label text="Afbeelding (path)" errorMessage={errorStates.imgpathError}>
-                        <AutoComplete
-                            value={values.imageFileName}
-                            suggestions={imagePaths}
-                            onChange={handleValueChange}
-                            name="imageFileName"
-                            dropdown
-                            noSuggestionsMessage={pending ? "Nog bezig me laden..." : "Geen afbeeldingen gevonden"}
+                    <Label text="Afbeelding" errorMessage={errorStates.imgpathError}>
+                        <ImageUploader
+                            existingImagePath={values.imageFileName}
+                            destination="events"
+                            onImageSelect={(file) => {setImageFile(file); changeValue("imageFileName", file?.name)}}
                         />
                     </Label>
                     <Label text="Datum & tijd" errorMessage={errorStates.datetimeError}>
                         <Input name="datetime" type="datetime-local" value={formatDateToInputDateTime(values.datetime as Date)} onChange={handleCalendarChange} />
                     </Label>
-
                 </Group>
                 <Label text="Beschrijving" errorMessage={errorStates.descriptionError} customClassName="flex-column">
                     <textarea

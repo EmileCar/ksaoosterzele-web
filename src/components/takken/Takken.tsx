@@ -17,8 +17,8 @@ const Takken = ({ setTak }: { setTak?: (tak: Group) => void }) => {
   }, [selectedTak]);
 
   return (
-    <div className="takken__container">
-      <FetchedDataLayout isPending={pending} error={error}>
+    <FetchedDataLayout isPending={pending} error={error}>
+      <div className="takken__container">
         <div>
           <div className="takken-list">
             {groups &&
@@ -51,8 +51,8 @@ const Takken = ({ setTak }: { setTak?: (tak: Group) => void }) => {
             </>
           )}
         </div>
-      </FetchedDataLayout>
-    </div>
+      </div>
+    </FetchedDataLayout>
   );
 };
 
